@@ -1,8 +1,9 @@
-import { motion, useScroll, useTransform, AnimatePresence } from "framer-motion";
+import { motion, useScroll, useTransform, AnimatePresence, useAnimationControls } from "framer-motion";
 import { BlurImage } from "../ui/BlurImage";
 import { useEffect, useRef, useState } from "react";
 import { CreditCard, Gift, Plane, Shield, Utensils, Hotel, Wifi, CreditCard as CardIcon, Zap, ChevronLeft, ChevronRight, Coffee, ShoppingBag, Dumbbell } from "lucide-react";
 import * as React from 'react';
+import { Glass } from "../ui/Gradient";
 
 // Define perk categories and their icons
 const categoryIcons = {
@@ -478,6 +479,78 @@ const cards: Card[] = [
   }
 ];
 
+interface InfiniteCardRiverProps {
+  cards: Card[];
+  speed?: number;
+  direction?: 'left' | 'right';
+}
+
+function InfiniteCardRiver({ cards, speed = 20, direction = 'left' }: InfiniteCardRiverProps) {
+  const [duplicatedCards, setDuplicatedCards] = useState<Card[]>([]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    // Check if mobile
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
+  useEffect(() => {
+    // Duplicate cards to ensure smooth infinite scroll
+    const duplicates = [...cards, ...cards, ...cards];
+    setDuplicatedCards(duplicates);
+
+    // Get container width for animation
+    if (containerRef.current) {
+      setContainerWidth(containerRef.current.scrollWidth / 3);
+    }
+  }, [cards]);
+
+  const animate = {
+    x: direction === 'left' ? [-containerWidth, 0] : [0, -containerWidth],
+    transition: {
+      x: {
+        duration: isMobile ? containerWidth / (speed * 0.7) : containerWidth / speed, // Slower on mobile
+        repeat: Infinity,
+        ease: "linear",
+      },
+    },
+  };
+
+  return (
+    <div className="relative w-full overflow-hidden" ref={containerRef}>
+      <motion.div
+        className="flex gap-4 md:gap-6"
+        animate={animate}
+      >
+        {duplicatedCards.map((card, index) => (
+          <motion.div
+            key={`${card.name}-${index}`}
+            className="relative shrink-0"
+            whileHover={isMobile ? undefined : { scale: 1.05, zIndex: 10 }}
+          >
+            <Glass variant="light" className="rounded-2xl p-2 md:p-4">
+              <BlurImage
+                src={card.image}
+                alt={card.name}
+                width={300}
+                height={189}
+                className="w-[200px] md:w-[300px] h-[126px] md:h-[189px] object-contain"
+              />
+            </Glass>
+          </motion.div>
+        ))}
+      </motion.div>
+    </div>
+  );
+}
+
 export function CardShowcase() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
@@ -530,7 +603,7 @@ export function CardShowcase() {
   );
 
   return (
-    <section className="py-24 bg-gray-50 overflow-hidden" ref={containerRef}>
+    <section className="py-8 lg:py-24 overflow-hidden">
       <div className="container px-4 mx-auto">
         <div className="text-center mb-16">
           <motion.div
@@ -563,135 +636,11 @@ export function CardShowcase() {
           </motion.p>
         </div>
 
-        <div className="max-w-6xl mx-auto">
-          <div className="grid md:grid-cols-2 gap-8 items-start">
-            {/* Card Display */}
-            <div 
-              className="relative aspect-[1.586/1] rounded-2xl overflow-hidden bg-gradient-to-br from-gray-900 to-gray-800 p-8"
-              onMouseEnter={() => setIsHovered(true)}
-              onMouseLeave={() => setIsHovered(false)}
-            >
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentCard.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="relative h-full"
-                >
-                  <BlurImage
-                    src={currentCard.image}
-                    alt={currentCard.name}
-                    width={800}
-                    height={500}
-                    className="w-full h-full object-contain"
-                  />
-                </motion.div>
-              </AnimatePresence>
-
-              {/* Navigation Controls */}
-              <div className="absolute inset-x-0 bottom-4 flex justify-center gap-2">
-                {cards.map((_, idx) => (
-                  <button
-                    key={idx}
-                    onClick={() => setCurrentIndex(idx)}
-                    className="group p-1.5"
-                  >
-                    <div
-                      className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
-                        currentIndex === idx
-                          ? "bg-white w-4"
-                          : "bg-white/50 group-hover:bg-white/75"
-                      }`}
-                    />
-                  </button>
-                ))}
-              </div>
-
-              {/* Previous/Next Buttons */}
-              <button
-                onClick={() => setCurrentIndex((prev) => (prev - 1 + cards.length) % cards.length)}
-                className="absolute left-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/20 hover:bg-black/40 transition-colors"
-              >
-                <ChevronLeft className="w-6 h-6 text-white" />
-              </button>
-              <button
-                onClick={() => setCurrentIndex((prev) => (prev + 1) % cards.length)}
-                className="absolute right-4 top-1/2 -translate-y-1/2 p-2 rounded-full bg-black/20 hover:bg-black/40 transition-colors"
-              >
-                <ChevronRight className="w-6 h-6 text-white" />
-              </button>
-            </div>
-
-            {/* Card Details */}
-            <div className="space-y-6">
-              <AnimatePresence mode="wait">
-                <motion.div
-                  key={currentCard.name}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -20 }}
-                  transition={{ duration: 0.3 }}
-                  className="space-y-6"
-                >
-                  <div>
-                    <h3 className="text-2xl font-bold">{currentCard.name}</h3>
-                    <div className="flex items-center gap-4 mt-2 text-gray-600">
-                      <span>Annual Fee: ${currentCard.annualFee}</span>
-                      <span>•</span>
-                      <span>Total Value: ${totalAnnualValue}/yr</span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-4">
-                    {currentCard.benefits.map((perk) => (
-                      <motion.div
-                        key={perk.id}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        className="bg-white rounded-lg p-4 shadow-sm border border-gray-100"
-                      >
-                        <div className="flex items-start justify-between gap-4">
-                          <div>
-                            <h4 className="font-medium">{perk.name}</h4>
-                            <p className="text-sm text-gray-600 mt-1">{perk.description}</p>
-                          </div>
-                          <div className="text-right">
-                            <div className="font-bold text-brand">{formatValue(perk.value, perk.period)}</div>
-                            <div className="text-xs text-gray-500 mt-1">{perk.period}</div>
-                          </div>
-                        </div>
-
-                        {/* Categories */}
-                        <div className="flex flex-wrap gap-2 mt-3">
-                          {perk.categories.map((category) => {
-                            const Icon = categoryIcons[category];
-                            return (
-                              <span
-                                key={category}
-                                className="inline-flex items-center gap-1 px-2 py-1 rounded-full bg-gray-100 text-xs font-medium text-gray-600"
-                              >
-                                <Icon className="w-3 h-3" />
-                                {category}
-                              </span>
-                            );
-                          })}
-                        </div>
-
-                        {/* Redemption Instructions */}
-                        {perk.redemptionInstructions && (
-                          <div className="mt-3 text-sm text-gray-500">
-                            <strong className="font-medium">How to use:</strong> {perk.redemptionInstructions}
-                          </div>
-                        )}
-                      </motion.div>
-                    ))}
-                  </div>
-                </motion.div>
-              </AnimatePresence>
-            </div>
-          </div>
+        <div className="mt-8 md:mt-12">
+          <InfiniteCardRiver cards={cards} speed={15} direction="left" />
+        </div>
+        <div className="mt-4 md:mt-8">
+          <InfiniteCardRiver cards={cards.slice().reverse()} speed={20} direction="right" />
         </div>
       </div>
     </section>

@@ -1,129 +1,77 @@
 import { motion } from "framer-motion";
+import { Text } from "../ui/Text";
+import { ScrollReveal, ScrollRevealList } from "../ui/ScrollReveal";
 import { BlurImage } from "../ui/BlurImage";
-import { Award, TrendingUp, Users } from "lucide-react";
+import { Glass } from "../ui/Gradient";
 
-const stats = [
+const CARD_LOGOS = [
   {
-    value: "$2.4M+",
-    label: "Benefits Tracked",
-    description: "Total value monitored for our users",
-    icon: TrendingUp,
-    color: "text-green-500",
+    src: "/assets/cards/amex_plat.avif",
+    alt: "American Express Platinum Card",
   },
   {
-    value: "50K+",
-    label: "Active Users",
-    description: "Growing community of savvy cardholders",
-    icon: Users,
-    color: "text-blue-500",
+    src: "/assets/cards/chase_sapphire_reserve.png",
+    alt: "Chase Sapphire Reserve",
   },
   {
-    value: "98%",
-    label: "User Satisfaction",
-    description: "Based on our latest user survey",
-    icon: Award,
-    color: "text-purple-500",
+    src: "/assets/cards/venture_x.avif",
+    alt: "Capital One Venture X",
+  },
+  {
+    src: "/assets/cards/amex_gold.avif",
+    alt: "American Express Gold Card",
+  },
+  {
+    src: "/assets/cards/chase_sapphire_preferred.png",
+    alt: "Chase Sapphire Preferred",
+  },
+  {
+    src: "/assets/cards/boa_premium_rewards_elite.png",
+    alt: "Bank of America Premium Rewards Elite",
   },
 ];
-
-const cardIssuers = [
-  { name: "American Express", logo: "/assets/cards/amex_plat.avif" },
-  { name: "Chase", logo: "/assets/cards/chase_sapphire_reserve.png" },
-  { name: "Capital One", logo: "/assets/cards/venture_x.avif" },
-  { name: "Citi", logo: "/assets/cards/citi_prestige.jpeg" },
-];
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.2,
-    },
-  },
-};
-
-const itemVariants = {
-  hidden: { 
-    opacity: 0,
-    y: 20,
-  },
-  visible: { 
-    opacity: 1,
-    y: 0,
-    transition: {
-      duration: 0.6,
-    },
-  },
-};
 
 export function SocialProof() {
   return (
-    <div className="container px-4 mx-auto">
-      {/* Stats Grid */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        className="grid md:grid-cols-3 gap-8 mb-24"
-      >
-        {stats.map((stat) => {
-          const Icon = stat.icon;
-          return (
-            <motion.div
-              key={stat.label}
-              variants={itemVariants}
-              className="relative group"
-            >
-              <div className="flex flex-col items-center text-center p-8 rounded-2xl bg-white shadow-sm hover:shadow-md transition-shadow duration-300">
-                <div className={`w-12 h-12 rounded-xl bg-gray-50 ${stat.color} flex items-center justify-center mb-6`}>
-                  <Icon size={24} />
-                </div>
-                <div className="text-4xl font-bold mb-2">{stat.value}</div>
-                <div className="font-medium text-gray-900 mb-2">{stat.label}</div>
-                <div className="text-gray-600">{stat.description}</div>
-              </div>
-            </motion.div>
-          );
-        })}
-      </motion.div>
+    <section className="py-12 lg:py-24 overflow-hidden">
+      <div className="container px-4 mx-auto">
+        <ScrollReveal>
+          <Text variant="h2" as="h2" className="text-center mb-4">
+            We Support All Major Premium Cards
+          </Text>
+          <Text variant="subtitle" className="text-center mb-12 max-w-2xl mx-auto">
+            From travel rewards to cash back, we help you maximize the value of your premium credit cards.
+          </Text>
+        </ScrollReveal>
 
-      {/* Card Issuers */}
-      <div className="text-center">
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-gray-600 mb-8"
-        >
-          Trusted by cardholders from leading issuers
-        </motion.p>
-
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="flex flex-wrap justify-center items-center gap-12"
-        >
-          {cardIssuers.map((issuer) => (
+        <ScrollRevealList className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 items-center">
+          {CARD_LOGOS.map((card, index) => (
             <motion.div
-              key={issuer.name}
-              variants={itemVariants}
-              className="relative w-24 h-12"
+              key={card.alt}
+              whileHover={{ scale: 1.05 }}
+              className="relative aspect-[1.586/1] w-full"
             >
-              <BlurImage
-                src={issuer.logo}
-                alt={issuer.name}
-                width={96}
-                height={48}
-                className="object-contain w-full h-full grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
-              />
+              <Glass variant="light" className="absolute inset-0 rounded-xl">
+                <BlurImage
+                  src={card.src}
+                  alt={card.alt}
+                  width={200}
+                  height={126}
+                  className="w-full h-full object-contain p-4"
+                />
+              </Glass>
             </motion.div>
           ))}
-        </motion.div>
+        </ScrollRevealList>
+
+        <ScrollReveal>
+          <div className="mt-12 text-center">
+            <Text variant="small" className="text-gray-500">
+              And many more premium cards from American Express, Chase, Capital One, and other major issuers.
+            </Text>
+          </div>
+        </ScrollReveal>
       </div>
-    </div>
+    </section>
   );
 } 
