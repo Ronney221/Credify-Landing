@@ -1,5 +1,4 @@
-import { Link } from "react-router-dom";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 
 interface FooterProps {
   className?: string;
@@ -12,21 +11,21 @@ export function Footer({ className }: FooterProps) {
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
           <div className="flex flex-col space-y-4">
             <h3 className="text-lg font-semibold">Product</h3>
-            <Link to="/features" className="text-muted-foreground hover:text-foreground">Features</Link>
-            <Link to="/pricing" className="text-muted-foreground hover:text-foreground">Pricing</Link>
-            <Link to="/waitlist" className="text-muted-foreground hover:text-foreground">Join Waitlist</Link>
+            <a href="#features" className="text-muted-foreground hover:text-foreground">Features</a>
+            <a href="#pricing" className="text-muted-foreground hover:text-foreground">Pricing</a>
+            <a href="#waitlist" className="text-muted-foreground hover:text-foreground">Join Waitlist</a>
           </div>
           <div className="flex flex-col space-y-4">
             <h3 className="text-lg font-semibold">Company</h3>
-            <Link to="/about" className="text-muted-foreground hover:text-foreground">About</Link>
-            <Link to="/blog" className="text-muted-foreground hover:text-foreground">Blog</Link>
-            <Link to="/careers" className="text-muted-foreground hover:text-foreground">Careers</Link>
+            <a href="#about" className="text-muted-foreground hover:text-foreground">About</a>
+            <a href="#blog" className="text-muted-foreground hover:text-foreground">Blog</a>
+            <a href="#careers" className="text-muted-foreground hover:text-foreground">Careers</a>
           </div>
           <div className="flex flex-col space-y-4">
             <h3 className="text-lg font-semibold">Resources</h3>
-            <Link to="/help" className="text-muted-foreground hover:text-foreground">Help Center</Link>
-            <Link to="/terms" className="text-muted-foreground hover:text-foreground">Terms of Service</Link>
-            <Link to="/privacy" className="text-muted-foreground hover:text-foreground">Privacy Policy</Link>
+            <a href="#help" className="text-muted-foreground hover:text-foreground">Help Center</a>
+            <a href="#terms" className="text-muted-foreground hover:text-foreground">Terms of Service</a>
+            <a href="#privacy" className="text-muted-foreground hover:text-foreground">Privacy Policy</a>
           </div>
           <div className="flex flex-col space-y-4">
             <h3 className="text-lg font-semibold">Connect</h3>

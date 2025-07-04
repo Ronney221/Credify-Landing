@@ -9,12 +9,12 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
-          className="mb-8"
+          className="mb-12"
         >
           <img 
             src="/assets/logo/icon.png" 
             alt="Credify" 
-            className="h-20 w-20 mx-auto mb-6"
+            className="h-32 w-32 md:h-48 md:w-48 mx-auto mb-8"
           />
         </motion.div>
         

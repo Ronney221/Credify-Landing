@@ -1,7 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
+ 
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -29,6 +29,7 @@
     --brand-navy: 212 100% 13%;
     --brand-coral: 5 100% 69%;
   }
+ 
   .dark {
     --background: 212 100% 13%;
     --foreground: 0 0% 100%;
@@ -52,6 +53,16 @@
   }
 }
 
+@layer utilities {
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+ 
 @layer base {
   * {
     @apply border-border;
