@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 212 100% 13%; /* Our brand navy */
+    --card: 0 0% 100%;
+    --card-foreground: 212 100% 13%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 212 100% 13%;
+    --primary: 212 100% 13%; /* Brand navy #002043 */
+    --primary-foreground: 0 0% 100%;
+    --secondary: 60 4.8% 95.9%;
+    --secondary-foreground: 212 100% 13%;
+    --muted: 60 4.8% 95.9%;
+    --muted-foreground: 25 5.3% 44.7%;
+    --accent: 5 100% 69%; /* Brand coral #FF6F61 */
+    --accent-foreground: 212 100% 13%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 20 5.9% 90%;
+    --input: 20 5.9% 90%;
+    --ring: 212 100% 13%;
+    --radius: 0.75rem; /* Increased for modern look */
+    
+    /* Brand-specific colors */
+    --brand-navy: 212 100% 13%;
+    --brand-coral: 5 100% 69%;
+  }
+  .dark {
+    --background: 212 100% 13%;
+    --foreground: 0 0% 100%;
+    --card: 212 100% 13%;
+    --card-foreground: 0 0% 100%;
+    --popover: 212 100% 13%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 0 0% 100%;
+    --primary-foreground: 212 100% 13%;
+    --secondary: 212 90% 20%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 212 90% 20%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 5 100% 69%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 212 90% 20%;
+    --input: 212 90% 20%;
+    --ring: 0 0% 100%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-sans;
+  }
+}
+
+/* Custom font configuration */
+@font-face {
+  font-family: 'SF Pro Display';
+  src: local('SF Pro Display');
+  font-weight: 400 700;
+  font-style: normal;
+}
