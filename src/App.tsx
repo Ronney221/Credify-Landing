@@ -1,10 +1,56 @@
+import { BrowserRouter as Router } from "react-router-dom";
+import { RootLayout } from "@/components/layout/RootLayout";
 
 export default function App() {
   return (
-    <main className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-16 flex items-center justify-center">
-        <p className="text-2xl font-bold text-foreground">Hello World</p>
-      </div>
-    </main>
+    <Router>
+      <RootLayout>
+        <section id="hero" className="min-h-[80vh] flex items-center justify-center bg-gradient-to-b from-background to-background/80">
+          <div className="container px-4 py-16 text-center">
+            <h1 className="text-4xl md:text-6xl font-bold mb-6">Stop leaving money on the table.</h1>
+            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
+              Credify is the ultimate app for tracking, managing, and maximizing your credit-card benefits, 
+              ensuring you get every dollar of value from your annual fees.
+            </p>
+            {/* Waitlist form will go here */}
+          </div>
+        </section>
+
+        <section id="features" className="py-16 bg-muted/50">
+          <div className="container px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">Core Benefits</h2>
+            {/* Features grid will go here */}
+          </div>
+        </section>
+
+        <section id="ai-assistant" className="py-16">
+          <div className="container px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">AI-Powered Insights</h2>
+            {/* AI assistant preview will go here */}
+          </div>
+        </section>
+
+        <section id="cards" className="py-16 bg-muted/50">
+          <div className="container px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">Supported Cards</h2>
+            {/* Card showcase will go here */}
+          </div>
+        </section>
+
+        <section id="testimonials" className="py-16">
+          <div className="container px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">What Users Say</h2>
+            {/* Testimonials will go here */}
+          </div>
+        </section>
+
+        <section id="faq" className="py-16 bg-muted/50">
+          <div className="container px-4">
+            <h2 className="text-3xl font-bold text-center mb-12">Frequently Asked Questions</h2>
+            {/* FAQ accordion will go here */}
+          </div>
+        </section>
+      </RootLayout>
+    </Router>
   );
 }
