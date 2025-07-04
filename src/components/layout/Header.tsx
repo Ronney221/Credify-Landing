@@ -1,70 +1,81 @@
-import { Home, LayoutGrid, Mail, Menu } from "lucide-react";
-import { Button } from "../../components/ui/button";
+import { Menu } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import {
   Sheet,
   SheetContent,
   SheetHeader,
   SheetTitle,
-  SheetTrigger,
-} from "../../components/ui/sheet";
+  SheetTrigger
+} from "@/components/ui/sheet";
+import { useScrollTo } from "@/hooks/useScrollTo";
+
+const navigation = [
+  { name: "Features", id: "features" },
+  { name: "AI Assistant", id: "ai-assistant" },
+  { name: "Cards", id: "cards" },
+  { name: "FAQ", id: "faq" }
+];
 
 export function Header() {
+  const scrollTo = useScrollTo();
+
   return (
-    <>
-      {/* Top Header - Hidden on Mobile */}
-      <header className="sticky top-0 z-50 hidden md:block w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-        <div className="container flex h-16 items-center">
-          <div className="mr-4 flex items-center space-x-2">
+    <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b">
+      <div className="container flex h-16 items-center justify-between">
+        <div className="flex items-center gap-6">
+          <a href="/" className="flex items-center gap-2">
             <img src="/assets/logo/icon.png" alt="Credify" className="h-8 w-8" />
-            <span className="text-xl font-bold">Credify</span>
-          </div>
-          <nav className="ml-auto flex gap-4">
-            <a href="#home" className="text-muted-foreground hover:text-foreground">Home</a>
-            <a href="#features" className="text-muted-foreground hover:text-foreground">Features</a>
-            <a href="#pricing" className="text-muted-foreground hover:text-foreground">Pricing</a>
-            <Button asChild>
-              <a href="#waitlist">Join Waitlist</a>
-            </Button>
+            <img src="/assets/logo/logo_text.png" alt="" className="h-6" />
+          </a>
+          <nav className="hidden md:flex items-center gap-6">
+            {navigation.map((item) => (
+              <button
+                key={item.name}
+                onClick={() => scrollTo(item.id)}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              >
+                {item.name}
+              </button>
+            ))}
           </nav>
         </div>
-      </header>
 
-      {/* Mobile Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 z-50 w-full border-t bg-background md:hidden">
-        <div className="grid h-16 grid-cols-4">
-          <a href="#home" className="flex flex-col items-center justify-center">
-            <Home className="h-5 w-5" />
-            <span className="text-xs">Home</span>
-          </a>
-          <a href="#features" className="flex flex-col items-center justify-center">
-            <LayoutGrid className="h-5 w-5" />
-            <span className="text-xs">Features</span>
-          </a>
-          <a href="#waitlist" className="flex flex-col items-center justify-center">
-            <Mail className="h-5 w-5" />
-            <span className="text-xs">Waitlist</span>
-          </a>
+        <div className="flex items-center gap-4">
+          <Button variant="default" onClick={() => scrollTo("waitlist")}>
+            Join Waitlist
+          </Button>
           <Sheet>
-            <SheetTrigger asChild>
-              <button className="flex flex-col items-center justify-center w-full">
-                <Menu className="h-5 w-5" />
-                <span className="text-xs">Menu</span>
-              </button>
+            <SheetTrigger asChild className="md:hidden">
+              <Button variant="ghost" size="icon">
+                <Menu className="h-6 w-6" />
+                <span className="sr-only">Toggle menu</span>
+              </Button>
             </SheetTrigger>
             <SheetContent>
               <SheetHeader>
-                <SheetTitle>Menu</SheetTitle>
+                <SheetTitle>Navigation</SheetTitle>
               </SheetHeader>
-              <nav className="flex flex-col gap-4 mt-8">
-                <a href="#about" className="text-lg">About</a>
-                <a href="#pricing" className="text-lg">Pricing</a>
-                <a href="#blog" className="text-lg">Blog</a>
-                <a href="#help" className="text-lg">Help</a>
-              </nav>
+              <div className="flex flex-col gap-4 mt-8">
+                {navigation.map((item) => (
+                  <button
+                    key={item.name}
+                    onClick={() => {
+                      scrollTo(item.id);
+                      const closeButton = document.querySelector('[data-radix-collection-item]');
+                      if (closeButton instanceof HTMLElement) {
+                        closeButton.click();
+                      }
+                    }}
+                    className="text-left py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {item.name}
+                  </button>
+                ))}
+              </div>
             </SheetContent>
           </Sheet>
         </div>
       </div>
-    </>
+    </header>
   );
 } 

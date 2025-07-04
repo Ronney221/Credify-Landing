@@ -1,44 +1,89 @@
-import { cn } from "../../lib/utils";
+import { Github, Twitter, Linkedin } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface FooterProps {
   className?: string;
 }
 
+const socialLinks = [
+  {
+    name: "Twitter",
+    href: "https://twitter.com/credifyapp",
+    icon: Twitter
+  },
+  {
+    name: "GitHub",
+    href: "https://github.com/credifyapp",
+    icon: Github
+  },
+  {
+    name: "LinkedIn",
+    href: "https://linkedin.com/company/credifyapp",
+    icon: Linkedin
+  }
+];
+
+const legalLinks = [
+  {
+    name: "Privacy Policy",
+    href: "/privacy"
+  },
+  {
+    name: "Terms of Service",
+    href: "/terms"
+  },
+  {
+    name: "Contact",
+    href: "mailto:hello@getcredify.app"
+  }
+];
+
 export function Footer({ className }: FooterProps) {
   return (
-    <footer className={cn("border-t bg-background", className)}>
-      <div className="container py-8 md:py-12">
-        <div className="grid grid-cols-2 gap-8 md:grid-cols-4">
-          <div className="flex flex-col space-y-4">
-            <h3 className="text-lg font-semibold">Product</h3>
-            <a href="#features" className="text-muted-foreground hover:text-foreground">Features</a>
-            <a href="#pricing" className="text-muted-foreground hover:text-foreground">Pricing</a>
-            <a href="#waitlist" className="text-muted-foreground hover:text-foreground">Join Waitlist</a>
+    <footer className={cn("py-12 bg-slate-900", className)}>
+      <div className="container">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pb-8 border-b border-white/10">
+          <div>
+            <h3 className="font-semibold text-white mb-4">About Credify</h3>
+            <p className="text-sm text-white/60 leading-relaxed">
+              Credify helps you maximize credit card benefits through AI-powered tracking and personalized recommendations.
+            </p>
           </div>
-          <div className="flex flex-col space-y-4">
-            <h3 className="text-lg font-semibold">Company</h3>
-            <a href="#about" className="text-muted-foreground hover:text-foreground">About</a>
-            <a href="#blog" className="text-muted-foreground hover:text-foreground">Blog</a>
-            <a href="#careers" className="text-muted-foreground hover:text-foreground">Careers</a>
+          <div>
+            <h3 className="font-semibold text-white mb-4">Connect</h3>
+            <div className="flex gap-4">
+              {socialLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/60 hover:text-white transition-colors"
+                >
+                  <span className="sr-only">{link.name}</span>
+                  <link.icon className="w-5 h-5" />
+                </a>
+              ))}
+            </div>
           </div>
-          <div className="flex flex-col space-y-4">
-            <h3 className="text-lg font-semibold">Resources</h3>
-            <a href="#help" className="text-muted-foreground hover:text-foreground">Help Center</a>
-            <a href="#terms" className="text-muted-foreground hover:text-foreground">Terms of Service</a>
-            <a href="#privacy" className="text-muted-foreground hover:text-foreground">Privacy Policy</a>
-          </div>
-          <div className="flex flex-col space-y-4">
-            <h3 className="text-lg font-semibold">Connect</h3>
-            <a href="https://twitter.com/credifyapp" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">Twitter</a>
-            <a href="https://linkedin.com/company/credifyapp" target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground">LinkedIn</a>
-            <a href="mailto:hello@credify.app" className="text-muted-foreground hover:text-foreground">Contact</a>
+          <div>
+            <h3 className="font-semibold text-white mb-4">Legal</h3>
+            <ul className="space-y-2">
+              {legalLinks.map((link) => (
+                <li key={link.name}>
+                  <a
+                    href={link.href}
+                    className="text-sm text-white/60 hover:text-white transition-colors"
+                  >
+                    {link.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
-        <div className="mt-8 flex items-center justify-between border-t pt-8">
-          <div className="flex items-center space-x-2">
-            <img src="/assets/logo/icon.png" alt="Credify" className="h-6 w-6" />
-            <span className="text-sm text-muted-foreground">© 2024 Credify. All rights reserved.</span>
-          </div>
+        <div className="pt-8 text-center text-sm text-white/40">
+          <p>© {new Date().getFullYear()} Credify. All rights reserved.</p>
         </div>
       </div>
     </footer>
