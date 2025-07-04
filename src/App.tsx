@@ -1,32 +1,41 @@
-import { RootLayout } from "./components/layout/RootLayout";
+import { RootLayout } from "./components/RootLayout";
 import { Hero } from "./components/sections/Hero";
 import { Features } from "./components/sections/Features";
-import { AIAssistant } from "./components/sections/AIAssistant";
+import { ScreenshotShowcase } from "./components/sections/ScreenshotShowcase";
 import { CardShowcase } from "./components/sections/CardShowcase";
-import { Testimonials } from "./components/sections/Testimonials";
-import { SocialProof } from "./components/sections/SocialProof";
 import { FAQ } from "./components/sections/FAQ";
+import { Footer } from "./components/Footer";
 
-export default function App() {
+export function App() {
   return (
     <RootLayout>
-      <div id="hero">
-        <Hero />
-      </div>
-      <SocialProof />
-      <div id="features">
-        <Features />
-      </div>
-      <div id="ai-assistant">
-        <AIAssistant />
-      </div>
-      <div id="cards">
-        <CardShowcase />
-      </div>
-      <Testimonials />
-      <div id="faq">
-        <FAQ />
-      </div>
+      <main className="flex-1">
+        {/* Hero Section */}
+        <section className="pt-32 pb-24 bg-white">
+          <Hero />
+        </section>
+
+        {/* Card Showcase */}
+        <section className="py-24 bg-gray-50">
+          <CardShowcase />
+        </section>
+
+        {/* Screenshot Showcase */}
+        <section className="py-24 bg-white">
+          <ScreenshotShowcase />
+        </section>
+
+        {/* Features Section */}
+        <section className="py-24 bg-gray-50">
+          <Features />
+        </section>
+
+        {/* FAQ Section */}
+        <section className="py-24 bg-white">
+          <FAQ />
+        </section>
+      </main>
+      <Footer />
     </RootLayout>
   );
 }

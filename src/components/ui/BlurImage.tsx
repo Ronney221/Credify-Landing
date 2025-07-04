@@ -4,31 +4,28 @@ import { motion } from "framer-motion";
 interface BlurImageProps {
   src: string;
   alt: string;
-  width: number;
-  height: number;
+  width?: number;
+  height?: number;
+  fill?: boolean;
   className?: string;
-  priority?: boolean;
 }
 
-export function BlurImage({ src, alt, width, height, className = "", priority = false }: BlurImageProps) {
+export function BlurImage({ src, alt, width, height, fill, className = "" }: BlurImageProps) {
   const [isLoading, setLoading] = useState(true);
 
   return (
-    <motion.div
-      initial={{ filter: "blur(20px)" }}
-      animate={{ filter: isLoading ? "blur(20px)" : "blur(0px)" }}
-      transition={{ duration: 0.3, ease: "easeOut" }}
-      className={className}
-    >
-      <img
-        src={src}
-        alt={alt}
-        width={width}
-        height={height}
-        onLoad={() => setLoading(false)}
-        loading={priority ? "eager" : "lazy"}
-        className={`duration-700 ease-in-out ${className}`}
-      />
-    </motion.div>
+    <motion.img
+      src={src}
+      alt={alt}
+      width={fill ? undefined : width}
+      height={fill ? undefined : height}
+      className={`
+        duration-700 ease-in-out
+        ${isLoading ? "scale-105 blur-lg" : "scale-100 blur-0"}
+        ${fill ? "absolute inset-0 w-full h-full" : ""}
+        ${className}
+      `}
+      onLoad={() => setLoading(false)}
+    />
   );
 } 

@@ -139,7 +139,7 @@ export function ScreenshotCarousel() {
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.5 }}
-            className="absolute -left-16 top-1/4 bg-white rounded-xl shadow-lg p-4"
+            className="absolute -left-24 md:-left-32 top-1/4 bg-white rounded-xl shadow-lg p-4 hidden sm:block"
           >
             <div className="text-sm font-medium">Active Benefits</div>
             <div className="text-2xl font-bold text-brand">12</div>
@@ -149,7 +149,7 @@ export function ScreenshotCarousel() {
             initial={{ opacity: 0, x: 20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.7 }}
-            className="absolute -right-16 bottom-1/4 bg-white rounded-xl shadow-lg p-4"
+            className="absolute -right-24 md:-right-32 bottom-1/4 bg-white rounded-xl shadow-lg p-4 hidden sm:block"
           >
             <div className="text-sm font-medium">Monthly Savings</div>
             <div className="text-2xl font-bold text-green-500">$324</div>

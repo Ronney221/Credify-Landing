@@ -33,51 +33,82 @@ const faqs = [
   }
 ];
 
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.1,
+    },
+  },
+};
+
+const itemVariants = {
+  hidden: { 
+    opacity: 0,
+    y: 20,
+  },
+  visible: { 
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.5,
+    },
+  },
+};
+
 export function FAQ() {
   return (
-    <section className="py-24 bg-gradient-to-b from-slate-900 to-slate-800">
-      <div className="container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-white to-white/60 bg-clip-text text-transparent">
+    <div className="container px-4 mx-auto">
+      <div className="max-w-3xl mx-auto">
+        {/* Section Header */}
+        <div className="text-center mb-12">
+          <motion.h2
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-4xl font-bold mb-4"
+          >
             Frequently Asked Questions
-          </h2>
-          <p className="text-lg text-white/60 max-w-2xl mx-auto">
-            Everything you need to know about Credify and how it works.
-          </p>
-        </motion.div>
+          </motion.h2>
+          <motion.p
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="text-xl text-gray-600"
+          >
+            Everything you need to know about Credify
+          </motion.p>
+        </div>
 
-        <div className="max-w-3xl mx-auto">
-          <Accordion type="single" collapsible className="space-y-4">
+        {/* FAQ Accordion */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          className="space-y-4"
+        >
+          <Accordion type="single" collapsible>
             {faqs.map((faq, index) => (
               <motion.div
                 key={index}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                variants={itemVariants}
               >
-                <AccordionItem
-                  value={`item-${index}`}
-                  className="border border-white/10 rounded-lg overflow-hidden bg-white/5 backdrop-blur-sm"
-                >
-                  <AccordionTrigger className="px-6 text-white hover:text-white/90 hover:no-underline">
+                <AccordionItem value={`item-${index}`}>
+                  <AccordionTrigger className="text-left hover:no-underline">
                     {faq.question}
                   </AccordionTrigger>
-                  <AccordionContent className="px-6 pb-6 text-white/70">
+                  <AccordionContent className="text-gray-600">
                     {faq.answer}
                   </AccordionContent>
                 </AccordionItem>
               </motion.div>
             ))}
           </Accordion>
-        </div>
+        </motion.div>
       </div>
-    </section>
+    </div>
   );
 } 
