@@ -1,21 +1,13 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import { RootLayout } from "@/components/layout/RootLayout";
+import { Hero } from "@/components/sections/Hero";
 
 export default function App() {
   return (
     <Router>
       <RootLayout>
-        <section id="hero" className="min-h-[80vh] flex items-center justify-center bg-gradient-to-b from-background to-background/80">
-          <div className="container px-4 py-16 text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">Stop leaving money on the table.</h1>
-            <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Credify is the ultimate app for tracking, managing, and maximizing your credit-card benefits, 
-              ensuring you get every dollar of value from your annual fees.
-            </p>
-            {/* Waitlist form will go here */}
-          </div>
-        </section>
-
+        <Hero />
+        
         <section id="features" className="py-16 bg-muted/50">
           <div className="container px-4">
             <h2 className="text-3xl font-bold text-center mb-12">Core Benefits</h2>
