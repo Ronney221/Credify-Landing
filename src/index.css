@@ -77,3 +77,22 @@
   font-weight: 400 700;
   font-style: normal;
 }
+
+:root {
+  scroll-behavior: smooth;
+}
+
+html {
+  @apply antialiased;
+  scroll-behavior: smooth;
+}
+
+/* Enable smooth scrolling for elements that can scroll */
+* {
+  scroll-behavior: smooth;
+}
+
+/* Optional: Add momentum-based scrolling for iOS devices */
+body {
+  -webkit-overflow-scrolling: touch;
+}

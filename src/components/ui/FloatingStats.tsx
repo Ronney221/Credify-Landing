@@ -1,4 +1,4 @@
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { useRef } from "react";
 
 export const allStats = [
@@ -80,9 +80,18 @@ interface FloatingStatsProps {
 
 export function FloatingStats({ count = 3, className = "", startIndex = 0 }: FloatingStatsProps) {
   const containerRef = useRef<HTMLDivElement>(null);
+  
+  // Use smoother scroll progress
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
+  });
+
+  // Create a smoothed version of the scroll progress
+  const smoothProgress = useSpring(scrollYProgress, {
+    stiffness: 100,
+    damping: 30,
+    restDelta: 0.001
   });
 
   // Take a slice of stats based on count and startIndex
@@ -91,27 +100,49 @@ export function FloatingStats({ count = 3, className = "", startIndex = 0 }: Flo
   return (
     <div className={`relative ${className}`} ref={containerRef}>
       {stats.map((stat, index) => {
-        // Create unique scroll-based animations for each stat
+        // Create smooth transform values
         const y = useTransform(
-          scrollYProgress,
+          smoothProgress,
           [0, 1],
           [0, (index % 2 === 0 ? 100 : -100) * (1 + index * 0.2)]
         );
+        
         const x = useTransform(
-          scrollYProgress,
+          smoothProgress,
           [0, 1],
           [0, (index % 3 === 0 ? 50 : index % 3 === 1 ? -50 : 0) * (1 + index * 0.1)]
+        );
+
+        // Create smooth opacity
+        const opacity = useTransform(
+          smoothProgress,
+          [0, 0.2, 0.8, 1],
+          [0.3, 1, 1, 0.3]
+        );
+
+        // Create smooth scale
+        const scale = useTransform(
+          smoothProgress,
+          [0, 0.2, 0.8, 1],
+          [0.8, 1, 1, 0.8]
         );
 
         return (
           <motion.div
             key={stat.label}
-            style={{ y, x }}
+            style={{ 
+              y,
+              x,
+              opacity,
+              scale
+            }}
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{
-              delay: 0.2 + index * 0.1,
-              duration: 0.5,
+              type: "spring",
+              stiffness: 100,
+              damping: 30,
+              mass: 1
             }}
             className={`absolute bg-white rounded-xl shadow-lg p-4 backdrop-blur-sm bg-white/90
               ${index % 3 === 0 ? 'left-0' : ''}
@@ -121,6 +152,7 @@ export function FloatingStats({ count = 3, className = "", startIndex = 0 }: Flo
               ${index >= 3 && index < 6 ? 'top-1/2 -translate-y-1/2' : ''}
               ${index >= 6 ? 'bottom-0' : ''}
               hover:scale-105 transition-transform duration-300
+              will-change-transform
             `}
           >
             {stat.type === "notification" ? (
