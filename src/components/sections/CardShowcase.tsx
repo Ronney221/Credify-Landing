@@ -1,8 +1,7 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { BlurImage } from "../ui/BlurImage";
-import { Button } from "../ui/button";
-import { useRef, useState } from "react";
-import { ChevronLeft, ChevronRight, CreditCard, Gift, Plane, Shield } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import { CreditCard, Gift, Plane, Shield } from "lucide-react";
 
 const cards = [
   {
@@ -57,25 +56,75 @@ const cards = [
     ],
     color: "bg-gradient-to-br from-yellow-600 to-yellow-800",
   },
+  {
+    name: "Hilton Honors Aspire",
+    image: "/assets/cards/hilton_aspire.avif",
+    annualFee: "$450",
+    category: "Hotel",
+    keyBenefits: [
+      { icon: Gift, text: "$250 Resort Credit" },
+      { icon: CreditCard, text: "14x at Hilton" },
+      { icon: Shield, text: "Diamond Status" },
+      { icon: Plane, text: "Free Night Award" },
+    ],
+    color: "bg-gradient-to-br from-blue-600 to-blue-800",
+  },
+  {
+    name: "Marriott Bonvoy Brilliant",
+    image: "/assets/cards/marriott_bonvoy_brilliant.avif",
+    annualFee: "$650",
+    category: "Hotel",
+    keyBenefits: [
+      { icon: Gift, text: "$300 Dining Credit" },
+      { icon: CreditCard, text: "6x at Marriott" },
+      { icon: Shield, text: "Platinum Status" },
+      { icon: Plane, text: "85K Free Night" },
+    ],
+    color: "bg-gradient-to-br from-red-700 to-red-900",
+  },
 ];
 
 export function CardShowcase() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [selectedCard, setSelectedCard] = useState<number | null>(null);
+  const [autoScrollEnabled, setAutoScrollEnabled] = useState(true);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start end", "end start"],
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8]);
+  const scale = useTransform(scrollYProgress, [0, 0.3], [0.9, 1]);
+  const opacity = useTransform(scrollYProgress, [0, 0.3], [0.5, 1]);
 
-  const scroll = (direction: "left" | "right") => {
-    if (containerRef.current) {
-      const scrollAmount = direction === "left" ? -400 : 400;
-      containerRef.current.scrollBy({ left: scrollAmount, behavior: "smooth" });
-    }
-  };
+  useEffect(() => {
+    if (!autoScrollEnabled || !containerRef.current) return;
+
+    const scrollContainer = containerRef.current.querySelector('.cards-container');
+    if (!scrollContainer) return;
+
+    let animationFrameId: number;
+    let startTime: number;
+    const duration = 30000; // 30 seconds for one complete scroll
+
+    const animate = (timestamp: number) => {
+      if (!startTime) startTime = timestamp;
+      const elapsed = timestamp - startTime;
+      const progress = (elapsed % duration) / duration;
+      
+      const totalWidth = scrollContainer.scrollWidth - scrollContainer.clientWidth;
+      scrollContainer.scrollLeft = totalWidth * progress;
+
+      animationFrameId = requestAnimationFrame(animate);
+    };
+
+    animationFrameId = requestAnimationFrame(animate);
+
+    return () => {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
+      }
+    };
+  }, [autoScrollEnabled]);
 
   return (
     <section className="py-24 bg-gray-50 relative overflow-hidden" ref={containerRef}>
@@ -121,97 +170,89 @@ export function CardShowcase() {
         </div>
 
         {/* Cards Carousel */}
-        <div className="relative">
-          <div className="absolute left-0 top-1/2 -translate-y-1/2 z-10">
-            <Button
-              variant="outline"
-              size="icon"
-              className="rounded-full shadow-lg"
-              onClick={() => scroll("left")}
-            >
-              <ChevronLeft className="h-4 w-4" />
-            </Button>
-          </div>
-
-          <div className="absolute right-0 top-1/2 -translate-y-1/2 z-10">
-            <Button
-              variant="outline"
-              size="icon"
-              className="rounded-full shadow-lg"
-              onClick={() => scroll("right")}
-            >
-              <ChevronRight className="h-4 w-4" />
-            </Button>
-          </div>
-
-          <div className="overflow-x-auto hide-scrollbar">
-            <div className="flex gap-6 pb-8 px-4 min-w-max">
-              {cards.map((card, index) => (
-                <motion.div
-                  key={card.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: index * 0.1 }}
-                  className="relative group"
-                  onMouseEnter={() => setSelectedCard(index)}
-                  onMouseLeave={() => setSelectedCard(null)}
-                >
-                  <div className={`w-[300px] rounded-2xl p-6 ${card.color} relative overflow-hidden`}>
-                    {/* Card Image */}
-                    <div className="relative aspect-[1.586/1] mb-4 transform group-hover:scale-105 transition-transform duration-300">
-                      <BlurImage
-                        src={card.image}
-                        alt={card.name}
-                        width={300}
-                        height={189}
-                        className="rounded-xl shadow-lg"
-                      />
-                    </div>
-
-                    {/* Card Details */}
-                    <div className="text-white">
-                      <h3 className="text-lg font-semibold mb-1">{card.name}</h3>
-                      <div className="flex items-center gap-2 mb-4">
-                        <span className="text-sm opacity-80">{card.category}</span>
-                        <span className="w-1 h-1 rounded-full bg-white/50" />
-                        <span className="text-sm opacity-80">{card.annualFee}/year</span>
-                      </div>
-
-                      {/* Benefits */}
-                      <div className="space-y-2">
-                        {card.keyBenefits.map((benefit, i) => {
-                          const Icon = benefit.icon;
-                          return (
-                            <div
-                              key={i}
-                              className="flex items-center gap-2 text-sm"
-                            >
-                              <Icon className="w-4 h-4 opacity-75" />
-                              <span>{benefit.text}</span>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-
-                    {/* Hover Effect */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div 
+          className="cards-container overflow-x-auto hide-scrollbar"
+          onMouseEnter={() => setAutoScrollEnabled(false)}
+          onMouseLeave={() => setAutoScrollEnabled(true)}
+        >
+          <div className="flex gap-6 pb-8 px-4 min-w-max">
+            {cards.map((card, index) => (
+              <motion.div
+                key={card.name}
+                initial="hidden"
+                whileInView="show"
+                viewport={{ once: true, margin: "-100px" }}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  show: {
+                    opacity: 1,
+                    y: 0,
+                    transition: {
+                      type: "spring",
+                      stiffness: 100,
+                      damping: 20,
+                      delay: index * 0.1,
+                    },
+                  },
+                }}
+                className="relative group"
+                onMouseEnter={() => setSelectedCard(index)}
+                onMouseLeave={() => setSelectedCard(null)}
+              >
+                <div className={`w-[300px] rounded-2xl p-6 ${card.color} relative overflow-hidden`}>
+                  {/* Card Image */}
+                  <div className="relative aspect-[1.586/1] mb-4 transform group-hover:scale-105 transition-transform duration-300">
+                    <BlurImage
+                      src={card.image}
+                      alt={card.name}
+                      width={300}
+                      height={189}
+                      className="rounded-xl shadow-lg"
+                    />
                   </div>
 
-                  {/* Selection Indicator */}
-                  <motion.div
-                    className="absolute -bottom-2 left-1/2 w-12 h-1 bg-brand rounded-full -translate-x-1/2"
-                    initial={{ opacity: 0, scale: 0 }}
-                    animate={{ 
-                      opacity: selectedCard === index ? 1 : 0,
-                      scale: selectedCard === index ? 1 : 0,
-                    }}
-                    transition={{ duration: 0.2 }}
-                  />
-                </motion.div>
-              ))}
-            </div>
+                  {/* Card Details */}
+                  <div className="text-white">
+                    <h3 className="text-lg font-semibold mb-1">{card.name}</h3>
+                    <div className="flex items-center gap-2 mb-4">
+                      <span className="text-sm opacity-80">{card.category}</span>
+                      <span className="w-1 h-1 rounded-full bg-white/50" />
+                      <span className="text-sm opacity-80">{card.annualFee}/year</span>
+                    </div>
+
+                    {/* Benefits */}
+                    <div className="space-y-2">
+                      {card.keyBenefits.map((benefit, i) => {
+                        const Icon = benefit.icon;
+                        return (
+                          <div
+                            key={i}
+                            className="flex items-center gap-2 text-sm"
+                          >
+                            <Icon className="w-4 h-4 opacity-75" />
+                            <span>{benefit.text}</span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+
+                  {/* Hover Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                </div>
+
+                {/* Selection Indicator */}
+                <motion.div
+                  className="absolute -bottom-2 left-1/2 w-12 h-1 bg-brand rounded-full -translate-x-1/2"
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ 
+                    opacity: selectedCard === index ? 1 : 0,
+                    scale: selectedCard === index ? 1 : 0,
+                  }}
+                  transition={{ duration: 0.2 }}
+                />
+              </motion.div>
+            ))}
           </div>
         </div>
       </motion.div>
