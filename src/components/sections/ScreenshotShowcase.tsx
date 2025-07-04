@@ -1,22 +1,23 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { BlurImage } from "../ui/BlurImage";
 import { useRef } from "react";
+import { FloatingStats } from "../ui/FloatingStats";
 
 const screenshots = [
   {
-    title: "Smart Advice",
-    description: "Ask our AI which card to use",
-    image: "/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 1.png",
+    title: "Your Paycheck",
+    description: "Instantly see your perk value",
+    image: "/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 6.png",
   },
   {
-    title: "Benefit Tracking",
-    description: "Never miss a reward or perk",
-    image: "/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 2.png",
+    title: "Smart Tracking",
+    description: "Never miss a benefit deadline",
+    image: "/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 7.png",
   },
   {
-    title: "Monthly Insights",
-    description: "Track your savings and ROI",
-    image: "/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 3.png",
+    title: "ROI Analysis",
+    description: "Track your card's real value",
+    image: "/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 8.png",
   },
 ];
 
@@ -65,29 +66,13 @@ export function ScreenshotShowcase() {
         className="relative flex justify-center items-center min-h-[600px]"
       >
         {/* Floating Stats */}
-        <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="absolute left-0 top-1/4 bg-white rounded-xl shadow-lg p-4 z-10"
-        >
-          <div className="text-sm font-medium">Active Benefits</div>
-          <div className="text-2xl font-bold text-brand">12</div>
-        </motion.div>
-
-        <motion.div
-          initial={{ opacity: 0, x: 20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          className="absolute right-0 bottom-1/4 bg-white rounded-xl shadow-lg p-4 z-10"
-        >
-          <div className="text-sm font-medium">Monthly Savings</div>
-          <div className="text-2xl font-bold text-green-500">$324</div>
-        </motion.div>
+        <div className="absolute inset-0 pointer-events-none">
+          <FloatingStats count={5} startIndex={3} className="h-full" />
+        </div>
 
         {/* Screenshots */}
         <div className="relative w-full max-w-5xl mx-auto">
-          <div className="grid grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {screenshots.map((screenshot, index) => (
               <motion.div
                 key={screenshot.title}
@@ -102,7 +87,8 @@ export function ScreenshotShowcase() {
                   <BlurImage
                     src={screenshot.image}
                     alt={screenshot.title}
-                    fill
+                    width={375}
+                    height={812}
                     className="object-cover"
                   />
                 </div>

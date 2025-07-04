@@ -1,6 +1,14 @@
 import { motion } from "framer-motion";
 import { BlurImage } from "../ui/BlurImage";
 
+const floatingStats = [
+  { label: "Active Benefits", value: "12", color: "text-brand" },
+  { label: "Monthly Savings", value: "$324", color: "text-green-500" },
+  { label: "Annual ROI", value: "78%", color: "text-blue-500" },
+  { label: "Total Value", value: "$2,314", color: "text-purple-500" },
+  { label: "Cards Tracked", value: "4", color: "text-orange-500" }
+];
+
 export function Hero() {
   return (
     <div className="container px-4 mx-auto">
@@ -34,7 +42,7 @@ export function Hero() {
             <button
               className="px-8 py-3 rounded-lg bg-white border-2 border-brand hover:bg-brand hover:text-white text-gray-900 font-medium shadow-lg transition-all duration-300"
             >
-              Join Waitlist
+              Join Beta Test
             </button>
           </div>
 
@@ -76,41 +84,53 @@ export function Hero() {
         </div>
 
         {/* Right Column - App Preview */}
-        <div className="flex-1">
+        <div className="flex-1 relative">
           <motion.div
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
-            className="relative"
+            className="relative grid grid-cols-2 gap-4 md:gap-6"
           >
             <BlurImage
-              src="/assets/screenshots/preview.png"
-              alt="Credify App Preview"
-              width={375}
-              height={812}
-              className="rounded-3xl shadow-2xl"
+              src="/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 1.png"
+              alt="Credify App Interface"
+              width={280}
+              height={560}
+              className="rounded-3xl shadow-2xl transform -rotate-6"
+            />
+            <BlurImage
+              src="/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 2.png"
+              alt="Credify App Interface"
+              width={280}
+              height={560}
+              className="rounded-3xl shadow-2xl transform rotate-6 translate-y-8"
             />
 
             {/* Floating Stats */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.5 }}
-              className="absolute -left-24 top-1/4 bg-white rounded-xl shadow-lg p-4 hidden lg:block"
-            >
-              <div className="text-sm font-medium">Active Benefits</div>
-              <div className="text-2xl font-bold text-brand">12</div>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.7 }}
-              className="absolute -right-24 bottom-1/4 bg-white rounded-xl shadow-lg p-4 hidden lg:block"
-            >
-              <div className="text-sm font-medium">Monthly Savings</div>
-              <div className="text-2xl font-bold text-green-500">$324</div>
-            </motion.div>
+            {floatingStats.map((stat, index) => (
+              <motion.div
+                key={stat.label}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  delay: 0.5 + index * 0.1,
+                  repeat: Infinity,
+                  repeatType: "reverse",
+                  duration: 2,
+                  repeatDelay: index * 0.5,
+                }}
+                className={`absolute bg-white rounded-xl shadow-lg p-4 hidden lg:block
+                  ${index === 0 ? 'top-0 left-0' : ''}
+                  ${index === 1 ? 'top-1/4 right-0' : ''}
+                  ${index === 2 ? 'bottom-1/4 left-0' : ''}
+                  ${index === 3 ? 'bottom-0 right-0' : ''}
+                  ${index === 4 ? 'top-1/2 left-1/2 -translate-x-1/2' : ''}
+                `}
+              >
+                <div className="text-sm font-medium">{stat.label}</div>
+                <div className={`text-2xl font-bold ${stat.color}`}>{stat.value}</div>
+              </motion.div>
+            ))}
           </motion.div>
         </div>
       </div>
