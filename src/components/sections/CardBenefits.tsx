@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { CreditCard, Gift, Plane, Shield, Utensils, Hotel, Wifi, CreditCard as CardIcon, Zap, ChevronLeft, ChevronRight, Coffee, ShoppingBag, Dumbbell } from "lucide-react";
 import * as React from 'react';
 import { Glass } from "../ui/Gradient";
+import { Text } from "../ui/Text";
+import { fadeIn } from "../../lib/animations";
 
 // Define perk categories and their icons
 const categoryIcons = {
@@ -476,8 +478,38 @@ const cards: Card[] = [
         categories: ["Travel"]
       }
     ]
+  },
+  {
+    name: "Hilton Honors Aspire",
+    image: "/assets/cards/hilton_aspire.avif",
+    annualFee: 450,
+    benefits: []
+  },
+  {
+    name: "Marriott Bonvoy Brilliant",
+    image: "/assets/cards/marriott_bonvoy_brilliant.avif",
+    annualFee: 650,
+    benefits: []
   }
 ];
+
+function PerkIcon({ category }: { category: CategoryIconType }) {
+  const Icon = categoryIcons[category] || CardIcon;
+  return <Icon className="w-5 h-5" />;
+}
+
+const benefitVariants = {
+  hidden: { opacity: 0, x: 20 },
+  visible: (i: number) => ({
+    opacity: 1,
+    x: 0,
+    transition: {
+      delay: i * 0.1,
+      type: "spring",
+      stiffness: 100,
+    },
+  }),
+};
 
 interface InfiniteCardRiverProps {
   cards: Card[];
@@ -513,7 +545,7 @@ function InfiniteCardRiver({ cards, speed = 20, direction = 'left' }: InfiniteCa
   }, [cards]);
 
   const animate = {
-    x: direction === 'left' ? [-containerWidth, 0] : [0, -containerWidth],
+    x: direction === 'left' ? [0, -containerWidth] : [-containerWidth, 0],
     transition: {
       x: {
         duration: isMobile ? containerWidth / (speed * 0.7) : containerWidth / speed, // Slower on mobile
@@ -552,21 +584,13 @@ function InfiniteCardRiver({ cards, speed = 20, direction = 'left' }: InfiniteCa
 }
 
 export function CardBenefits() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [isHovered, setIsHovered] = useState(false);
-  const containerRef = useRef<HTMLDivElement>(null);
+  const [selectedCardIndex, setSelectedCardIndex] = useState(0);
+  const [direction, setDirection] = useState<"left" | "right" | null>(null);
+  const controls = useAnimationControls();
 
-  useEffect(() => {
-    if (isHovered) return;
-    
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => (prev + 1) % cards.length);
-    }, 5000);
-
-    return () => clearInterval(interval);
-  }, [isHovered]);
-
-  const currentCard = cards[currentIndex];
+  const halfIndex = Math.ceil(cards.length / 2);
+  const firstHalfCards = cards.slice(0, halfIndex);
+  const secondHalfCards = cards.slice(halfIndex);
 
   const formatValue = (value: number, period: string) => {
     switch (period) {
@@ -576,8 +600,6 @@ export function CardBenefits() {
         return `$${value}/yr`;
       case "semi_annual":
         return `$${value} (2x/yr)`;
-      case "quarterly":
-        return `$${value}/qtr`;
       default:
         return `$${value}`;
     }
@@ -589,58 +611,147 @@ export function CardBenefits() {
         return value * 12;
       case "semi_annual":
         return value * 2;
-      case "quarterly":
-        return value * 4;
       case "annual":
       default:
         return value;
     }
   };
 
-  const totalAnnualValue = currentCard.benefits.reduce(
-    (sum, perk) => sum + calculateAnnualValue(perk.value, perk.period),
-    0
-  );
+  const totalAnnualValue = cards[selectedCardIndex].benefits.reduce((acc, perk) => {
+    return acc + calculateAnnualValue(perk.value, perk.period);
+  }, 0);
+
+  const handleNext = () => {
+    setDirection("right");
+    setSelectedCardIndex((prev) => (prev + 1) % cards.length);
+  };
+
+  const handlePrev = () => {
+    setDirection("left");
+    setSelectedCardIndex((prev) => (prev - 1 + cards.length) % cards.length);
+  };
+
+  useEffect(() => {
+    controls.start("visible");
+  }, [selectedCardIndex, controls]);
 
   return (
-    <section className="py-8 lg:py-24 overflow-hidden">
+    <section id="cards" className="py-24 bg-gray-50 overflow-hidden">
       <div className="container px-4 mx-auto">
-        <div className="text-center mb-16">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-4"
-          >
-            <span className="inline-block px-4 py-2 rounded-full bg-brand/5 text-brand text-sm font-medium">
-              Premium Benefits
-            </span>
-          </motion.div>
-
-          <motion.h2
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-3xl md:text-4xl font-bold mb-4"
-          >
+        <motion.div
+          variants={fadeIn}
+          initial="hidden"
+          animate="visible"
+          transition={{ duration: 0.5 }}
+          className="text-center mb-16"
+        >
+          <Text variant="h2" as="h2" className="mb-4">
             Maximize Your Card Benefits
-          </motion.h2>
+          </Text>
+          <Text variant="subtitle" className="max-w-3xl mx-auto">
+            Track and optimize your credit card benefits with our smart reminders and insights. We turn complex perks into simple, actionable steps.
+          </Text>
+        </motion.div>
 
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="text-xl text-gray-600 max-w-2xl mx-auto"
-          >
-            Track and optimize your credit card benefits with our smart reminders and insights.
-          </motion.p>
+        <div className="space-y-4 md:space-y-6">
+          <InfiniteCardRiver cards={firstHalfCards} speed={25} direction="left" />
+          <InfiniteCardRiver cards={secondHalfCards} speed={30} direction="right" />
         </div>
 
-        <div className="mt-8 md:mt-12">
-          <InfiniteCardRiver cards={cards} speed={15} direction="left" />
-        </div>
-        <div className="mt-4 md:mt-8">
-          <InfiniteCardRiver cards={cards.slice().reverse()} speed={20} direction="right" />
+        <div className="mt-24 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            {/* Left side: Card Carousel */}
+            <div className="relative h-[250px] sm:h-[300px]">
+              <AnimatePresence initial={false} custom={direction}>
+                <motion.div
+                  key={selectedCardIndex}
+                  className="absolute inset-0 flex items-center justify-center"
+                  custom={direction}
+                  variants={{
+                    enter: (direction) => ({
+                      x: direction === 'right' ? 300 : -300,
+                      opacity: 0,
+                      scale: 0.8
+                    }),
+                    center: {
+                      x: 0,
+                      opacity: 1,
+                      scale: 1,
+                      transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] }
+                    },
+                    exit: (direction) => ({
+                      x: direction === 'right' ? -300 : 300,
+                      opacity: 0,
+                      scale: 0.8,
+                      transition: { duration: 0.4, ease: [0.4, 0, 0.2, 1] }
+                    })
+                  }}
+                  initial="enter"
+                  animate="center"
+                  exit="exit"
+                >
+                  <Glass variant="light" className="rounded-2xl p-4">
+                    <BlurImage
+                      src={cards[selectedCardIndex].image}
+                      alt={cards[selectedCardIndex].name}
+                      width={400}
+                      height={252}
+                      className="w-full h-full object-contain"
+                    />
+                  </Glass>
+                </motion.div>
+              </AnimatePresence>
+              <button onClick={handlePrev} className="absolute left-0 top-1/2 -translate-y-1/2 bg-white/50 backdrop-blur-sm rounded-full p-2 hover:bg-white transition-all z-10">
+                <ChevronLeft className="w-6 h-6" />
+              </button>
+              <button onClick={handleNext} className="absolute right-0 top-1/2 -translate-y-1/2 bg-white/50 backdrop-blur-sm rounded-full p-2 hover:bg-white transition-all z-10">
+                <ChevronRight className="w-6 h-6" />
+              </button>
+            </div>
+
+            {/* Right side: Benefits List */}
+            <div className="relative">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={selectedCardIndex}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <Text variant="h3" as="h3" className="mb-2">{cards[selectedCardIndex].name}</Text>
+                  <Text variant="body" className="text-gray-600 mb-4">
+                    Annual Fee: ${cards[selectedCardIndex].annualFee} | Est. Annual Value: <span className="font-bold text-green-600">${totalAnnualValue}</span>
+                  </Text>
+                  <div className="space-y-4 max-h-[300px] overflow-y-auto pr-4">
+                    {cards[selectedCardIndex].benefits.map((perk, i) => (
+                      <motion.div
+                        key={perk.id}
+                        custom={i}
+                        variants={benefitVariants}
+                        initial="hidden"
+                        animate={controls}
+                        className="p-4 bg-white rounded-lg shadow-sm border"
+                      >
+                        <div className="flex justify-between items-start">
+                          <div>
+                            <Text variant="body" className="font-semibold">{perk.name}</Text>
+                            <Text variant="caption" className="text-gray-500">{perk.description}</Text>
+                          </div>
+                          <Text variant="body" className="font-bold text-gray-800 whitespace-nowrap ml-4">
+                            {formatValue(perk.value, perk.period)}
+                          </Text>
+                        </div>
+                        <div className="flex items-center gap-2 mt-2">
+                          {perk.categories.map(cat => <PerkIcon key={cat} category={cat} />)}
+                        </div>
+                      </motion.div>
+                    ))}
+                  </div>
+                </motion.div>
+              </AnimatePresence>
+            </div>
+          </div>
         </div>
       </div>
     </section>

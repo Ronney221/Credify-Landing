@@ -5,30 +5,20 @@ import { BlurImage } from "../ui/BlurImage";
 import { Glass } from "../ui/Gradient";
 
 const CARD_LOGOS = [
-  {
-    src: "/assets/cards/amex_plat.avif",
-    alt: "American Express Platinum Card",
-  },
-  {
-    src: "/assets/cards/chase_sapphire_reserve.png",
-    alt: "Chase Sapphire Reserve",
-  },
-  {
-    src: "/assets/cards/venture_x.avif",
-    alt: "Capital One Venture X",
-  },
-  {
-    src: "/assets/cards/amex_gold.avif",
-    alt: "American Express Gold Card",
-  },
-  {
-    src: "/assets/cards/chase_sapphire_preferred.png",
-    alt: "Chase Sapphire Preferred",
-  },
-  {
-    src: "/assets/cards/boa_premium_rewards_elite.png",
-    alt: "Bank of America Premium Rewards Elite",
-  },
+    { src: "/assets/cards/amex_plat.avif", alt: "American Express Platinum Card" },
+    { src: "/assets/cards/chase_sapphire_reserve.png", alt: "Chase Sapphire Reserve" },
+    { src: "/assets/cards/venture_x.avif", alt: "Capital One Venture X" },
+    { src: "/assets/cards/amex_gold.avif", alt: "American Express Gold Card" },
+    { src: "/assets/cards/chase_sapphire_preferred.png", alt: "Chase Sapphire Preferred" },
+    { src: "/assets/cards/boa_premium_rewards_elite.png", alt: "Bank of America Premium Rewards Elite" },
+    { src: "/assets/cards/amex_green.avif", alt: "American Express Green Card" },
+    { src: "/assets/cards/citi_prestige.jpeg", alt: "Citi Prestige Card" },
+    { src: "/assets/cards/hilton_aspire.avif", alt: "Hilton Honors Aspire Card" },
+    { src: "/assets/cards/marriott_bonvoy_brilliant.avif", alt: "Marriott Bonvoy Brilliant Card" },
+    { src: "/assets/cards/delta_reserve.avif", alt: "Delta SkyMiles Reserve Card" },
+    { src: "/assets/cards/blue_cash_preferred.avif", alt: "Blue Cash Preferred Card" },
+    { src: "/assets/cards/boa_premium_rewards.png", alt: "Bank of America Premium Rewards" },
+    { src: "/assets/cards/usb_altitude_reserve.png", alt: "US Bank Altitude Reserve" },
 ];
 
 export function SocialProof() {
@@ -66,7 +56,7 @@ export function SocialProof() {
 
         <ScrollReveal>
           <div className="mt-12 text-center">
-            <Text variant="small" className="text-gray-500">
+            <Text variant="caption" className="text-gray-500">
               And many more premium cards from American Express, Chase, Capital One, and other major issuers.
             </Text>
           </div>

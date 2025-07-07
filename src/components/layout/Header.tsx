@@ -24,8 +24,7 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
           <a href="/" className="flex items-center gap-2">
-            <img src="/assets/logo/icon.png" alt="Credify" className="h-8 w-8" />
-            <img src="/assets/logo/logo_text.png" alt="" className="h-6" />
+            <img src="/assets/logo/logo_text.png" alt="Credify" className="h-8" />
           </a>
           <nav className="hidden md:flex items-center gap-6">
             {navigation.map((item) => (
