@@ -1,41 +1,24 @@
-import { RootLayout } from "./components/RootLayout";
-import { Hero } from "./components/sections/Hero";
+import { CardBenefits } from "./components/sections/CardBenefits";
 import { Features } from "./components/sections/Features";
-import { ScreenshotShowcase } from "./components/sections/ScreenshotShowcase";
-import { CardShowcase } from "./components/sections/CardShowcase";
-import { FAQ } from "./components/sections/FAQ";
-import { Footer } from "./components/Footer";
+import { Hero } from "./components/sections/Hero";
+import { HowItWorks } from "./components/sections/HowItWorks";
+import { PartnerLogoWall } from "./components/sections/PartnerLogoWall";
+import { Scrollytelling } from "./components/sections/Scrollytelling";
+import { TheProblem } from "./components/sections/TheProblem";
+import { RootLayout } from "./components/layout/RootLayout";
 
-export function App() {
+function App() {
   return (
     <RootLayout>
-      <main className="flex-1">
-        {/* Hero Section */}
-        <section className="pt-32 pb-24 bg-white">
-          <Hero />
-        </section>
-
-        {/* Card Showcase */}
-        <section className="py-24 bg-gray-50">
-          <CardShowcase />
-        </section>
-
-        {/* Screenshot Showcase */}
-        <section className="py-24 bg-white">
-          <ScreenshotShowcase />
-        </section>
-
-        {/* Features Section */}
-        <section className="py-24 bg-gray-50">
-          <Features />
-        </section>
-
-        {/* FAQ Section */}
-        <section className="py-24 bg-white">
-          <FAQ />
-        </section>
-      </main>
-      <Footer />
+      <Hero />
+      <PartnerLogoWall />
+      <TheProblem />
+      <Scrollytelling />
+      <HowItWorks />
+      <CardBenefits />
+      <Features />
     </RootLayout>
   );
 }
+
+export default App;

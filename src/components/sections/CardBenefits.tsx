@@ -551,7 +551,7 @@ function InfiniteCardRiver({ cards, speed = 20, direction = 'left' }: InfiniteCa
   );
 }
 
-export function CardShowcase() {
+export function CardBenefits() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);

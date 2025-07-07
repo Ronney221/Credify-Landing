@@ -6,17 +6,17 @@ import { fadeIn, fadeInUp, scaleIn, transition } from "../../lib/animations";
 
 export function Hero() {
   return (
-    <section className="relative bg-gray-50">
+    <section className="relative">
       {/* First full-height section for mobile - Text Content */}
-      <div className="min-h-[100dvh] container px-4 mx-auto flex flex-col justify-center">
-        <div className="max-w-[640px] mx-auto text-center">
+      <div className="min-h-[100dvh] container px-4 mx-auto flex flex-col justify-center py-24 md:py-32">
+        <div className="max-w-[720px] mx-auto text-center">
           <motion.div
             variants={fadeIn}
             initial="hidden"
             animate="visible"
             transition={transition}
           >
-            <Text variant="h1" as="h1" className="mb-6 text-4xl sm:text-5xl lg:text-6xl">
+            <Text variant="h1" as="h1" className="mb-8 text-4xl sm:text-5xl lg:text-6xl bg-gradient-to-br from-gray-900 to-gray-600 bg-clip-text text-transparent">
               Stop missing out on your premium card perks
             </Text>
           </motion.div>
@@ -27,7 +27,7 @@ export function Hero() {
             animate="visible"
             transition={{ ...transition, delay: 0.1 }}
           >
-            <Text variant="subtitle" className="mb-8 text-lg sm:text-xl text-gray-600">
+            <Text variant="subtitle" className="mb-10 text-lg sm:text-xl text-gray-600">
               Credify automatically tracks and helps you redeem every hidden benefit and credit from your cards, so you never miss a perk again.
             </Text>
           </motion.div>
@@ -38,7 +38,7 @@ export function Hero() {
             initial="hidden"
             animate="visible"
             transition={{ ...transition, delay: 0.2 }}
-            className="mb-8"
+            className="mb-10"
           >
             <WaitlistCTA variant="secondary" />
           </motion.div>

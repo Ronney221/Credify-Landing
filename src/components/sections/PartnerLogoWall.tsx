@@ -1,125 +1,61 @@
-import { motion, useAnimation } from "framer-motion";
-import { BlurImage } from "../ui/BlurImage";
-import { Glass } from "../ui/Gradient";
-import { ScrollReveal } from "../ui/ScrollReveal";
-import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { Text } from "../ui/Text";
 
-const PARTNER_LOGOS = [
-  {
-    src: "/assets/partners/amex.svg",
-    alt: "American Express",
-    width: 120,
-    height: 40,
-  },
-  {
-    src: "/assets/partners/chase.svg",
-    alt: "Chase",
-    width: 100,
-    height: 40,
-  },
-  {
-    src: "/assets/partners/capital-one.svg",
-    alt: "Capital One",
-    width: 140,
-    height: 40,
-  },
-  {
-    src: "/assets/partners/citi.svg",
-    alt: "Citi",
-    width: 80,
-    height: 40,
-  },
-  {
-    src: "/assets/partners/bank-of-america.svg",
-    alt: "Bank of America",
-    width: 160,
-    height: 40,
-  },
-  {
-    src: "/assets/partners/us-bank.svg",
-    alt: "U.S. Bank",
-    width: 120,
-    height: 40,
-  },
+const partners = [
+  { name: "American Express", logo: "/assets/partners/amex.svg" },
+  { name: "Bank of America", logo: "/assets/partners/bank-of-america.svg" },
+  { name: "Capital One", logo: "/assets/partners/capital-one.svg" },
+  { name: "Chase", logo: "/assets/partners/chase.svg" },
+  { name: "Citi", logo: "/assets/partners/citi.svg" },
+  { name: "U.S. Bank", logo: "/assets/partners/us-bank.svg" },
 ];
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.3,
-    },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: {
-    opacity: 1,
-    y: 0,
-    transition: {
-      type: "spring",
-      stiffness: 100,
-      damping: 10,
-    },
-  },
-};
+const duplicatedPartners = [...partners, ...partners];
 
 export function PartnerLogoWall() {
-  const [isMobile, setIsMobile] = useState(false);
-  const controls = useAnimation();
-
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768);
-    };
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
+  const scrollVariants = {
+    animate: {
+      x: "-100%",
+      transition: {
+        x: {
+          repeat: Infinity,
+          repeatType: "loop",
+          duration: 20,
+          ease: "linear",
+        },
+      },
+    },
+  };
 
   return (
-    <section className="py-8 lg:py-24">
-      <div className="container px-4 mx-auto">
-        <ScrollReveal>
-          <h2 className="text-2xl md:text-3xl lg:text-4xl font-bold text-center mb-3 md:mb-4">
-            Trusted by Leading Card Issuers
-          </h2>
-          <p className="text-sm md:text-base text-gray-600 text-center mb-8 md:mb-12 max-w-2xl mx-auto">
-            We work with all major credit card companies to ensure you get the most value from your cards.
-          </p>
-        </ScrollReveal>
-
-        <motion.div
-          variants={container}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 lg:gap-8 items-center"
-        >
-          {PARTNER_LOGOS.map((logo) => (
-            <motion.div
-              key={logo.alt}
-              variants={item}
-              whileHover={isMobile ? undefined : { scale: 1.05 }}
-              className="relative aspect-[3/1]"
-            >
-              <Glass variant="light" className="absolute inset-0 rounded-lg md:rounded-xl">
-                <div className="flex items-center justify-center w-full h-full p-3 md:p-4 lg:p-6">
-                  <BlurImage
-                    src={logo.src}
-                    alt={logo.alt}
-                    width={logo.width}
-                    height={logo.height}
-                    className="w-full h-full object-contain opacity-80 hover:opacity-100 transition-opacity"
-                  />
-                </div>
-              </Glass>
-            </motion.div>
-          ))}
-        </motion.div>
+    <section className="py-12 bg-white/50">
+      <div className="container mx-auto text-center">
+        <Text variant="caption" as="p" className="mb-8 tracking-widest uppercase">
+          Trusted by all major card issuers
+        </Text>
+        <div className="relative w-full overflow-hidden">
+          <motion.div
+            className="flex"
+            variants={scrollVariants}
+            animate="animate"
+          >
+            {duplicatedPartners.map((partner, index) => (
+              <div
+                key={index}
+                className="flex-shrink-0 mx-8 flex items-center justify-center"
+                style={{ width: "160px" }}
+              >
+                <img
+                  src={partner.logo}
+                  alt={partner.name}
+                  className="h-10 object-contain filter grayscale transition-all duration-300 hover:grayscale-0"
+                />
+              </div>
+            ))}
+          </motion.div>
+          <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white/50 to-transparent" />
+          <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-white/50 to-transparent" />
+        </div>
       </div>
     </section>
   );
