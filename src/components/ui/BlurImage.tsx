@@ -8,9 +8,18 @@ interface BlurImageProps {
   height?: number;
   fill?: boolean;
   className?: string;
+  priority?: boolean;
 }
 
-export function BlurImage({ src, alt, width, height, fill, className = "" }: BlurImageProps) {
+export function BlurImage({ 
+  src, 
+  alt, 
+  width, 
+  height, 
+  fill, 
+  className = "",
+  priority = false 
+}: BlurImageProps) {
   const [isLoading, setLoading] = useState(true);
 
   return (
@@ -19,6 +28,8 @@ export function BlurImage({ src, alt, width, height, fill, className = "" }: Blu
       alt={alt}
       width={fill ? undefined : width}
       height={fill ? undefined : height}
+      loading={priority ? "eager" : "lazy"}
+      decoding={priority ? "sync" : "async"}
       className={`
         duration-700 ease-in-out
         ${isLoading ? "scale-105 blur-lg" : "scale-100 blur-0"}

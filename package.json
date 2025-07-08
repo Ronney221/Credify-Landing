@@ -25,6 +25,7 @@
     "react-countup": "^6.5.3",
     "react-dom": "^18.2.0",
     "react-hook-form": "^7.51.0",
+    "react-router-dom": "^7.6.3",
     "tailwind-merge": "^2.2.1",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"

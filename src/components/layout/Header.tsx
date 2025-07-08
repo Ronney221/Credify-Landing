@@ -19,23 +19,27 @@ const navigation = [
 export function Header() {
   const scrollTo = useScrollTo();
 
+  const handleDownload = () => {
+    window.open('https://testflight.apple.com/join/your-testflight-link', '_blank');
+  };
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b">
-      <div className="container flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+      <div className="container flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Logo on the left */}
-        <a href="/" className="flex items-center gap-2">
+        <a href="/" className="flex-shrink-0">
           <img src="/assets/logo/logo_text.png" alt="Credify" className="h-8" />
         </a>
 
-        {/* Right-aligned section */}
-        <div className="flex items-center gap-6">
+        {/* Right-aligned section with flex-grow to push items right */}
+        <div className="flex items-center gap-6 flex-grow justify-end">
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-6">
+          <nav className="hidden md:flex items-center gap-8">
             {navigation.map((item) => (
               <button
                 key={item.name}
                 onClick={() => scrollTo(item.id)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
               >
                 {item.name}
               </button>
@@ -43,8 +47,12 @@ export function Header() {
           </nav>
 
           {/* CTA Button */}
-          <Button variant="default" className="hidden md:inline-flex" onClick={() => scrollTo("waitlist")}>
-            Join Waitlist
+          <Button 
+            variant="default" 
+            className="hidden md:inline-flex whitespace-nowrap ml-8" 
+            onClick={handleDownload}
+          >
+            Download Beta
           </Button>
 
           {/* Mobile Menu */}
@@ -76,8 +84,8 @@ export function Header() {
                   </button>
                 ))}
                 {/* Mobile CTA Button */}
-                <Button variant="default" className="w-full" onClick={() => scrollTo("waitlist")}>
-                  Join Waitlist
+                <Button variant="default" className="w-full" onClick={handleDownload}>
+                  Download Beta
                 </Button>
               </div>
             </SheetContent>

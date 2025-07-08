@@ -3,7 +3,7 @@ import { BlurImage } from "../ui/BlurImage";
 import { useEffect, useRef, useState, useMemo } from "react";
 import * as React from 'react';
 import { Glass } from "../ui/Gradient";
-import { cards, Card } from "./CardData"; // Assuming CardData.ts holds the cards array and types
+import { cards, Card } from "@/components/sections/CardData";
 
 interface InfiniteCardRiverProps {
   cards: Card[];
@@ -55,15 +55,16 @@ const InfiniteCardRiver = React.memo(function InfiniteCardRiver({ cards, speed =
             className="relative shrink-0"
             whileHover={isMobile ? undefined : { scale: 1.05, zIndex: 10 }}
           >
-            <Glass variant="light" className="rounded-2xl p-2 md:p-4">
+            <div className="bg-gradient-to-br from-gray-100/80 to-white/50 backdrop-blur-sm rounded-2xl p-2 md:p-4 shadow-lg hover:shadow-xl transition-shadow">
               <BlurImage
                 src={card.image}
                 alt={card.name}
                 width={300}
                 height={189}
-                className="w-[200px] md:w-[300px] h-auto object-contain aspect-[1.586/1]"
+                className="w-[200px] md:w-[300px] h-auto object-contain aspect-[1.586/1] rounded-xl"
+                priority={index < 4} // Load first few cards with priority
               />
-            </Glass>
+            </div>
           </motion.div>
         ))}
       </motion.div>
@@ -72,18 +73,20 @@ const InfiniteCardRiver = React.memo(function InfiniteCardRiver({ cards, speed =
 });
 
 export function CardRiverShowcase() {
-    const shuffledCards = useMemo(() => {
-        return [...cards].sort(() => Math.random() - 0.5);
-    }, []);
+  const shuffledCards = useMemo(() => {
+    return [...cards].sort(() => Math.random() - 0.5);
+  }, []);
 
-    const halfIndex = Math.ceil(shuffledCards.length / 2);
-    const firstHalfCards = shuffledCards.slice(0, halfIndex);
-    const secondHalfCards = shuffledCards.slice(halfIndex);
+  const halfIndex = Math.ceil(shuffledCards.length / 2);
+  const firstHalfCards = shuffledCards.slice(0, halfIndex);
+  const secondHalfCards = shuffledCards.slice(halfIndex);
 
-    return (
-        <div className="space-y-4 md:space-y-6">
-            <InfiniteCardRiver cards={firstHalfCards} speed={25} direction="left" />
-            <InfiniteCardRiver cards={secondHalfCards} speed={30} direction="right" />
-        </div>
-    );
+  return (
+    <div className="py-12 bg-gradient-to-b from-gray-50 to-white">
+      <div className="max-w-7xl mx-auto space-y-4 md:space-y-6 px-4 sm:px-6 lg:px-8">
+        <InfiniteCardRiver cards={firstHalfCards} speed={25} direction="left" />
+        <InfiniteCardRiver cards={secondHalfCards} speed={30} direction="right" />
+      </div>
+    </div>
+  );
 } 
