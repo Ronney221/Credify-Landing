@@ -27,8 +27,9 @@ export function Header() {
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b">
       <div className="container flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
         {/* Logo on the left */}
-        <a href="/" className="flex-shrink-0">
-          <img src="/assets/logo/logo_text.png" alt="Credify" className="h-8" />
+        <a href="/" className="flex items-center gap-2 flex-shrink-0">
+          <img src="/assets/logo/icon.png" alt="Credify Icon" className="h-8 w-8" />
+          <span className="text-xl font-semibold text-[#002B5B]">Credify</span>
         </a>
 
         {/* Right-aligned section with flex-grow to push items right */}

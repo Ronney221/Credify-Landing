@@ -8,7 +8,7 @@ export function Hero() {
     <section className="relative min-h-[100dvh] overflow-hidden">
       {/* Background Screenshots for Desktop */}
       <div className="absolute inset-0 z-0 hidden md:flex items-center justify-center">
-        <div className="flex gap-8 max-w-6xl mx-auto">
+        <div className="flex gap-8 max-w-6xl mx-auto items-center">
           <motion.div
             variants={scaleIn}
             initial="hidden"
@@ -30,7 +30,7 @@ export function Hero() {
             initial="hidden"
             animate="visible"
             transition={{ ...transition, delay: 0.5 }}
-            className="relative flex-1 mt-16"
+            className="relative flex-1"
             whileHover={{ scale: 1.02, rotate: "2deg" }}
           >
             <BlurImage
@@ -71,7 +71,7 @@ export function Hero() {
           </motion.div>
 
           {/* Mobile Screenshots */}
-          <div className="md:hidden flex flex-row gap-4 mb-8 justify-center">
+          <div className="md:hidden flex flex-row gap-4 mb-8 justify-center items-center">
             <motion.div
               variants={scaleIn}
               initial="hidden"
@@ -92,7 +92,7 @@ export function Hero() {
               initial="hidden"
               animate="visible"
               transition={{ ...transition, delay: 0.5 }}
-              className="w-1/2 mt-6"
+              className="w-1/2"
             >
               <BlurImage
                 src="/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 2.png"
