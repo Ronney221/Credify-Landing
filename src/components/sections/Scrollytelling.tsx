@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import { Text } from "../ui/Text";
 import { BlurImage } from "../ui/BlurImage";
 
@@ -28,25 +28,27 @@ export function Scrollytelling() {
     offset: ["start start", "end end"],
   });
 
+  const imageIndex = useTransform(scrollYProgress, (pos) => {
+    return Math.floor(pos * scrollytellingData.length);
+  });
+
   return (
     <section ref={targetRef} className="relative h-[300vh] bg-white">
       <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8 md:gap-16">
           {/* Left: Text Content */}
-          <div className="w-full md:w-1/2">
+          <div className="w-full md:w-1/2 flex flex-col justify-center h-full">
             {scrollytellingData.map((step, i) => {
-              const stepProgress = useTransform(
+              const opacity = useTransform(
                 scrollYProgress,
-                [i / scrollytellingData.length, (i + 1) / scrollytellingData.length],
-                [0, 1]
+                [i / scrollytellingData.length - 0.1, i / scrollytellingData.length, (i + 1) / scrollytellingData.length - 0.1, (i + 1) / scrollytellingData.length],
+                [0, 1, 1, 0]
               );
-              const opacity = useTransform(stepProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-
               return (
                 <motion.div
                   key={i}
                   style={{ opacity }}
-                  className="h-screen flex flex-col justify-center"
+                  className="absolute"
                 >
                   <Text variant="h2" as="h2" className="mb-6">{step.title}</Text>
                   <Text variant="subtitle">{step.description}</Text>
@@ -58,28 +60,25 @@ export function Scrollytelling() {
           {/* Right: Sticky Phone Mockup */}
           <div className="w-full md:w-1/2 flex justify-center">
             <div className="relative w-[300px] h-[600px] md:w-[360px] md:h-[640px]">
-              {scrollytellingData.map((step, i) => {
-                const imageOpacity = useTransform(
-                  scrollYProgress,
-                  [i / scrollytellingData.length, (i + 0.5) / scrollytellingData.length, (i + 1) / scrollytellingData.length],
-                  [0, 1, 0]
-                );
-                return(
-                  <motion.div
-                    key={step.image}
-                    style={{ opacity: imageOpacity }}
-                    className="absolute inset-0"
-                  >
-                    <BlurImage
-                      src={step.image}
-                      alt={step.title}
-                      width={360}
-                      height={640}
-                      className="rounded-[32px] shadow-2xl w-full h-full object-cover"
-                    />
-                  </motion.div>
-                );
-              })}
+              {scrollytellingData.map((step, i) => (
+                <motion.div
+                  key={step.image}
+                  style={{
+                    opacity: useTransform(imageIndex, (latest) =>
+                      latest === i ? 1 : 0
+                    ),
+                  }}
+                  className="absolute inset-0"
+                >
+                  <BlurImage
+                    src={step.image}
+                    alt={step.title}
+                    width={360}
+                    height={640}
+                    className="rounded-[32px] shadow-2xl w-full h-full object-cover"
+                  />
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>

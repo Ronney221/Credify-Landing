@@ -4,19 +4,19 @@ import { fadeIn } from "../../lib/animations";
 
 const steps = [
   {
-    icon: "🔗",
-    title: "Securely Link Your Cards",
-    description: "Connect your credit card accounts through our secure portal. We use bank-level encryption to protect your data.",
+    icon: "💳",
+    title: "Select Your Cards",
+    description: "Simply choose the credit cards you own from our comprehensive list. No sensitive information required.",
   },
   {
     icon: "🔔",
     title: "Get Smart Reminders",
-    description: "Our AI analyzes your benefits and sends you timely notifications before perks or credits expire.",
+    description: "Our AI tracks your card's built-in annual benefits and sends you timely notifications so you never miss a perk.",
   },
   {
     icon: "✅",
-    title: "Redeem Your Perks",
-    description: "Follow simple, one-tap links to activate offers and claim your rewards, ensuring you never miss out on value.",
+    title: "Redeem With a Tap",
+    description: "Follow simple deep-links that take you directly to the partner app or website to easily redeem your benefits.",
   },
 ];
 

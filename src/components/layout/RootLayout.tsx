@@ -10,12 +10,11 @@ export function RootLayout({ children }: RootLayoutProps) {
   return (
     <div className="relative min-h-screen flex flex-col">
       <Header />
-      <main className="flex-1 pb-16 md:pb-0">
+      <main className="flex-1">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 w-full">
           {children}
         </div>
       </main>
-      <Footer className="hidden md:block" />
     </div>
   );
 } 

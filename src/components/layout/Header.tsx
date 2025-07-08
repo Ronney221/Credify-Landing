@@ -21,11 +21,15 @@ export function Header() {
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-lg border-b">
-      <div className="container flex h-16 items-center justify-between">
+      <div className="container flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
+        {/* Logo on the left */}
+        <a href="/" className="flex items-center gap-2">
+          <img src="/assets/logo/logo_text.png" alt="Credify" className="h-8" />
+        </a>
+
+        {/* Right-aligned section */}
         <div className="flex items-center gap-6">
-          <a href="/" className="flex items-center gap-2">
-            <img src="/assets/logo/logo_text.png" alt="Credify" className="h-8" />
-          </a>
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-6">
             {navigation.map((item) => (
               <button
@@ -37,15 +41,16 @@ export function Header() {
               </button>
             ))}
           </nav>
-        </div>
 
-        <div className="flex items-center gap-4">
-          <Button variant="default" onClick={() => scrollTo("waitlist")}>
+          {/* CTA Button */}
+          <Button variant="default" className="hidden md:inline-flex" onClick={() => scrollTo("waitlist")}>
             Join Waitlist
           </Button>
+
+          {/* Mobile Menu */}
           <Sheet>
-            <SheetTrigger asChild className="md:hidden">
-              <Button variant="ghost" size="icon">
+            <SheetTrigger asChild>
+              <Button variant="ghost" size="icon" className="md:hidden">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Toggle menu</span>
               </Button>
@@ -70,6 +75,10 @@ export function Header() {
                     {item.name}
                   </button>
                 ))}
+                {/* Mobile CTA Button */}
+                <Button variant="default" className="w-full" onClick={() => scrollTo("waitlist")}>
+                  Join Waitlist
+                </Button>
               </div>
             </SheetContent>
           </Sheet>
