@@ -1,7 +1,7 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { BlurImage } from "@/components/ui/BlurImage";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 const testimonials = [
   {
@@ -145,22 +145,56 @@ function CarouselButton({ direction, onClick }: { direction: "left" | "right", o
 }
 
 export function Testimonials() {
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = window.innerWidth >= 1024 ? 3 : 1;
+  const [[page, direction], setPage] = useState([0, 0]);
+  const [itemsPerPage, setItemsPerPage] = useState(3);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setItemsPerPage(window.innerWidth >= 1024 ? 3 : 1);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const totalPages = Math.ceil(testimonials.length / itemsPerPage);
 
-  const nextPage = useCallback(() => {
-    setCurrentPage((prev) => (prev + 1) % totalPages);
+  const paginate = useCallback((newDirection: number) => {
+    setPage(prev => [(prev[0] + newDirection + totalPages) % totalPages, newDirection]);
   }, [totalPages]);
 
-  const prevPage = useCallback(() => {
-    setCurrentPage((prev) => (prev - 1 + totalPages) % totalPages);
-  }, [totalPages]);
+  const nextPage = useCallback(() => paginate(1), [paginate]);
+  const prevPage = useCallback(() => paginate(-1), [paginate]);
+
+  const goToPage = useCallback((newPage: number) => {
+    setPage(prev => {
+        if (newPage === prev[0]) return prev;
+        const newDirection = newPage > prev[0] ? 1 : -1;
+        return [newPage, newDirection];
+    });
+  }, []);
 
   const currentTestimonials = testimonials.slice(
-    currentPage * itemsPerPage,
-    (currentPage + 1) * itemsPerPage
+    page * itemsPerPage,
+    (page + 1) * itemsPerPage
   );
+  
+  const variants = {
+    enter: (direction: number) => ({
+      x: direction > 0 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      opacity: 1,
+    },
+    exit: (direction: number) => ({
+      zIndex: 0,
+      x: direction < 0 ? "100%" : "-100%",
+      opacity: 0,
+    }),
+  };
 
   return (
     <section className="py-32 bg-gradient-to-b from-black to-slate-950">
@@ -181,19 +215,48 @@ export function Testimonials() {
         </motion.div>
 
         <div className="relative">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            {currentTestimonials.map((testimonial) => (
-              <TestimonialCard key={`${testimonial.name}-${currentPage}`} {...testimonial} />
-            ))}
-          </div>
+          <AnimatePresence initial={false} custom={direction} mode="wait">
+            <motion.div
+              key={page}
+              className="grid grid-cols-1 lg:grid-cols-3 gap-8"
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { type: "spring", stiffness: 300, damping: 30 },
+                opacity: { duration: 0.2 },
+              }}
+              drag={itemsPerPage === 1 ? "x" : false}
+              dragConstraints={{ left: 0, right: 0 }}
+              dragElastic={0.1}
+              onDragEnd={(_e, { offset, velocity }) => {
+                if (itemsPerPage !== 1) return;
+                const swipeThreshold = 50;
+                
+                if (Math.abs(offset.x) < swipeThreshold) return;
+
+                if (velocity.x < -200) {
+                  nextPage();
+                } else if (velocity.x > 200) {
+                  prevPage();
+                }
+              }}
+            >
+              {currentTestimonials.map((testimonial) => (
+                <TestimonialCard key={`${testimonial.name}-${page}`} {...testimonial} />
+              ))}
+            </motion.div>
+          </AnimatePresence>
           
           <CarouselButton direction="left" onClick={prevPage} />
           <CarouselButton direction="right" onClick={nextPage} />
           
           <CarouselDots
             total={totalPages}
-            current={currentPage}
-            onClick={setCurrentPage}
+            current={page}
+            onClick={goToPage}
           />
         </div>
       </div>
