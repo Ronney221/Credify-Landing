@@ -40,7 +40,7 @@ const legalLinks = [
 
 export function Footer({ className }: FooterProps) {
   return (
-    <footer className={cn("py-12 bg-slate-900", className)}>
+    <footer className={cn("py-12 bg-slate-950", className)}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pb-8 border-b border-white/10">
           <div>
