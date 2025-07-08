@@ -28,26 +28,25 @@ export function Scrollytelling() {
     offset: ["start start", "end end"],
   });
 
-  const imageIndex = useTransform(scrollYProgress, (pos) => {
-    return Math.floor(pos * scrollytellingData.length);
-  });
-
   return (
     <section ref={targetRef} className="relative h-[300vh] bg-white">
-      <div className="sticky top-0 h-screen flex items-center justify-center overflow-hidden">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8 md:gap-16">
+      <div className="sticky top-0 h-screen flex flex-col md:flex-row items-center justify-center overflow-hidden">
+        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8 md:gap-16 h-full">
           {/* Left: Text Content */}
-          <div className="w-full md:w-1/2 flex flex-col justify-center h-full">
+          <div className="w-full md:w-1/2 flex flex-col justify-center h-1/2 md:h-full text-center md:text-left">
             {scrollytellingData.map((step, i) => {
-              const opacity = useTransform(
+              const stepProgress = useTransform(
                 scrollYProgress,
-                [i / scrollytellingData.length - 0.1, i / scrollytellingData.length, (i + 1) / scrollytellingData.length - 0.1, (i + 1) / scrollytellingData.length],
-                [0, 1, 1, 0]
+                [i / scrollytellingData.length, (i + 1) / scrollytellingData.length],
+                [0, 1]
               );
+              const opacity = useTransform(stepProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+              const y = useTransform(stepProgress, [0, 0.2, 0.8, 1], [30, 0, 0, -30]);
+
               return (
                 <motion.div
                   key={i}
-                  style={{ opacity }}
+                  style={{ opacity, y }}
                   className="absolute"
                 >
                   <Text variant="h2" as="h2" className="mb-6">{step.title}</Text>
@@ -58,27 +57,33 @@ export function Scrollytelling() {
           </div>
 
           {/* Right: Sticky Phone Mockup */}
-          <div className="w-full md:w-1/2 flex justify-center">
-            <div className="relative w-[300px] h-[600px] md:w-[360px] md:h-[640px]">
-              {scrollytellingData.map((step, i) => (
-                <motion.div
-                  key={step.image}
-                  style={{
-                    opacity: useTransform(imageIndex, (latest) =>
-                      latest === i ? 1 : 0
-                    ),
-                  }}
-                  className="absolute inset-0"
-                >
-                  <BlurImage
-                    src={step.image}
-                    alt={step.title}
-                    width={360}
-                    height={640}
-                    className="rounded-[32px] shadow-2xl w-full h-full object-cover"
-                  />
-                </motion.div>
-              ))}
+          <div className="w-full md:w-1/2 flex justify-center items-center h-1/2 md:h-full">
+            <div className="relative w-[250px] h-[500px] md:w-[360px] md:h-[640px]">
+              {scrollytellingData.map((step, i) => {
+                const stepProgress = useTransform(
+                  scrollYProgress,
+                  [i / scrollytellingData.length, (i + 1) / scrollytellingData.length],
+                  [0, 1]
+                );
+                const scale = useTransform(stepProgress, [0, 0.2, 0.8, 1], [0.9, 1, 1, 0.9]);
+                const opacity = useTransform(stepProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
+
+                return (
+                  <motion.div
+                    key={step.image}
+                    style={{ opacity, scale }}
+                    className="absolute inset-0"
+                  >
+                    <BlurImage
+                      src={step.image}
+                      alt={step.title}
+                      width={360}
+                      height={640}
+                      className="rounded-[32px] shadow-2xl w-full h-full object-cover"
+                    />
+                  </motion.div>
+                );
+              })}
             </div>
           </div>
         </div>

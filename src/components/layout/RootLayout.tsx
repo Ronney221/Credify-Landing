@@ -15,6 +15,7 @@ export function RootLayout({ children }: RootLayoutProps) {
           {children}
         </div>
       </main>
+      <Footer />
     </div>
   );
 } 

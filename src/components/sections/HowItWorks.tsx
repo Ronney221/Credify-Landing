@@ -9,9 +9,14 @@ const steps = [
     description: "Simply choose the credit cards you own from our comprehensive list. No sensitive information required.",
   },
   {
+    icon: "✨",
+    title: "Unified Dashboard",
+    description: "See all your credit card perks in one place. Monthly, quarterly, and annual benefits tracked automatically.",
+  },
+  {
     icon: "🔔",
-    title: "Get Smart Reminders",
-    description: "Our AI tracks your card's built-in annual benefits and sends you timely notifications so you never miss a perk.",
+    title: "AI-Powered Reminders",
+    description: "Our AI tracks your card's built-in annual benefits and sends you intelligent, timely notifications so you never miss a perk.",
   },
   {
     icon: "✅",
@@ -39,7 +44,7 @@ export function HowItWorks() {
           </Text>
         </motion.div>
 
-        <div className="grid md:grid-cols-3 gap-8 md:gap-12">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
           {steps.map((step, index) => (
             <motion.div
               key={index}
