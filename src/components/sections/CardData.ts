@@ -637,7 +637,7 @@ export const cards: Card[] = [
     popularity: 12
   },
   {
-    name: "Delta SkyMiles Reserve (AmEx)",
+    name: "Delta SkyMiles Reserve",
     image: "/assets/cards/delta_reserve.avif",
     annualFee: 650,
     benefits: [
