@@ -14,16 +14,24 @@ const faqItems = [
     answer: "Credify is your AI-powered command center for credit card perks. It helps you track, manage, and maximize your credit card benefits in one place. The app shows a unified dashboard of all your available benefits—monthly, quarterly, and annual—and helps ensure you get every dollar of value from your annual fees.",
   },
   {
-    question: "Is my financial information secure?",
-    answer: "Yes, absolutely! We use bank-level 256-bit encryption and secure connections to protect your data. We never store your actual credit card numbers or sensitive financial information on our servers. Your privacy and security are our top priorities.",
+    question: "Do you need my bank login or credit card numbers?",
+    answer: "No, absolutely not! We never ask for or store your bank login credentials or credit card numbers. Credify is designed to work without requiring any sensitive financial information. Simply select your cards from our comprehensive list, and we'll help you track all the benefits. Your security is our top priority.",
   },
   {
-    question: "How do I track and redeem perks?",
-    answer: "Credify makes perk tracking and redemption easy:\n\n1. Dashboard View: See all your cards and available perks\n2. One-Tap Redemption: Open associated merchant apps directly\n3. Auto-Redemption: Set up automatic tracking for recurring perks\n4. Progress Tracking: Watch your savings add up in real-time\n5. Smart Notifications: Get reminders before perks expire",
+    question: "How do you keep my information secure?",
+    answer: "Security is our highest priority. We use:\n\n• Bank-level 256-bit encryption\n• Secure SSL connections\n• Regular security audits\n• No storage of sensitive financial data\n• Read-only access to benefit information\n• Compliance with industry security standards\n\nWe treat your data with the utmost care and never share or sell your personal information.",
+  },
+  {
+    question: "How does Credify make money?",
+    answer: "We believe in complete transparency about our business model. Credify operates on a freemium model:\n\n• Free Tier: Basic features for tracking essential benefits\n• Premium Tier: Advanced analytics, unlimited cards, and priority support\n\nWe never sell your personal data or make money from your financial information. Our revenue comes solely from premium subscriptions and optional features.",
   },
   {
     question: "Which credit cards do you support?",
     answer: "We support all major premium travel and rewards cards from issuers like American Express, Chase, Capital One, Citi, and more. This includes popular cards like the Amex Platinum, Chase Sapphire Reserve, Capital One Venture X, and many others. We are continuously expanding our card database.",
+  },
+  {
+    question: "How do I track and redeem perks?",
+    answer: "Credify makes perk tracking and redemption easy:\n\n1. Dashboard View: See all your cards and available perks\n2. One-Tap Redemption: Open associated merchant apps directly\n3. Auto-Redemption: Set up automatic tracking for recurring perks\n4. Progress Tracking: Watch your savings add up in real-time\n5. Smart Notifications: Get reminders before perks expire",
   },
   {
     question: "How does the AI Assistant work?",
@@ -40,14 +48,6 @@ const faqItems = [
   {
     question: "How do you calculate ROI?",
     answer: "We track your return on investment by monitoring all redeemed perks, calculating the actual value received, and comparing it against your annual fees. The app shows real-time progress toward breaking even on each card's annual fee and provides detailed analytics in the Insights tab.",
-  },
-  {
-    question: "How does Credify make money?",
-    answer: "Credify operates on a freemium model. We offer a free tier with basic features and a premium subscription that unlocks advanced analytics, unlimited cards, and priority support. We never sell your personal data - our business model is based on providing value through premium features.",
-  },
-  {
-    question: "Do you need my bank login?",
-    answer: "No! Credify is designed to work without requiring sensitive bank credentials. Simply select your cards from our comprehensive list and we'll help you track all the benefits. No sensitive information required.",
   }
 ];
 

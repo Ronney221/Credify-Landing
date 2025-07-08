@@ -66,7 +66,7 @@ export const cards: Card[] = [
         categories: ["Grocery"]
       }
     ],
-    popularity: 1
+    popularity: 4
   },
   {
     name: "American Express Gold",
@@ -131,7 +131,7 @@ export const cards: Card[] = [
         categories: ["Bills & Utilities", "Entertainment"]
       }
     ],
-    popularity: 3
+    popularity: 6
   },
   {
     name: "Chase Sapphire Reserve",
@@ -237,7 +237,7 @@ export const cards: Card[] = [
         categories: ["Travel", "Flights"]
       }
     ],
-    popularity: 4
+    popularity: 3
   },
   {
     name: "American Express Platinum",
@@ -324,7 +324,7 @@ export const cards: Card[] = [
         categories: ["Travel", "Lodging"]
       }
     ],
-    popularity: 5
+    popularity: 1
   },
   {
     name: "Capital One Venture X",
