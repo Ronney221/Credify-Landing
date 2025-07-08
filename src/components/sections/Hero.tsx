@@ -5,7 +5,7 @@ import { fadeIn, fadeInUp, scaleIn, transition } from "../../lib/animations";
 
 export function Hero() {
   return (
-    <section className="relative min-h-[100dvh] overflow-hidden">
+    <section id="hero" className="relative min-h-[100dvh] overflow-hidden">
       {/* Background Screenshots for Desktop */}
       <div className="absolute inset-0 z-0 hidden md:flex items-center justify-center">
         <div className="flex gap-8 max-w-6xl mx-auto items-center">

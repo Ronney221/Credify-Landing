@@ -34,7 +34,7 @@ const legalLinks = [
   },
   {
     name: "Contact",
-    href: "mailto:hello@getcredify.app"
+    href: "mailto:support@getcredify.app"
   }
 ];
 

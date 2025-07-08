@@ -10,9 +10,9 @@ import {
 import { useScrollTo } from "@/hooks/useScrollTo";
 
 const navigation = [
-  { name: "Features", id: "features" },
-  { name: "AI Assistant", id: "ai-assistant" },
+  { name: "Download", id: "hero" },
   { name: "Cards", id: "cards" },
+  { name: "How It Works", id: "how-it-works" },
   { name: "FAQ", id: "faq" }
 ];
 

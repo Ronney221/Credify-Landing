@@ -14,7 +14,6 @@ function App() {
       <Hero />
       <TheProblem />
       <CardBenefits />
-      <Testimonials />
       <Scrollytelling />
       <HowItWorks />
       <FAQ />
