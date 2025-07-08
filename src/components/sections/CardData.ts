@@ -36,94 +36,37 @@ export interface Card {
   image: string;
   annualFee: number;
   benefits: Perk[];
+  popularity?: number; // Lower number = more popular
 }
 
 export const cards: Card[] = [
   {
-    name: "American Express Platinum",
-    image: "/assets/cards/amex_plat.avif",
-    annualFee: 695,
+    name: "Chase Sapphire Preferred",
+    image: "/assets/cards/chase_sapphire_preferred.png",
+    annualFee: 95,
     benefits: [
       {
-        id: "platinum_uber_cash",
-        name: "Uber Cash",
-        value: 15,
-        period: "monthly",
-        description: "Receive $15 in Uber Cash for U.S. rides or Uber Eats orders each month, plus a $20 bonus in December, for a total of $200 annually.",
-        redemptionInstructions: "To activate, add your Platinum Card as a payment method in your Uber account. The Uber Cash is automatically added to your account on the first day of each month and expires at the end of that month. Unused amounts do not roll over.",
-        appScheme: "uber",
-        categories: ["Transportation", "Dining"]
-      },
-      {
-        id: "platinum_digital_ent",
-        name: "Digital Entertainment Credit",
-        value: 20,
-        period: "monthly",
-        description: "Up to $20 per month (totaling $240 per year) in statement credits for eligible digital subscriptions. Covered services include Audible, Disney+, The Disney Bundle, ESPN+, Hulu, Peacock, The New York Times, and The Wall Street Journal.",
-        redemptionInstructions: "You must enroll in this benefit first via your Amex account. Then, simply use your Platinum Card to pay for the eligible subscriptions. The credit is automatically applied as a statement credit.",
-        categories: ["Bills & Utilities", "Entertainment"]
-      },
-      {
-        id: "platinum_walmart_plus",
-        name: "Walmart+ Membership Credit",
-        value: 12.95,
-        period: "monthly",
-        description: "Receive a statement credit that covers the full cost of a Walmart+ monthly membership ($12.95 plus applicable sales tax).",
-        redemptionInstructions: "Use your Platinum Card to pay for a Walmart+ monthly membership. This benefit does not cover the annual membership. A key value of this perk is that a Walmart+ membership also includes a complimentary Paramount+ subscription.",
-        appScheme: "walmart",
-        categories: ["Shopping", "Grocery", "Entertainment"]
-      },
-      {
-        id: "platinum_equinox",
-        name: "Equinox Credit",
-        value: 300,
-        period: "annual",
-        description: "Receive up to $300 in statement credits annually for eligible Equinox memberships.",
-        redemptionInstructions: "Enrollment is required. Use your Platinum Card to pay for an Equinox All Access, Destination, E by Equinox, or Equinox+ membership. The credit is applied monthly based on your charges, up to the annual maximum of $300.",
-        appScheme: "equinox",
-        categories: ["Fitness", "Wellness"]
-      },
-      {
-        id: "platinum_saks",
-        name: "Saks Fifth Avenue Credit",
+        id: "csp_hotel",
+        name: "Hotel Credit",
         value: 50,
-        period: "semi_annual",
-        description: "Receive up to $50 in statement credits twice per year for purchases at Saks Fifth Avenue. This provides up to $100 in total value annually.",
-        redemptionInstructions: "Enrollment is required. The credit is split into two periods: January through June, and July through December. Use your Platinum Card at Saks in-store or online. A popular strategy is to purchase a $50 gift card in-store to use later if you don't have an immediate purchase to make. The credit does not apply to purchases at Saks OFF 5TH.",
-        appScheme: "saks",
-        categories: ["Shopping"]
-      },
-      {
-        id: "platinum_clear",
-        name: "CLEAR Plus Credit",
-        value: 189,
         period: "annual",
-        description: "Receive up to $189 in statement credits per calendar year for a CLEAR Plus membership, which provides expedited security screening at select airports and stadiums.",
-        redemptionInstructions: "Enroll in CLEAR Plus and pay with your Platinum Card. The credit covers one annual CLEAR membership.",
-        appScheme: "clear",
-        categories: ["Travel", "Flights"]
-      },
-      {
-        id: "platinum_airline_fee",
-        name: "Airline Fee Credit",
-        value: 200,
-        period: "annual",
-        description: "Up to $200 in statement credits per calendar year for incidental fees with one selected qualifying airline.",
-        redemptionInstructions: "You must enroll and select one airline from the Amex website each year. This credit applies to incidental fees like checked bags, seat selection, and in-flight refreshments, but not directly to ticket purchases. Some users have found that certain charges under $100 or purchases for airline travel banks (e.g., United TravelBank) may trigger the credit, but these methods are not guaranteed. Plan to use it for standard fees to ensure reimbursement.",
-        appScheme: "amex",
-        categories: ["Travel", "Flights"]
-      },
-      {
-        id: "platinum_hotel_credit",
-        name: "Prepaid Hotel Credit",
-        value: 200,
-        period: "annual",
-        description: "Receive up to $200 back in statement credits each calendar year on prepaid bookings with Fine Hotels + Resorts® or The Hotel Collection made through American Express Travel.",
-        redemptionInstructions: "Book a prepaid stay through amextravel.com. For The Hotel Collection, a minimum two-night stay is required. The credit is automatically applied. This is in addition to the valuable on-site benefits (like room upgrades and property credits) that come with FHR and THC bookings.",
-        appScheme: "amex",
+        description: "Up to $50 statement credit each account anniversary year for hotel stays booked via the Chase Ultimate Rewards travel portal.",
+        redemptionInstructions: "Book a hotel through Chase Travel using your Sapphire Preferred; the first $50 of hotel charges will be automatically refunded. Credit resets every account anniversary.",
+        appScheme: "chase",
         categories: ["Travel", "Lodging"]
+      },
+      {
+        id: "csp_doordash_grocery",
+        name: "DoorDash Grocery Credit",
+        value: 10,
+        period: "monthly",
+        description: "$10 monthly DoorDash credit for non-restaurant purchases (grocery stores, convenience stores, DashMart, etc.) through 2027.",
+        redemptionInstructions: "Use your Preferred card with DashPass activated. You'll see a $10 off promo automatically for eligible non-restaurant orders each month. Credit does not roll over.",
+        appScheme: "doordash",
+        categories: ["Grocery"]
       }
-    ]
+    ],
+    popularity: 1
   },
   {
     name: "American Express Gold",
@@ -170,7 +113,25 @@ export const cards: Card[] = [
         appScheme: "dunkin",
         categories: ["Dining", "Coffee"]
       }
-    ]
+    ],
+    popularity: 2
+  },
+  {
+    name: "American Express Blue Cash Preferred",
+    image: "/assets/cards/blue_cash_preferred.avif",
+    annualFee: 95,
+    benefits: [
+      {
+        id: "bcp_disney_bundle",
+        name: "Disney Bundle Credit",
+        value: 7,
+        period: "monthly",
+        description: "Get a $7 statement credit each month after you spend $9.99 or more on an eligible subscription to The Disney Bundle. This can reduce the cost of subscriptions that include Disney+, Hulu, and ESPN+.",
+        redemptionInstructions: "You must first enroll in the benefit through your American Express online account. Then, use your Blue Cash Preferred card to pay for your monthly Disney Bundle subscription of $9.99 or more. The statement credit will be applied automatically. Unused credits do not roll over.",
+        categories: ["Bills & Utilities", "Entertainment"]
+      }
+    ],
+    popularity: 3
   },
   {
     name: "Chase Sapphire Reserve",
@@ -275,34 +236,95 @@ export const cards: Card[] = [
         redemptionInstructions: "Charge the application fee to your card to receive the statement credit automatically.",
         categories: ["Travel", "Flights"]
       }
-    ]
+    ],
+    popularity: 4
   },
   {
-    name: "Chase Sapphire Preferred",
-    image: "/assets/cards/chase_sapphire_preferred.png",
-    annualFee: 95,
+    name: "American Express Platinum",
+    image: "/assets/cards/amex_plat.avif",
+    annualFee: 695,
     benefits: [
       {
-        id: "csp_hotel",
-        name: "Hotel Credit",
-        value: 50,
-        period: "annual",
-        description: "Up to $50 statement credit each account anniversary year for hotel stays booked via the Chase Ultimate Rewards travel portal.",
-        redemptionInstructions: "Book a hotel through Chase Travel using your Sapphire Preferred; the first $50 of hotel charges will be automatically refunded. Credit resets every account anniversary.",
-        appScheme: "chase",
-        categories: ["Travel", "Lodging"]
+        id: "platinum_uber_cash",
+        name: "Uber Cash",
+        value: 15,
+        period: "monthly",
+        description: "Receive $15 in Uber Cash for U.S. rides or Uber Eats orders each month, plus a $20 bonus in December, for a total of $200 annually.",
+        redemptionInstructions: "To activate, add your Platinum Card as a payment method in your Uber account. The Uber Cash is automatically added to your account on the first day of each month and expires at the end of that month. Unused amounts do not roll over.",
+        appScheme: "uber",
+        categories: ["Transportation", "Dining"]
       },
       {
-        id: "csp_doordash_grocery",
-        name: "DoorDash Grocery Credit",
-        value: 10,
+        id: "platinum_digital_ent",
+        name: "Digital Entertainment Credit",
+        value: 20,
         period: "monthly",
-        description: "$10 monthly DoorDash credit for non-restaurant purchases (grocery stores, convenience stores, DashMart, etc.) through 2027.",
-        redemptionInstructions: "Use your Preferred card with DashPass activated. You'll see a $10 off promo automatically for eligible non-restaurant orders each month. Credit does not roll over.",
-        appScheme: "doordash",
-        categories: ["Grocery"]
+        description: "Up to $20 per month (totaling $240 per year) in statement credits for eligible digital subscriptions. Covered services include Audible, Disney+, The Disney Bundle, ESPN+, Hulu, Peacock, The New York Times, and The Wall Street Journal.",
+        redemptionInstructions: "You must enroll in this benefit first via your Amex account. Then, simply use your Platinum Card to pay for the eligible subscriptions. The credit is automatically applied as a statement credit.",
+        categories: ["Bills & Utilities", "Entertainment"]
+      },
+      {
+        id: "platinum_walmart_plus",
+        name: "Walmart+ Membership Credit",
+        value: 12.95,
+        period: "monthly",
+        description: "Receive a statement credit that covers the full cost of a Walmart+ monthly membership ($12.95 plus applicable sales tax).",
+        redemptionInstructions: "Use your Platinum Card to pay for a Walmart+ monthly membership. This benefit does not cover the annual membership. A key value of this perk is that a Walmart+ membership also includes a complimentary Paramount+ subscription.",
+        appScheme: "walmart",
+        categories: ["Shopping", "Grocery", "Entertainment"]
+      },
+      {
+        id: "platinum_equinox",
+        name: "Equinox Credit",
+        value: 300,
+        period: "annual",
+        description: "Receive up to $300 in statement credits annually for eligible Equinox memberships.",
+        redemptionInstructions: "Enrollment is required. Use your Platinum Card to pay for an Equinox All Access, Destination, E by Equinox, or Equinox+ membership. The credit is applied monthly based on your charges, up to the annual maximum of $300.",
+        appScheme: "equinox",
+        categories: ["Fitness", "Wellness"]
+      },
+      {
+        id: "platinum_saks",
+        name: "Saks Fifth Avenue Credit",
+        value: 50,
+        period: "semi_annual",
+        description: "Receive up to $50 in statement credits twice per year for purchases at Saks Fifth Avenue. This provides up to $100 in total value annually.",
+        redemptionInstructions: "Enrollment is required. The credit is split into two periods: January through June, and July through December. Use your Platinum Card at Saks in-store or online. A popular strategy is to purchase a $50 gift card in-store to use later if you don't have an immediate purchase to make. The credit does not apply to purchases at Saks OFF 5TH.",
+        appScheme: "saks",
+        categories: ["Shopping"]
+      },
+      {
+        id: "platinum_clear",
+        name: "CLEAR Plus Credit",
+        value: 189,
+        period: "annual",
+        description: "Receive up to $189 in statement credits per calendar year for a CLEAR Plus membership, which provides expedited security screening at select airports and stadiums.",
+        redemptionInstructions: "Enroll in CLEAR Plus and pay with your Platinum Card. The credit covers one annual CLEAR membership.",
+        appScheme: "clear",
+        categories: ["Travel", "Flights"]
+      },
+      {
+        id: "platinum_airline_fee",
+        name: "Airline Fee Credit",
+        value: 200,
+        period: "annual",
+        description: "Up to $200 in statement credits per calendar year for incidental fees with one selected qualifying airline.",
+        redemptionInstructions: "You must enroll and select one airline from the Amex website each year. This credit applies to incidental fees like checked bags, seat selection, and in-flight refreshments, but not directly to ticket purchases. Some users have found that certain charges under $100 or purchases for airline travel banks (e.g., United TravelBank) may trigger the credit, but these methods are not guaranteed. Plan to use it for standard fees to ensure reimbursement.",
+        appScheme: "amex",
+        categories: ["Travel", "Flights"]
+      },
+      {
+        id: "platinum_hotel_credit",
+        name: "Prepaid Hotel Credit",
+        value: 200,
+        period: "annual",
+        description: "Receive up to $200 back in statement credits each calendar year on prepaid bookings with Fine Hotels + Resorts® or The Hotel Collection made through American Express Travel.",
+        redemptionInstructions: "Book a prepaid stay through amextravel.com. For The Hotel Collection, a minimum two-night stay is required. The credit is automatically applied. This is in addition to the valuable on-site benefits (like room upgrades and property credits) that come with FHR and THC bookings.",
+        appScheme: "amex",
+        categories: ["Travel", "Lodging"]
       }
-    ]
+    ],
+    popularity: 5
   },
   {
     name: "Capital One Venture X",
@@ -364,112 +386,8 @@ export const cards: Card[] = [
         redemptionInstructions: "You must pay your monthly cell phone bill with your Venture X card to be eligible for this coverage. There is a $50 deductible per claim, and you can make up to two claims per 12-month period. To file a claim, contact the benefits administrator within 60 days of the incident.",
         categories: ["Insurance", "Shopping"]
       }
-    ]
-  },
-  {
-    name: "Blue Cash Preferred (AmEx)",
-    image: "/assets/cards/blue_cash_preferred.avif",
-    annualFee: 95,
-    benefits: [
-      {
-        id: "bcp_disney_bundle",
-        name: "Disney Bundle Credit",
-        value: 7,
-        period: "monthly",
-        description: "Get a $7 statement credit each month after you spend $9.99 or more on an eligible subscription to The Disney Bundle. This can reduce the cost of subscriptions that include Disney+, Hulu, and ESPN+.",
-        redemptionInstructions: "You must first enroll in the benefit through your American Express online account. Then, use your Blue Cash Preferred card to pay for your monthly Disney Bundle subscription of $9.99 or more. The statement credit will be applied automatically. Unused credits do not roll over.",
-        categories: ["Bills & Utilities", "Entertainment"]
-      }
-    ]
-  },
-  {
-    name: "Delta SkyMiles Reserve (AmEx)",
-    image: "/assets/cards/delta_reserve.avif",
-    annualFee: 650,
-    benefits: [
-      {
-        id: "delta_resy",
-        name: "Resy Dining Credit",
-        value: 20,
-        period: "monthly",
-        description: "Receive up to $20 in statement credits each month for eligible purchases at U.S. restaurants on Resy. This amounts to a total of up to $240 per calendar year.",
-        categories: ["Dining"],
-        appScheme: "resy",
-        redemptionInstructions: "Enrollment is required through your American Express online account. After enrolling, use your Delta Reserve card to pay at eligible U.S. restaurants that offer reservations through Resy.com or the Resy app. The credit is applied automatically. Unused monthly credits do not roll over."
-      },
-      {
-        id: "delta_rideshare",
-        name: "Rideshare Credit",
-        value: 10,
-        period: "monthly",
-        description: "Get up to $10 in statement credits each month on U.S. rideshare purchases with select providers, totaling up to $120 per year.",
-        categories: ["Transportation"],
-        redemptionInstructions: "Enrollment is required via your Amex account. Use your card to pay for eligible U.S. rideshare services like Uber, Lyft, Curb, Revel, and Alto. The credit is applied automatically. Unused monthly credits are forfeited."
-      },
-      {
-        id: "delta_stays",
-        name: "Delta Stays Credit",
-        value: 200,
-        period: "annual",
-        description: "Receive up to a $200 statement credit each calendar year for prepaid hotels or vacation rentals booked through the Delta Stays platform.",
-        categories: ["Travel"],
-        appScheme: "delta",
-        redemptionInstructions: "To redeem, book a prepaid hotel or vacation rental through delta.com/stays and pay with your Delta Reserve card. The credit is applied automatically to your statement. The credit resets each calendar year."
-      },
-      {
-        id: "delta_companion_certificate",
-        name: "Annual Companion Certificate",
-        value: 0,
-        period: "annual",
-        description: "Receive a Companion Certificate each year after your card renewal. This certificate is valid for one round-trip Main Cabin, Delta Comfort+, or First Class ticket for a companion traveling with you on the same itinerary.",
-        redemptionInstructions: "The certificate is deposited into your Delta SkyMiles account after your card anniversary. To use it, you must book through delta.com. The certificate is valid for travel within the 48 contiguous United States, and to select destinations in Alaska, Hawaii, Mexico, the Caribbean, and Central America. You are responsible for government-imposed taxes and fees on the companion ticket. Availability is subject to certain fare classes, so booking in advance provides the best chance of successful redemption.",
-        categories: ["Travel"]
-      },
-      {
-        id: "delta_sky_club_access",
-        name: "Delta Sky Club Access",
-        value: 0,
-        period: "ongoing",
-        description: "Receive 15 complimentary visits to the Delta Sky Club each year. You can unlock unlimited visits for the remainder of the year after spending $75,000 on the card in a calendar year. Also includes four one-time guest passes annually.",
-        categories: ["Travel"],
-        redemptionInstructions: "Access the Sky Club by presenting your valid Delta Reserve card and a same-day boarding pass for a Delta or partner airline flight. You also get complimentary access to The Centurion Lounge when you book your Delta flight with your Reserve Card."
-      },
-      {
-        id: "delta_global_entry",
-        name: "Global Entry or TSA PreCheck Credit",
-        value: 120,
-        period: "quadrennial",
-        description: "Receive a statement credit for the application fee for either Global Entry (up to $120 every 4 years) or TSA PreCheck (up to $85 every 4.5 years).",
-        categories: ["Travel"],
-        redemptionInstructions: "Pay the application fee for either program with your Delta Reserve card to receive the statement credit automatically. You do not need to be the one applying to use the credit."
-      }
-    ]
-  },
-  {
-    name: "American Express Green",
-    image: "/assets/cards/amex_green.avif",
-    annualFee: 150,
-    benefits: [
-      {
-        id: "green_clear",
-        name: "CLEAR Plus Credit Green",
-        value: 189,
-        period: "annual",
-        description: "Receive up to $189 in statement credits per calendar year, enough to cover the full cost of a CLEAR Plus membership for expedited airport security.",
-        redemptionInstructions: "Simply use your American Express Green card to pay for your CLEAR Plus membership. The statement credit will be applied automatically to your account, typically within 6-8 weeks. To maximize this benefit, ensure CLEAR is available at airports you frequently use.",
-        appScheme: "clear",
-        categories: ["Travel", "Flights"]
-      },
-      {
-        id: 'green_travel_rewards',
-        name: '3X Points on Travel, Transit & Dining',
-        value: 0,
-        period: 'ongoing',
-        description: 'Earn 3X Membership Rewards points on a broad range of categories. This includes travel (flights, hotels, car rentals, cruises, tours, third-party travel websites), transit (rideshares, subways, parking, tolls), and at restaurants worldwide.',
-        redemptionInstructions: 'Points are earned automatically when you use your card for purchases in these categories. This is a primary benefit of the card, and maximizing its value depends on using it for all eligible travel and dining expenses. Unlike some cards, the travel category is very broad and not limited to a specific travel portal.',
-        categories: ['Travel', 'Dining', 'Transportation', 'Rewards']
-      },
-    ]
+    ],
+    popularity: 6
   },
   {
     name: "Bank of America Premium Rewards",
@@ -503,7 +421,8 @@ export const cards: Card[] = [
         redemptionInstructions: "To receive this benefit, you must be enrolled in the Bank of America Preferred Rewards program, which requires having a qualifying Bank of America checking account and maintaining a combined three-month average daily balance. Gold Tier ($20k+ balance) gets a 25% bonus, Platinum ($50k+) gets a 50% bonus, and Platinum Honors ($100k+) gets a 75% bonus. The bonus is applied automatically to the points you earn.",
         categories: ["Rewards"]
       }
-    ]
+    ],
+    popularity: 7
   },
   {
     name: "Bank of America Premium Rewards Elite",
@@ -623,7 +542,8 @@ export const cards: Card[] = [
         redemptionInstructions: "No activation is needed. Simply use your card for travel purchases, including airfare, hotels, car rentals, cruise lines, travel agencies, taxis, ride-hailing services, tolls, and parking. The credit is automatically applied to your statement until you have received the full $250. The benefit resets on January 1st each year.",
         categories: ["Travel"]
       }
-    ]
+    ],
+    popularity: 10
   },
   {
     name: "Hilton Honors Aspire",
@@ -686,7 +606,8 @@ export const cards: Card[] = [
         categories: ["Travel"],
         redemptionInstructions: "To receive this credit, you must book your stay through HiltonHonors.com/aspirecard or by calling the number on the back of your card and booking the specific 'Aspire Card' rate. The credit can be used for on-property expenses such as dining and spa services."
       }
-    ]
+    ],
+    popularity: 11
   },
   {
     name: "Marriott Bonvoy Brilliant",
@@ -712,6 +633,98 @@ export const cards: Card[] = [
         ],
         redemptionInstructions: "The Free Night Award will be automatically deposited into your Marriott Bonvoy account 8-12 weeks after your card renewal month. To use it, log in to your Marriott Bonvoy account and select the award at the time of booking. The award expires one year from the date of issuance. Be aware that some properties may charge resort fees, which are not covered by the award."
       },
-    ]
+    ],
+    popularity: 12
+  },
+  {
+    name: "Delta SkyMiles Reserve (AmEx)",
+    image: "/assets/cards/delta_reserve.avif",
+    annualFee: 650,
+    benefits: [
+      {
+        id: "delta_resy",
+        name: "Resy Dining Credit",
+        value: 20,
+        period: "monthly",
+        description: "Receive up to $20 in statement credits each month for eligible purchases at U.S. restaurants on Resy. This amounts to a total of up to $240 per calendar year.",
+        categories: ["Dining"],
+        appScheme: "resy",
+        redemptionInstructions: "Enrollment is required through your American Express online account. After enrolling, use your Delta Reserve card to pay at eligible U.S. restaurants that offer reservations through Resy.com or the Resy app. The credit is applied automatically. Unused monthly credits do not roll over."
+      },
+      {
+        id: "delta_rideshare",
+        name: "Rideshare Credit",
+        value: 10,
+        period: "monthly",
+        description: "Get up to $10 in statement credits each month on U.S. rideshare purchases with select providers, totaling up to $120 per year.",
+        categories: ["Transportation"],
+        redemptionInstructions: "Enrollment is required via your Amex account. Use your card to pay for eligible U.S. rideshare services like Uber, Lyft, Curb, Revel, and Alto. The credit is applied automatically. Unused monthly credits are forfeited."
+      },
+      {
+        id: "delta_stays",
+        name: "Delta Stays Credit",
+        value: 200,
+        period: "annual",
+        description: "Receive up to a $200 statement credit each calendar year for prepaid hotels or vacation rentals booked through the Delta Stays platform.",
+        categories: ["Travel"],
+        appScheme: "delta",
+        redemptionInstructions: "To redeem, book a prepaid hotel or vacation rental through delta.com/stays and pay with your Delta Reserve card. The credit is applied automatically to your statement. The credit resets each calendar year."
+      },
+      {
+        id: "delta_companion_certificate",
+        name: "Annual Companion Certificate",
+        value: 0,
+        period: "annual",
+        description: "Receive a Companion Certificate each year after your card renewal. This certificate is valid for one round-trip Main Cabin, Delta Comfort+, or First Class ticket for a companion traveling with you on the same itinerary.",
+        redemptionInstructions: "The certificate is deposited into your Delta SkyMiles account after your card anniversary. To use it, you must book through delta.com. The certificate is valid for travel within the 48 contiguous United States, and to select destinations in Alaska, Hawaii, Mexico, the Caribbean, and Central America. You are responsible for government-imposed taxes and fees on the companion ticket. Availability is subject to certain fare classes, so booking in advance provides the best chance of successful redemption.",
+        categories: ["Travel"]
+      },
+      {
+        id: "delta_sky_club_access",
+        name: "Delta Sky Club Access",
+        value: 0,
+        period: "ongoing",
+        description: "Receive 15 complimentary visits to the Delta Sky Club each year. You can unlock unlimited visits for the remainder of the year after spending $75,000 on the card in a calendar year. Also includes four one-time guest passes annually.",
+        categories: ["Travel"],
+        redemptionInstructions: "Access the Sky Club by presenting your valid Delta Reserve card and a same-day boarding pass for a Delta or partner airline flight. You also get complimentary access to The Centurion Lounge when you book your Delta flight with your Reserve Card."
+      },
+      {
+        id: "delta_global_entry",
+        name: "Global Entry or TSA PreCheck Credit",
+        value: 120,
+        period: "quadrennial",
+        description: "Receive a statement credit for the application fee for either Global Entry (up to $120 every 4 years) or TSA PreCheck (up to $85 every 4.5 years).",
+        categories: ["Travel"],
+        redemptionInstructions: "Pay the application fee for either program with your Delta Reserve card to receive the statement credit automatically. You do not need to be the one applying to use the credit."
+      }
+    ],
+    popularity: 13
+  },
+  {
+    name: "American Express Green",
+    image: "/assets/cards/amex_green.avif",
+    annualFee: 150,
+    benefits: [
+      {
+        id: "green_clear",
+        name: "CLEAR Plus Credit Green",
+        value: 189,
+        period: "annual",
+        description: "Receive up to $189 in statement credits per calendar year, enough to cover the full cost of a CLEAR Plus membership for expedited airport security.",
+        redemptionInstructions: "Simply use your American Express Green card to pay for your CLEAR Plus membership. The statement credit will be applied automatically to your account, typically within 6-8 weeks. To maximize this benefit, ensure CLEAR is available at airports you frequently use.",
+        appScheme: "clear",
+        categories: ["Travel", "Flights"]
+      },
+      {
+        id: 'green_travel_rewards',
+        name: '3X Points on Travel, Transit & Dining',
+        value: 0,
+        period: 'ongoing',
+        description: 'Earn 3X Membership Rewards points on a broad range of categories. This includes travel (flights, hotels, car rentals, cruises, tours, third-party travel websites), transit (rideshares, subways, parking, tolls), and at restaurants worldwide.',
+        redemptionInstructions: 'Points are earned automatically when you use your card for purchases in these categories. This is a primary benefit of the card, and maximizing its value depends on using it for all eligible travel and dining expenses. Unlike some cards, the travel category is very broad and not limited to a specific travel portal.',
+        categories: ['Travel', 'Dining', 'Transportation', 'Rewards']
+      }
+    ],
+    popularity: 14
   }
 ]; 
