@@ -25,15 +25,15 @@ export function Scrollytelling() {
   const targetRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
-    offset: ["start start", "end end"],
+    offset: ["start center", "end end"],
   });
 
   return (
-    <section ref={targetRef} className="relative h-[300vh] bg-white">
+    <section ref={targetRef} className="relative h-[200vh] bg-white">
       <div className="sticky top-0 h-screen flex flex-col md:flex-row items-center justify-center overflow-hidden">
         <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8 md:gap-16 h-full">
           {/* Left: Text Content */}
-          <div className="w-full md:w-1/2 flex flex-col justify-center h-1/2 md:h-full text-center md:text-left">
+          <div className="w-full md:w-1/2 flex flex-col justify-center h-2/5 md:h-full text-center md:text-left">
             {scrollytellingData.map((step, i) => {
               const stepProgress = useTransform(
                 scrollYProgress,
@@ -57,7 +57,7 @@ export function Scrollytelling() {
           </div>
 
           {/* Right: Sticky Phone Mockup */}
-          <div className="w-full md:w-1/2 flex justify-center items-center h-1/2 md:h-full">
+          <div className="w-full md:w-1/2 flex justify-center items-center h-3/5 md:h-full">
             <div className="relative w-[250px] h-[500px] md:w-[360px] md:h-[640px]">
               {scrollytellingData.map((step, i) => {
                 const stepProgress = useTransform(

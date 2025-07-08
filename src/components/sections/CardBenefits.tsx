@@ -74,7 +74,7 @@ export function CardBenefits() {
 
   return (
     <section id="cards" className="py-24 bg-gray-50 overflow-hidden">
-      <div className="container px-4 mx-auto">
+      <div className="container px-0 md:px-4 mx-auto">
         <motion.div
           variants={fadeIn}
           initial="hidden"
