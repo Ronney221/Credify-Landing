@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
 import { Text } from "../ui/Text";
 import { ScrollReveal } from "../ui/ScrollReveal";
+import { cn } from "../../lib/utils";
 
 interface PartnerLogo {
   name: string;
@@ -37,8 +39,27 @@ const PARTNER_LOGOS: PartnerLogo[] = [
 ];
 
 export function PartnerLogos() {
-  const firstHalf = PARTNER_LOGOS.slice(0, Math.ceil(PARTNER_LOGOS.length / 2));
-  const secondHalf = PARTNER_LOGOS.slice(Math.ceil(PARTNER_LOGOS.length / 2));
+  const [highlightedIndices, setHighlightedIndices] = useState<Set<number>>(new Set());
+
+  useEffect(() => {
+    const totalLogos = PARTNER_LOGOS.length;
+    // Ensure at least 1 in 4 logos are highlighted
+    const numToHighlight = Math.ceil(totalLogos / 4);
+
+    // Create an array of all indices [0, 1, ..., n-1]
+    const allIndices = Array.from(Array(totalLogos).keys());
+
+    // Shuffle the indices using Fisher-Yates algorithm for robust randomization
+    for (let i = allIndices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [allIndices[i], allIndices[j]] = [allIndices[j], allIndices[i]];
+    }
+
+    // Take the first `numToHighlight` indices from the shuffled array
+    const highlighted = new Set(allIndices.slice(0, numToHighlight));
+
+    setHighlightedIndices(highlighted);
+  }, []);
 
   return (
     <section className="py-12 lg:py-24 bg-white">
@@ -55,7 +76,7 @@ export function PartnerLogos() {
 
       {/* Desktop: Infinite Scroll */}
       <div className="hidden md:block relative w-full overflow-hidden">
-        <div className="flex gap-8 animate-scroll">
+        <div className="flex gap-12 animate-scroll">
           {[...PARTNER_LOGOS, ...PARTNER_LOGOS].map((logo, index) => (
             <motion.div
               key={`${logo.name}-${index}`}
@@ -66,7 +87,12 @@ export function PartnerLogos() {
                 <img
                   src={logo.svg}
                   alt={logo.name}
-                  className="w-16 h-16 object-contain transition-all duration-300 grayscale group-hover:grayscale-0 opacity-60 group-hover:opacity-100"
+                  className={cn(
+                    "w-16 h-16 object-contain transition-all duration-300 opacity-60 group-hover:opacity-100 group-active:opacity-100 group-hover:grayscale-0 group-active:grayscale-0",
+                    highlightedIndices.has(index % PARTNER_LOGOS.length)
+                      ? "grayscale-0"
+                      : "grayscale"
+                  )}
                 />
               </div>
             </motion.div>
@@ -76,56 +102,38 @@ export function PartnerLogos() {
         <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent pointer-events-none" />
       </div>
 
-      {/* Mobile: Independent Swipeable Rows */}
-      <div className="md:hidden flex flex-col gap-8">
-        {/* First Row */}
-        <div className="relative w-full overflow-hidden">
-          <div className="overflow-x-auto hide-scrollbar">
-            <div className="flex gap-8 min-w-max px-4">
-              {firstHalf.map((logo) => (
-                <motion.div
-                  key={logo.name}
-                  className="flex-none w-20 h-20 relative group"
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <img
-                      src={logo.svg}
-                      alt={logo.name}
-                      className="w-12 h-12 object-contain transition-all duration-300 grayscale group-hover:grayscale-0 group-active:grayscale-0 opacity-60 group-hover:opacity-100 group-active:opacity-100"
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
+      {/* Mobile: A Single, Correctly Clipped Scrollable Row */}
+      <div className="md:hidden">
+        <div
+          className="relative w-full overflow-x-auto hide-scrollbar"
+          style={{
+            // The mask property is a more direct way to apply gradients as a mask
+            maskImage:
+              "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+          }}
+        >
+          <div className="flex min-w-max items-center">
+            {[...PARTNER_LOGOS, ...PARTNER_LOGOS, ...PARTNER_LOGOS].map((logo, index) => (
+              <motion.div
+                key={`${logo.name}-${index}`}
+                className="flex-none w-24 h-24 relative group mr-6" // Increased size & spacing
+                whileTap={{ scale: 0.95 }}
+              >
+                <div className="absolute inset-0 flex items-center justify-center">
+                  <img
+                    src={logo.svg}
+                    alt={logo.name}
+                    className={cn(
+                      "w-16 h-16 object-contain transition-all duration-300 opacity-60 group-hover:opacity-100 group-active:opacity-100 group-hover:grayscale-0 group-active:grayscale-0",
+                      highlightedIndices.has(index % PARTNER_LOGOS.length)
+                        ? "grayscale-0"
+                        : "grayscale"
+                    )}
+                  />
+                </div>
+              </motion.div>
+            ))}
           </div>
-          <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white to-transparent pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-white to-transparent pointer-events-none" />
-        </div>
-
-        {/* Second Row */}
-        <div className="relative w-full overflow-hidden">
-          <div className="overflow-x-auto hide-scrollbar">
-            <div className="flex gap-8 min-w-max px-4">
-              {secondHalf.map((logo) => (
-                <motion.div
-                  key={logo.name}
-                  className="flex-none w-20 h-20 relative group"
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <img
-                      src={logo.svg}
-                      alt={logo.name}
-                      className="w-12 h-12 object-contain transition-all duration-300 grayscale group-hover:grayscale-0 group-active:grayscale-0 opacity-60 group-hover:opacity-100 group-active:opacity-100"
-                    />
-                  </div>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-          <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-white to-transparent pointer-events-none" />
-          <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-white to-transparent pointer-events-none" />
         </div>
       </div>
     </section>
