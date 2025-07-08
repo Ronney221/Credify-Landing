@@ -110,3 +110,23 @@ body {
 .hide-scrollbar::-webkit-scrollbar {
   display: none;  /* Chrome, Safari and Opera */
 }
+
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-scroll {
+  animation: scroll 40s linear infinite;
+  width: fit-content;
+  display: flex;
+  gap: 2rem;
+}
+
+.animate-scroll:hover {
+  animation-play-state: paused;
+}
