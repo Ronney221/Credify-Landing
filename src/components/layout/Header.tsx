@@ -20,7 +20,7 @@ export function Header() {
   const scrollTo = useScrollTo();
 
   const handleDownload = () => {
-    window.open('https://testflight.apple.com/join/your-testflight-link', '_blank');
+    window.open('https://testflight.apple.com/join/xtFTgddM', '_blank');
   };
 
   return (
