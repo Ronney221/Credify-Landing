@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Text } from "../ui/Text";
 import { fadeIn } from "../../lib/animations";
@@ -7,7 +7,9 @@ import { CardGrid } from "./CardGrid";
 import { PerkList } from "./PerkList";
 
 export function CardBenefits() {
-  const [selectedCardIndex, setSelectedCardIndex] = useState(0);
+  // Find the index of Amex Platinum or default to first card
+  const defaultCardIndex = cards.findIndex(card => card.name === "American Express Platinum") || 0;
+  const [selectedCardIndex, setSelectedCardIndex] = useState(defaultCardIndex);
 
   const calculateAnnualValue = (value: number, period: string) => {
     switch (period) {
@@ -54,22 +56,24 @@ export function CardBenefits() {
         </div>
 
         <div className="max-w-3xl mx-auto">
-          <motion.div
-            key={selectedCardIndex}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
-          >
-            <div className="mb-8">
-              <Text variant="h3" as="h3" className="mb-2">{currentCard.name}</Text>
-              <Text variant="body" className="text-gray-600">
-                Annual Fee: ${currentCard.annualFee} | Est. Annual Value: <span className="font-bold text-green-600">${totalAnnualValue}</span>
-              </Text>
-            </div>
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={selectedCardIndex}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -20 }}
+              transition={{ duration: 0.2, ease: "easeInOut" }}
+            >
+              <div className="mb-8">
+                <Text variant="h3" as="h3" className="mb-2">{currentCard.name}</Text>
+                <Text variant="body" className="text-gray-600">
+                  Annual Fee: ${currentCard.annualFee} | Est. Annual Value: <span className="font-bold text-green-600">${totalAnnualValue}</span>
+                </Text>
+              </div>
 
-            <PerkList perks={currentCard.benefits} />
-          </motion.div>
+              <PerkList perks={currentCard.benefits} />
+            </motion.div>
+          </AnimatePresence>
         </div>
       </div>
     </section>

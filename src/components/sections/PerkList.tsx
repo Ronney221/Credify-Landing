@@ -31,20 +31,34 @@ export function PerkList({ perks }: PerkListProps) {
   const [expandedPerkId, setExpandedPerkId] = useState<string | null>(null);
 
   return (
-    <div className="space-y-2">
+    <motion.div 
+      className="space-y-2"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.2, delay: 0.1 }}
+    >
       {perks.map((perk) => (
-        <div
+        <motion.div
           key={perk.id}
-          className="border rounded-lg overflow-hidden bg-white"
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
+          className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-200"
         >
           <button
             onClick={() => setExpandedPerkId(expandedPerkId === perk.id ? null : perk.id)}
-            className="w-full p-4 flex items-center justify-between hover:bg-gray-50"
+            className="w-full p-4 flex items-center justify-between hover:bg-gray-50 transition-colors duration-200"
           >
             <div className="flex items-center gap-4">
               <div className="flex gap-2">
                 {perk.categories.map(cat => (
-                  <PerkIcon key={cat} category={cat} />
+                  <motion.div
+                    key={cat}
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 0.95 }}
+                  >
+                    <PerkIcon category={cat} />
+                  </motion.div>
                 ))}
               </div>
               <Text variant="body" className="font-semibold">{perk.name}</Text>
@@ -53,24 +67,42 @@ export function PerkList({ perks }: PerkListProps) {
               <Text variant="body" className="font-bold text-gray-800 whitespace-nowrap">
                 {formatValue(perk.value, perk.period)}
               </Text>
-              <ChevronDown
-                className={cn(
-                  "w-5 h-5 transition-transform",
-                  expandedPerkId === perk.id ? "rotate-180" : ""
-                )}
-              />
+              <motion.div
+                animate={{ rotate: expandedPerkId === perk.id ? 180 : 0 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+              >
+                <ChevronDown className="w-5 h-5" />
+              </motion.div>
             </div>
           </button>
           <AnimatePresence>
             {expandedPerkId === perk.id && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
-                animate={{ height: "auto", opacity: 1 }}
-                exit={{ height: 0, opacity: 0 }}
-                transition={{ duration: 0.2 }}
+                animate={{ 
+                  height: "auto", 
+                  opacity: 1,
+                  transition: {
+                    height: { duration: 0.2, ease: "easeOut" },
+                    opacity: { duration: 0.15, delay: 0.05 }
+                  }
+                }}
+                exit={{ 
+                  height: 0, 
+                  opacity: 0,
+                  transition: {
+                    height: { duration: 0.2, ease: "easeIn" },
+                    opacity: { duration: 0.1 }
+                  }
+                }}
                 className="border-t"
               >
-                <div className="p-4 space-y-2">
+                <motion.div 
+                  className="p-4 space-y-2"
+                  initial={{ y: -10 }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 0.2 }}
+                >
                   <Text variant="body" className="text-gray-600">
                     {perk.description}
                   </Text>
@@ -79,12 +111,12 @@ export function PerkList({ perks }: PerkListProps) {
                       <span className="font-semibold">How to redeem:</span> {perk.redemptionInstructions}
                     </Text>
                   )}
-                </div>
+                </motion.div>
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        </motion.div>
       ))}
-    </div>
+    </motion.div>
   );
 } 
