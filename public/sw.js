@@ -8,6 +8,12 @@ const STATIC_ASSETS = [
   '/assets/screenshots/preview.png'
 ];
 
+// Analytics and tracking scripts that should bypass the service worker
+const BYPASS_URLS = [
+  'plausible.io',
+  '/_vercel/insights/script.js'
+];
+
 // Install event - cache static assets
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -32,6 +38,12 @@ self.addEventListener('activate', (event) => {
 
 // Fetch event - serve from cache, fallback to network
 self.addEventListener('fetch', (event) => {
+  // Check if the request is for an analytics script
+  if (BYPASS_URLS.some(url => event.request.url.includes(url))) {
+    // Don't handle analytics scripts - let them go straight to network
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request).then((response) => {
       // Cache hit - return response
