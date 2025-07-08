@@ -8,17 +8,17 @@ const scrollytellingData = [
   {
     title: "Maximize Your Value",
     description: "Credify's dashboard gives you a real-time view of your total rewards and return on investment, so you always know where you stand.",
-    image: "/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 1.png",
+    image: "/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 5.png",
   },
   {
     title: "Claim Every Perk",
     description: "Get smart reminders for monthly, quarterly, and annual credits for things like dining, travel, and entertainment before they expire.",
-    image: "/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 3.png",
+    image: "/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 6.png",
   },
   {
     title: "Smart, Actionable Advice",
     description: "Receive personalized recommendations on which card to use for your purchases to maximize your points and cash back.",
-    image: "/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 4.png",
+    image: "/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 8.png",
   },
 ];
 
