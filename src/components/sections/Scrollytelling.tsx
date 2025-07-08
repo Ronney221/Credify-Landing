@@ -2,6 +2,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { Text } from "../ui/Text";
 import { BlurImage } from "../ui/BlurImage";
+import { cn } from "@/lib/utils";
 
 const scrollytellingData = [
   {
@@ -21,73 +22,57 @@ const scrollytellingData = [
   },
 ];
 
-export function Scrollytelling() {
-  const targetRef = useRef(null);
+const FeatureItem = ({
+  title,
+  description,
+  image,
+  isReversed,
+}: (typeof scrollytellingData)[0] & { isReversed: boolean }) => {
+  const ref = useRef(null);
   const { scrollYProgress } = useScroll({
-    target: targetRef,
-    offset: ["start center", "end end"],
+    target: ref,
+    offset: ["start end", "end start"],
   });
+  const y = useTransform(scrollYProgress, [0, 1], [-50, 50]);
 
   return (
-    <section ref={targetRef} className="relative h-[200vh] bg-white">
-      <div className="sticky top-0 h-screen flex flex-col md:flex-row items-center justify-center overflow-hidden">
-        <div className="container mx-auto px-4 flex flex-col md:flex-row items-center gap-8 md:gap-16 h-full">
-          {/* Left: Text Content */}
-          <div className="w-full md:w-1/2 flex flex-col justify-center h-2/5 md:h-full text-center md:text-left">
-            {scrollytellingData.map((step, i) => {
-              const stepProgress = useTransform(
-                scrollYProgress,
-                [i / scrollytellingData.length, (i + 1) / scrollytellingData.length],
-                [0, 1]
-              );
-              const opacity = useTransform(stepProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-              const y = useTransform(stepProgress, [0, 0.2, 0.8, 1], [30, 0, 0, -30]);
-
-              return (
-                <motion.div
-                  key={i}
-                  style={{ opacity, y }}
-                  className="absolute"
-                >
-                  <Text variant="h2" as="h2" className="mb-6">{step.title}</Text>
-                  <Text variant="subtitle">{step.description}</Text>
-                </motion.div>
-              );
-            })}
-          </div>
-
-          {/* Right: Sticky Phone Mockup */}
-          <div className="w-full md:w-1/2 flex justify-center items-center h-3/5 md:h-full">
-            <div className="relative w-[250px] h-[500px] md:w-[360px] md:h-[640px]">
-              {scrollytellingData.map((step, i) => {
-                const stepProgress = useTransform(
-                  scrollYProgress,
-                  [i / scrollytellingData.length, (i + 1) / scrollytellingData.length],
-                  [0, 1]
-                );
-                const scale = useTransform(stepProgress, [0, 0.2, 0.8, 1], [0.9, 1, 1, 0.9]);
-                const opacity = useTransform(stepProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
-
-                return (
-                  <motion.div
-                    key={step.image}
-                    style={{ opacity, scale }}
-                    className="absolute inset-0"
-                  >
-                    <BlurImage
-                      src={step.image}
-                      alt={step.title}
-                      width={360}
-                      height={640}
-                      className="rounded-[32px] shadow-2xl w-full h-full object-cover"
-                    />
-                  </motion.div>
-                );
-              })}
-            </div>
+    <motion.div
+      ref={ref}
+      initial={{ opacity: 0, y: 50 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      viewport={{ once: true, amount: 0.3 }}
+      className="container mx-auto px-4 py-16 md:py-24"
+    >
+      <div className="grid md:grid-cols-2 gap-12 md:gap-24 items-center">
+        <div className={cn("text-center md:text-left", isReversed && "md:order-last")}>
+          <Text variant="h2" as="h2" className="mb-6">{title}</Text>
+          <Text variant="subtitle">{description}</Text>
+        </div>
+        <div className="flex justify-center">
+          <div className="relative w-[250px] h-[500px] md:w-[300px] md:h-[600px] rounded-[32px] overflow-hidden">
+            <motion.div style={{ y }}>
+              <BlurImage
+                src={image}
+                alt={title}
+                width={300}
+                height={600}
+                className="shadow-2xl w-full h-full object-cover"
+              />
+            </motion.div>
           </div>
         </div>
       </div>
+    </motion.div>
+  );
+};
+
+export function Scrollytelling() {
+  return (
+    <section className="bg-white">
+      {scrollytellingData.map((item, index) => (
+        <FeatureItem key={item.title} {...item} isReversed={index % 2 !== 0} />
+      ))}
     </section>
   );
 } 
