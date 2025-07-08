@@ -73,15 +73,15 @@ export function CardBenefits() {
   const currentCard = cards[selectedCardIndex];
 
   return (
-    <section id="cards" className="py-24 bg-gray-50 overflow-hidden">
-      <div className="container px-0 md:px-4 mx-auto">
+    <section id="cards" className="py-24 overflow-hidden">
+      <div className="container px-0 mx-auto">
         <motion.div
           variants={fadeIn}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center mb-16"
+          className="text-center mb-16 px-4"
         >
           <Text variant="h2" as="h2" className="mb-4">
             Maximize Your Card Benefits
@@ -91,9 +91,11 @@ export function CardBenefits() {
           </Text>
         </motion.div>
 
-        <CardRiverShowcase />
+        <div className="-mx-4 md:mx-0">
+          <CardRiverShowcase />
+        </div>
 
-        <div className="mt-24 max-w-5xl mx-auto">
+        <div className="mt-24 max-w-5xl mx-auto px-4">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             {/* Left side: Card Carousel */}
             <div className="relative h-[250px] sm:h-[300px]">
