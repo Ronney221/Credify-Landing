@@ -1,5 +1,15 @@
 import { Github, Twitter, Linkedin } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { createClient } from '@supabase/supabase-js';
+
+// Initialize Supabase client
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
 
 interface FooterProps {
   className?: string;
@@ -39,10 +49,40 @@ const legalLinks = [
 ];
 
 export function Footer({ className }: FooterProps) {
+  const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const handleSubscribe = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setStatus("loading");
+    setErrorMessage("");
+
+    try {
+      const { error } = await supabase
+        .from('waitlist')
+        .insert([
+          {
+            email,
+            platform: 'both',
+            marketing_consent: true
+          }
+        ]);
+
+      if (error) throw error;
+      
+      setStatus("success");
+      setEmail("");
+    } catch (err) {
+      setStatus("error");
+      setErrorMessage(err instanceof Error ? err.message : "Failed to subscribe");
+    }
+  };
+
   return (
     <footer className={cn("py-12 bg-slate-950", className)}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12 pb-8 border-b border-white/10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-12 pb-8 border-b border-white/10">
           <div>
             <h3 className="font-semibold text-white mb-4">About Credify</h3>
             <p className="text-sm text-white/60 leading-relaxed">
@@ -80,6 +120,37 @@ export function Footer({ className }: FooterProps) {
                 </li>
               ))}
             </ul>
+          </div>
+          <div>
+            <h3 className="font-semibold text-white mb-4">Stay Updated</h3>
+            <form onSubmit={handleSubscribe} className="space-y-3">
+              <div>
+                <Input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
+                  className="bg-white/5 border-white/10 text-white placeholder:text-white/40"
+                />
+              </div>
+              <Button 
+                type="submit"
+                disabled={status === "loading"}
+                className="w-full bg-white text-slate-950 hover:bg-white/90"
+              >
+                {status === "loading" ? "Subscribing..." : "Subscribe"}
+              </Button>
+              {status === "success" && (
+                <p className="text-sm text-green-400">Thanks for subscribing!</p>
+              )}
+              {status === "error" && (
+                <p className="text-sm text-red-400">{errorMessage}</p>
+              )}
+              <p className="text-xs text-white/40">
+                By subscribing, you agree to receive Credify updates. Unsubscribe anytime.
+              </p>
+            </form>
           </div>
         </div>
         <div className="pt-8 text-center text-sm text-white/40">
