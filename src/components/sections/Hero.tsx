@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 import { BlurImage } from "../ui/BlurImage";
 import { Text } from "../ui/Text";
 import { fadeIn, fadeInUp, scaleIn, transition } from "../../lib/animations";
-import { WaitlistForm } from "../forms/WaitlistForm";
+import { WaitlistDialog } from "../ui/WaitlistDialog";
 
 // Partner logos for the animated background
 const partnerLogos = [
@@ -16,6 +17,8 @@ const partnerLogos = [
 ];
 
 export function Hero() {
+  const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+
   return (
     <section id="hero" className="relative min-h-[100dvh] overflow-hidden">
       {/* Animated Partner Logos Background */}
@@ -168,7 +171,7 @@ export function Hero() {
               </div>
             </motion.a>
             <motion.button
-              onClick={() => document.getElementById('android-waitlist')?.click()}
+              onClick={() => setIsWaitlistOpen(true)}
               whileHover={{ scale: 1.03, y: -2 }}
               whileTap={{ scale: 0.98 }}
               className="flex-1 flex items-center justify-center px-3 py-3 bg-black/10 text-gray-900 rounded-xl hover:bg-black/15 transition-colors shadow-lg hover:shadow-xl"
@@ -182,6 +185,12 @@ export function Hero() {
           </motion.div>
         </div>
       </div>
+
+      {/* Waitlist Dialog */}
+      <WaitlistDialog
+        isOpen={isWaitlistOpen}
+        onClose={() => setIsWaitlistOpen(false)}
+      />
     </section>
   );
 } 

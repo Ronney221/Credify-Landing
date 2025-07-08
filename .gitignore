@@ -27,3 +27,5 @@ todo.md
 todo2.md
 
 .vercel
+.env
+sql/waitlist_schema.sql
