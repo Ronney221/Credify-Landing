@@ -9,7 +9,7 @@ const steps = [
     description: "Simply choose the credit cards you own from our comprehensive list. No sensitive information required.",
   },
   {
-    icon: "✨",
+    icon: "📊",
     title: "Unified Dashboard",
     description: "See all your credit card perks in one place. Monthly, quarterly, and annual benefits tracked automatically.",
   },
@@ -19,7 +19,7 @@ const steps = [
     description: "Our AI tracks your card's built-in annual benefits and sends you intelligent, timely notifications so you never miss a perk.",
   },
   {
-    icon: "✅",
+    icon: "🎁",
     title: "Redeem With a Tap",
     description: "Follow simple deep-links that take you directly to the partner app or website to easily redeem your benefits.",
   },
@@ -55,7 +55,19 @@ export function HowItWorks() {
               transition={{ delay: index * 0.2 }}
               className="text-center"
             >
-              <div className="text-5xl mb-4">{step.icon}</div>
+              <motion.div
+                animate={{
+                  rotate: [0, -5, 5, -5, 0],
+                }}
+                transition={{
+                  duration: 4,
+                  ease: "easeInOut",
+                  repeat: Infinity,
+                  repeatDelay: 1 + Math.random() * 2,
+                }}
+              >
+                <div className="text-5xl mb-4">{step.icon}</div>
+              </motion.div>
               <Text variant="h4" as="h3" className="mb-3">
                 {step.title}
               </Text>

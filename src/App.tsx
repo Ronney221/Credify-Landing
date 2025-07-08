@@ -5,7 +5,7 @@ import { Hero } from "./components/sections/Hero";
 import { HowItWorks } from "./components/sections/HowItWorks";
 import { PartnerLogos } from "./components/sections/PartnerLogos";
 import { Scrollytelling } from "./components/sections/Scrollytelling";
-import { TheProblem } from "./components/sections/TheProblem";
+import { PrivacyFirst } from "./components/sections/PrivacyFirst";
 import { RootLayout } from "./components/layout/RootLayout";
 import { Testimonials } from "./components/sections/Testimonials";
 
@@ -18,7 +18,7 @@ function App() {
       {/* 5. Partner Logos for Credibility */}
       <PartnerLogos />
       {/* 2. The Pain & The Numbers - Hit them with powerful statistics */}
-      <TheProblem />
+      <PrivacyFirst />
       
       {/* 3. The Concrete Solution - Show the tangible value */}
       <CardBenefits />
