@@ -29,3 +29,5 @@ todo2.md
 .vercel
 .env
 sql/waitlist_schema.sql
+supabase/migrations/20240321_create_feedback_table.sql
+supabase/migrations/20240321_add_screenshots_to_feedback.sql

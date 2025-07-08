@@ -8,7 +8,6 @@ import { Scrollytelling } from "./components/sections/Scrollytelling";
 import { PrivacyFirst } from "./components/sections/PrivacyFirst";
 import { RootLayout } from "./components/layout/RootLayout";
 import { Testimonials } from "./components/sections/Testimonials";
-import { Analytics } from "@vercel/analytics/next";
 
 function App() {
   return (
@@ -36,7 +35,6 @@ function App() {
       
       {/* 8. FAQ - Address remaining questions */}
       <FAQ />
-      <Analytics />
     </RootLayout>
   );
 }

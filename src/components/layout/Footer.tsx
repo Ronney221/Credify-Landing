@@ -3,13 +3,8 @@ import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { createClient } from '@supabase/supabase-js';
-
-// Initialize Supabase client
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+import { supabase } from '../../lib/supabase';
+import { FeedbackForm } from "../forms/FeedbackForm";
 
 interface FooterProps {
   className?: string;
@@ -119,6 +114,9 @@ export function Footer({ className }: FooterProps) {
                   </a>
                 </li>
               ))}
+              <li className="mt-4">
+                <FeedbackForm className="text-sm text-white/60 hover:text-white transition-colors bg-transparent hover:bg-white/5 border-white/10 w-full" />
+              </li>
             </ul>
           </div>
           <div>
