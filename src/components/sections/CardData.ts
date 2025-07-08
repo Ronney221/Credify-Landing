@@ -173,23 +173,6 @@ export const cards: Card[] = [
     ]
   },
   {
-    name: "American Express Green",
-    image: "/assets/cards/amex_green.avif",
-    annualFee: 150,
-    benefits: [
-      {
-        id: "amex_green_clear",
-        name: "CLEAR Plus Credit",
-        value: 189,
-        period: "annual",
-        description: "Receive up to $189 in statement credits per calendar year for a CLEAR Plus membership, which provides expedited security screening at select airports and stadiums.",
-        redemptionInstructions: "Enroll in CLEAR Plus and pay with your Green Card. The credit covers one annual CLEAR membership.",
-        appScheme: "clear",
-        categories: ["Travel", "Flights"]
-      }
-    ]
-  },
-  {
     name: "Chase Sapphire Reserve",
     image: "/assets/cards/chase_sapphire_reserve.png",
     annualFee: 795,
@@ -270,8 +253,8 @@ export const cards: Card[] = [
         value: 10,
         period: "monthly",
         description: "$10 in-app Lyft ride credit each month. Plus earn 5x points on Lyft rides through September 30, 2027.",
-        redemptionInstructions: "Add your Sapphire Reserve as the payment method in the Lyft app. Credit appears automatically and applies to your next ride(s).",
         appScheme: "lyft",
+        redemptionInstructions: "Add your Sapphire Reserve as the payment method in the Lyft app. Credit appears automatically and applies to your next ride(s).",
         categories: ["Transportation"]
       },
       {
@@ -282,6 +265,15 @@ export const cards: Card[] = [
         description: "Complimentary subscriptions to Apple TV+ and Apple Music, positioned as a $250 annual value.",
         redemptionInstructions: "Requires a one-time activation for each service through chase.com or the Chase Mobile app.",
         categories: ["Lifestyle", "Entertainment"]
+      },
+      {
+        id: "csr_trusted_traveler_credit",
+        name: "Global Entry / TSA PreCheck / NEXUS Credit",
+        value: 120,
+        period: "quadrennial",
+        description: "Receive a statement credit of up to $120 once every four years for the application fee for Global Entry, TSA PreCheck, or NEXUS.",
+        redemptionInstructions: "Charge the application fee to your card to receive the statement credit automatically.",
+        categories: ["Travel", "Flights"]
       }
     ]
   },
@@ -326,6 +318,51 @@ export const cards: Card[] = [
         redemptionInstructions: "Simply use your Venture X card to pay for a booking on the Capital One Travel portal. The credit is automatically applied as a statement credit to your account. The credit can be used in one go or across multiple bookings. Unused credit does not roll over past your card anniversary date. To maximize value, compare prices, as the portal offers price matching within 24 hours of booking.",
         appScheme: "capitalOne",
         categories: ["Travel"]
+      },
+      {
+        id: "venturex_anniversary",
+        name: "Anniversary Miles Bonus",
+        value: 100,
+        period: "annual",
+        description: "Receive 10,000 bonus miles every year starting on your first account anniversary. These miles are worth a minimum of $100 when redeemed for travel.",
+        redemptionInstructions: "This is an automatic benefit. The 10,000 bonus miles will be deposited into your Capital One miles account within the billing cycle of your card anniversary.",
+        categories: ["Travel", "Rewards"]
+      },
+      {
+        id: "venturex_lounge_access",
+        name: "Airport Lounge Access",
+        value: 0,
+        period: "ongoing",
+        description: "Get unlimited complimentary access to Capital One Lounges for you and two guests. Also includes a complimentary Priority Pass Select membership, giving you access to over 1,300+ lounges worldwide.",
+        redemptionInstructions: "You must enroll in Priority Pass through your Capital One online account to receive your membership. For Capital One Lounges, simply present your Venture X card and a same-day boarding pass.",
+        categories: ["Travel"]
+      },
+      {
+        id: "venturex_global_entry",
+        name: "Global Entry or TSA PreCheck Credit",
+        value: 100,
+        period: "quadrennial",
+        description: "Receive up to a $100 statement credit for the application fee for either Global Entry or TSA PreCheck.",
+        redemptionInstructions: "Pay the application fee for either Global Entry or TSA PreCheck with your Venture X card. The statement credit will automatically be applied to your account. This benefit is available once every four years. You can use this credit to cover the fee for another person.",
+        categories: ["Travel"]
+      },
+      {
+        id: "venturex_hertz_status",
+        name: "Hertz President's Circle Status",
+        value: 0,
+        period: "ongoing",
+        description: "Receive complimentary top-tier Hertz President's Circle status, which provides benefits like guaranteed car upgrades, a wider selection of vehicles, and a dedicated customer service line.",
+        redemptionInstructions: "You must enroll for this benefit through your Capital One online account. You will be redirected to the Hertz website to link your accounts and activate your status.",
+        categories: ["Travel"]
+      },
+      {
+        id: "venturex_cell_phone_protection",
+        name: "Cell Phone Protection",
+        value: 800,
+        period: "per_incident",
+        description: "Get reimbursed for the repair or replacement of your stolen or damaged cell phone, up to $800 per claim.",
+        redemptionInstructions: "You must pay your monthly cell phone bill with your Venture X card to be eligible for this coverage. There is a $50 deductible per claim, and you can make up to two claims per 12-month period. To file a claim, contact the benefits administrator within 60 days of the incident.",
+        categories: ["Insurance", "Shopping"]
       }
     ]
   },
@@ -356,9 +393,9 @@ export const cards: Card[] = [
         value: 20,
         period: "monthly",
         description: "Receive up to $20 in statement credits each month for eligible purchases at U.S. restaurants on Resy. This amounts to a total of up to $240 per calendar year.",
-        redemptionInstructions: "Enrollment is required through your American Express online account. After enrolling, use your Delta Reserve card to pay at eligible U.S. restaurants that offer reservations through Resy.com or the Resy app. The credit is applied automatically. Unused monthly credits do not roll over.",
+        categories: ["Dining"],
         appScheme: "resy",
-        categories: ["Dining"]
+        redemptionInstructions: "Enrollment is required through your American Express online account. After enrolling, use your Delta Reserve card to pay at eligible U.S. restaurants that offer reservations through Resy.com or the Resy app. The credit is applied automatically. Unused monthly credits do not roll over."
       },
       {
         id: "delta_rideshare",
@@ -366,8 +403,8 @@ export const cards: Card[] = [
         value: 10,
         period: "monthly",
         description: "Get up to $10 in statement credits each month on U.S. rideshare purchases with select providers, totaling up to $120 per year.",
-        redemptionInstructions: "Enrollment is required via your Amex account. Use your card to pay for eligible U.S. rideshare services like Uber, Lyft, Curb, Revel, and Alto. The credit is applied automatically. Unused monthly credits are forfeited.",
-        categories: ["Transportation"]
+        categories: ["Transportation"],
+        redemptionInstructions: "Enrollment is required via your Amex account. Use your card to pay for eligible U.S. rideshare services like Uber, Lyft, Curb, Revel, and Alto. The credit is applied automatically. Unused monthly credits are forfeited."
       },
       {
         id: "delta_stays",
@@ -375,9 +412,36 @@ export const cards: Card[] = [
         value: 200,
         period: "annual",
         description: "Receive up to a $200 statement credit each calendar year for prepaid hotels or vacation rentals booked through the Delta Stays platform.",
-        redemptionInstructions: "To redeem, book a prepaid hotel or vacation rental through delta.com/stays and pay with your Delta Reserve card. The credit is applied automatically to your statement. The credit resets each calendar year.",
+        categories: ["Travel"],
         appScheme: "delta",
+        redemptionInstructions: "To redeem, book a prepaid hotel or vacation rental through delta.com/stays and pay with your Delta Reserve card. The credit is applied automatically to your statement. The credit resets each calendar year."
+      },
+      {
+        id: "delta_companion_certificate",
+        name: "Annual Companion Certificate",
+        value: 0,
+        period: "annual",
+        description: "Receive a Companion Certificate each year after your card renewal. This certificate is valid for one round-trip Main Cabin, Delta Comfort+, or First Class ticket for a companion traveling with you on the same itinerary.",
+        redemptionInstructions: "The certificate is deposited into your Delta SkyMiles account after your card anniversary. To use it, you must book through delta.com. The certificate is valid for travel within the 48 contiguous United States, and to select destinations in Alaska, Hawaii, Mexico, the Caribbean, and Central America. You are responsible for government-imposed taxes and fees on the companion ticket. Availability is subject to certain fare classes, so booking in advance provides the best chance of successful redemption.",
         categories: ["Travel"]
+      },
+      {
+        id: "delta_sky_club_access",
+        name: "Delta Sky Club Access",
+        value: 0,
+        period: "ongoing",
+        description: "Receive 15 complimentary visits to the Delta Sky Club each year. You can unlock unlimited visits for the remainder of the year after spending $75,000 on the card in a calendar year. Also includes four one-time guest passes annually.",
+        categories: ["Travel"],
+        redemptionInstructions: "Access the Sky Club by presenting your valid Delta Reserve card and a same-day boarding pass for a Delta or partner airline flight. You also get complimentary access to The Centurion Lounge when you book your Delta flight with your Reserve Card."
+      },
+      {
+        id: "delta_global_entry",
+        name: "Global Entry or TSA PreCheck Credit",
+        value: 120,
+        period: "quadrennial",
+        description: "Receive a statement credit for the application fee for either Global Entry (up to $120 every 4 years) or TSA PreCheck (up to $85 every 4.5 years).",
+        categories: ["Travel"],
+        redemptionInstructions: "Pay the application fee for either program with your Delta Reserve card to receive the statement credit automatically. You do not need to be the one applying to use the credit."
       }
     ]
   },
@@ -395,7 +459,16 @@ export const cards: Card[] = [
         redemptionInstructions: "Simply use your American Express Green card to pay for your CLEAR Plus membership. The statement credit will be applied automatically to your account, typically within 6-8 weeks. To maximize this benefit, ensure CLEAR is available at airports you frequently use.",
         appScheme: "clear",
         categories: ["Travel", "Flights"]
-      }
+      },
+      {
+        id: 'green_travel_rewards',
+        name: '3X Points on Travel, Transit & Dining',
+        value: 0,
+        period: 'ongoing',
+        description: 'Earn 3X Membership Rewards points on a broad range of categories. This includes travel (flights, hotels, car rentals, cruises, tours, third-party travel websites), transit (rideshares, subways, parking, tolls), and at restaurants worldwide.',
+        redemptionInstructions: 'Points are earned automatically when you use your card for purchases in these categories. This is a primary benefit of the card, and maximizing its value depends on using it for all eligible travel and dining expenses. Unlike some cards, the travel category is very broad and not limited to a specific travel portal.',
+        categories: ['Travel', 'Dining', 'Transportation', 'Rewards']
+      },
     ]
   },
   {
@@ -408,9 +481,27 @@ export const cards: Card[] = [
         name: "Airline Incidental Credit",
         value: 100,
         period: "annual",
-        description: "Receive up to $100 in statement credits annually for qualifying airline incidental fees. This helps to a significantly offset the annual fee.",
+        description: "Receive up to $100 in statement credits annually for qualifying airline incidental fees. This helps to significantly offset the annual fee.",
         redemptionInstructions: "The credit is automatically applied to your statement when you use your card for qualifying fees. Qualifying charges include seat upgrades, checked baggage fees, in-flight food and entertainment, and airline lounge access fees. It does not cover tickets, award fees, mileage purchases, or gift cards. It is also important to note that charges from some airlines, like Spirit and Allegiant, may not qualify. The credit resets every calendar year.",
         categories: ["Travel", "Flights"]
+      },
+      {
+        id: "boa_pr_global_entry",
+        name: "Global Entry or TSA PreCheck Credit",
+        value: 100,
+        period: "quadrennial",
+        description: "Receive a statement credit of up to $100 every four years to cover the application fee for either Global Entry or TSA PreCheck.",
+        redemptionInstructions: "Simply pay the application fee for either Global Entry or TSA PreCheck with your Premium Rewards card. The statement credit will be automatically applied to your account. Since Global Entry includes TSA PreCheck benefits, it is generally the better value. You can also use this credit to pay for a friend or family member's application fee.",
+        categories: ["Travel"]
+      },
+      {
+        id: "boa_pr_preferred_rewards_bonus",
+        name: "Preferred Rewards Bonus",
+        value: 0,
+        period: "ongoing",
+        description: "Boost your rewards earnings by 25% to 75% on every purchase if you are a Bank of America Preferred Rewards member. This is the most significant way to maximize the value of this card.",
+        redemptionInstructions: "To receive this benefit, you must be enrolled in the Bank of America Preferred Rewards program, which requires having a qualifying Bank of America checking account and maintaining a combined three-month average daily balance. Gold Tier ($20k+ balance) gets a 25% bonus, Platinum ($50k+) gets a 50% bonus, and Platinum Honors ($100k+) gets a 75% bonus. The bonus is applied automatically to the points you earn.",
+        categories: ["Rewards"]
       }
     ]
   },
@@ -436,6 +527,42 @@ export const cards: Card[] = [
         description: "Up to $150 annually in statement credits for lifestyle purchases. This flexible credit applies to a wide range of everyday services.",
         redemptionInstructions: "Credits post automatically when you use your card for eligible purchases. Confirmed eligible services include food delivery (DoorDash, Grubhub), ride-hailing (Uber, Lyft), streaming (Netflix, Hulu, Disney+), and fitness subscriptions. Some services like YouTube TV and Audible have been reported by users as not qualifying. The credit resets each calendar year.",
         categories: ["Shopping", "Dining", "Transportation", "Fitness"]
+      },
+      {
+        id: "boa_pre_priority_pass",
+        name: "Priority Pass Select Membership",
+        value: 0,
+        period: "ongoing",
+        description: "Receive up to four complimentary Priority Pass Select memberships, providing access to over 1,300 airport lounges and experiences worldwide for you and authorized members.",
+        redemptionInstructions: "You must enroll yourself and up to three other individuals in Priority Pass Select through your Bank of America online account. This is a significant perk for families or small groups, as most premium cards offer only one membership. The membership includes access to participating airport restaurants for a dining credit in some locations.",
+        categories: ["Travel"]
+      },
+      {
+        id: "boa_pre_global_entry",
+        name: "Global Entry or TSA PreCheck Credit",
+        value: 100,
+        period: "quadrennial",
+        description: "Receive a statement credit of up to $100 every four years to cover the application fee for either Global Entry or TSA PreCheck.",
+        redemptionInstructions: "Pay the application fee for either Global Entry or TSA PreCheck with your Premium Rewards Elite card. The statement credit will be automatically applied. Global Entry includes TSA PreCheck, making it the more valuable option. You can use this credit to pay for the application fee of another person.",
+        categories: ["Travel"]
+      },
+      {
+        id: "boa_pre_preferred_rewards_bonus",
+        name: "Preferred Rewards Bonus",
+        value: 0,
+        period: "ongoing",
+        description: "Dramatically increase your rewards earnings with a 25% to 75% bonus on all points earned if you are a Bank of America Preferred Rewards member. This is the single most effective way to maximize the value of this card.",
+        redemptionInstructions: "Enrollment in the Preferred Rewards program is required. You must have a qualifying Bank of America checking account and maintain a combined three-month average daily balance of $20k+ for Gold (25% bonus), $50k+ for Platinum (50% bonus), or $100k+ for Platinum Honors (75% bonus). With Platinum Honors, your earning rates become 3.5x on travel/dining and 2.625x on everything else.",
+        categories: ["Rewards"]
+      },
+      {
+        id: "boa_pre_airfare_discount",
+        name: "20% Airfare Discount",
+        value: 20,
+        period: "ongoing",
+        description: "Receive a 20% discount on the price of airfare when you pay with points through the Bank of America Travel Center. This increases the value of your points to 1.25 cents each for these redemptions.",
+        redemptionInstructions: "To receive the discount, you must book your flight through the Bank of America Travel Center and elect to pay with your points at checkout. The 20% savings will be automatically reflected in the number of points required for the booking.",
+        categories: ["Travel", "Flights", "Rewards"]
       }
     ]
   },
@@ -452,6 +579,33 @@ export const cards: Card[] = [
         description: "Receive up to $325 in automatic statement credits for purchases made directly from airlines, hotels, car rental companies, taxis, limousines, passenger trains, cruise lines, restaurants, takeout, and food delivery services.",
         redemptionInstructions: "This is one of the easiest credits to use. Simply use your Altitude Reserve card for any eligible travel or dining purchase and the credits will be applied automatically until you reach the $325 maximum for your cardmember year. This benefit effectively reduces the annual fee to $75 if fully utilized.",
         categories: ["Travel", "Dining"]
+      },
+      {
+        id: 'usb_ar_mobile_wallet_rewards',
+        name: 'Mobile Wallet Rewards',
+        value: 0,
+        period: 'ongoing',
+        description: 'Earn 3X points on eligible purchases made using a mobile wallet (like Apple Pay®, Google Pay™, or Samsung Pay). This is the signature feature of the card and a primary way to accumulate points on everyday spending.',
+        redemptionInstructions: 'To maximize this benefit, add your Altitude Reserve card to your mobile wallet and use it for all tap-to-pay transactions. When points are redeemed for travel through the U.S. Bank Rewards Center, they are worth 1.5 cents each, making this an effective 4.5% return on mobile wallet spending. You can also redeem points via "Real-Time Rewards" for travel purchases made directly with merchants.',
+        categories: ['Rewards', 'Shopping']
+      },
+      {
+        id: 'usb_ar_priority_pass',
+        name: 'Priority Pass Select Membership',
+        value: 0,
+        period: 'annual',
+        description: 'Receive a complimentary Priority Pass Select membership, which grants access to over 1,300 airport lounges worldwide. This membership includes a limited number of free visits.',
+        redemptionInstructions: 'You must enroll for this benefit on the U.S. Bank website. Your membership provides eight complimentary visits per year. These can be used as four visits for yourself and four for guests, or any combination up to eight total visits. After the free visits are used, a fee will be charged for each subsequent entry.',
+        categories: ['Travel']
+      },
+      {
+        id: 'usb_ar_global_entry',
+        name: 'Global Entry or TSA PreCheck Credit',
+        value: 100,
+        period: 'quadrennial',
+        description: 'Receive a statement credit of up to $100 for the application fee for either Global Entry or TSA PreCheck.',
+        redemptionInstructions: 'Pay the application fee for either Global Entry or TSA PreCheck with your Altitude Reserve card. The statement credit will be automatically applied to your account. This benefit is available once every four years, and Global Entry is the recommended choice as it includes TSA PreCheck benefits.',
+        categories: ['Travel']
       }
     ]
   },
@@ -474,13 +628,90 @@ export const cards: Card[] = [
   {
     name: "Hilton Honors Aspire",
     image: "/assets/cards/hilton_aspire.avif",
-    annualFee: 450,
-    benefits: []
+    annualFee: 550,
+    benefits: [
+      {
+        id: "aspire_flight_credit",
+        name: "Airline Flight Credit",
+        value: 50,
+        period: "quarterly",
+        description: "Up to $50 back in statement credits each quarter on eligible flight purchases (total $200 yr).",
+        categories: ["Travel", "Flights"]
+      },
+      {
+        id: "aspire_hilton_resort_credit",
+        name: "Hilton Resort Credit",
+        value: 200,
+        period: "semi_annual",
+        description: "Get up to $200 in statement credits semi-annually for eligible purchases made directly at participating Hilton Resorts. This provides a total of up to $400 in resort credits per calendar year. The credit periods are January-June and July-December.",
+        categories: ["Travel"],
+        appScheme: "hilton",
+        redemptionInstructions: "To use this credit, charge eligible purchases, including room rates and incidental charges like dining and spa treatments, to your room at a participating Hilton Resort and pay with your Hilton Honors Aspire card at checkout. A list of participating resorts is available on the Hilton website. Advance purchase or non-refundable rates may not be eligible. Unused semi-annual credits do not roll over."
+      },
+      {
+        id: "aspire_free_night_reward",
+        name: "Annual Free Night Reward",
+        value: 1000,
+        period: "annual",
+        description: "Receive one Free Night Reward certificate each year after your card renewal month, valid for a standard room on a weekend night at almost any Hilton property worldwide. You can earn a second Free Night Reward after you spend $30,000 in purchases on your card in a calendar year, and a third after spending a total of $60,000 in the same calendar year.",
+        categories: ["Travel"],
+        appScheme: "hilton",
+        redemptionInstructions: "The Free Night Reward will be delivered to you via email. To redeem, you must call Hilton Honors at 1-800-446-6677 and mention the code provided. The certificate is valid for one year from the date of issuance. It's best to use this for high-value properties to maximize its value."
+      },
+      {
+        id: "aspire_clear_plus_credit",
+        name: "CLEAR Plus Credit Aspire",
+        value: 189,
+        period: "annual",
+        description: "Receive up to $189 in statement credits per calendar year for a CLEAR Plus membership, which provides expedited security screening at select airports and stadiums.",
+        categories: ["Travel"],
+        appScheme: "clear",
+        redemptionInstructions: "Pay for your CLEAR Plus membership using your Hilton Honors Aspire card, and the statement credit will be automatically applied. This benefit covers the full cost of an individual CLEAR Plus membership."
+      },
+      {
+        id: "aspire_diamond_status",
+        name: "Hilton Honors Diamond Status",
+        value: 0,
+        period: "ongoing",
+        description: "Receive complimentary Hilton Honors Diamond status, the top tier of Hilton's loyalty program. Benefits include a 100% point bonus on stays, executive lounge access, room upgrades (up to a one-bedroom suite), and a daily food and beverage credit at select properties.",
+        categories: ["Travel"],
+        redemptionInstructions: "Your Hilton Honors account will be automatically upgraded to Diamond status upon card approval. Ensure your card is linked to your Hilton Honors account to receive these benefits."
+      },
+      {
+        id: "aspire_waldorf_conrad_credit",
+        name: "Waldorf Astoria & Conrad Property Credit",
+        value: 100,
+        period: "per_stay",
+        description: "Receive a $100 property credit when you book a two-night minimum stay at participating Waldorf Astoria and Conrad properties.",
+        categories: ["Travel"],
+        redemptionInstructions: "To receive this credit, you must book your stay through HiltonHonors.com/aspirecard or by calling the number on the back of your card and booking the specific 'Aspire Card' rate. The credit can be used for on-property expenses such as dining and spa services."
+      }
+    ]
   },
   {
     name: "Marriott Bonvoy Brilliant",
     image: "/assets/cards/marriott_bonvoy_brilliant.avif",
     annualFee: 650,
-    benefits: []
+    benefits: [
+      {
+        id: 'brilliant_dining',
+        name: 'Dining Credit',
+        value: 25,
+        period: 'monthly',
+        description: '$25 dining statement credit each month (up to $300 per year) at restaurants worldwide.',
+        categories: ['Dining'],
+      },
+      {
+        id: "brilliant_free_night_award",
+        name: "Annual Free Night Award",
+        value: 765,
+        period: "annual",
+        description: "Receive one Free Night Award each year after your card renewal month. The award can be used for a one-night stay at a participating Marriott Bonvoy hotel with a redemption level at or under 85,000 points. You can top off the award with up to 15,000 of your own points.",
+        categories: [
+          "Travel", "Lodging"
+        ],
+        redemptionInstructions: "The Free Night Award will be automatically deposited into your Marriott Bonvoy account 8-12 weeks after your card renewal month. To use it, log in to your Marriott Bonvoy account and select the award at the time of booking. The award expires one year from the date of issuance. Be aware that some properties may charge resort fees, which are not covered by the award."
+      },
+    ]
   }
 ]; 
