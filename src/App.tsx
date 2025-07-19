@@ -8,6 +8,8 @@ import { Scrollytelling } from "./components/sections/Scrollytelling";
 import { PrivacyFirst } from "./components/sections/PrivacyFirst";
 import { RootLayout } from "./components/layout/RootLayout";
 import { Testimonials } from "./components/sections/Testimonials";
+import { LaunchCountdown } from "./components/ui/LaunchCountdown";
+import { ValueByPortfolio } from "./components/sections/ValueByPortfolio";
 
 function App() {
   return (
@@ -15,8 +17,19 @@ function App() {
       {/* 1. Hero - Lead with the core problem */}
       <Hero />
       
+      {/* Launch Countdown */}
+      <section className="py-12 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <LaunchCountdown />
+        </div>
+      </section>
+      
       {/* 5. Partner Logos for Credibility */}
       <PartnerLogos />
+      
+      {/* Value by Portfolio Size */}
+      <ValueByPortfolio />
+      
       {/* 2. The Pain & The Numbers - Hit them with powerful statistics */}
       <PrivacyFirst />
       

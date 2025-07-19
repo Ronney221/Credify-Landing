@@ -23,7 +23,7 @@ const faqItems = [
   },
   {
     question: "How does Credify make money?",
-    answer: "We believe in complete transparency about our business model. Credify operates on a freemium model:\n\n• Free Tier: Basic features for tracking essential benefits\n• Premium Tier: Advanced analytics, unlimited cards, and priority support\n\nWe never sell your personal data or make money from your financial information. Our revenue comes solely from premium subscriptions and optional features.",
+    answer: "We believe in complete transparency about our business model. Credify operates on a freemium model:\n\n• Free Forever: Track up to 3-4 cards with all core features\n• Premium Subscription: Unlimited cards + AI-powered recommendations and insights\n\nWe never sell your personal data or make money from your financial information. Our revenue comes solely from premium subscriptions for users who want advanced AI features and unlimited card tracking.",
   },
   {
     question: "Which credit cards do you support?",

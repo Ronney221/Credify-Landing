@@ -18,7 +18,7 @@ const testimonials = [
   },
   {
     name: "Dr. Anya Sharma",
-    text: "As someone who analyzes everything, I love the ROI tracker. <highlight>It's one thing to have perks, but another to see a real-time dashboard showing I've already gotten $800 in value back from my $695 annual fee.</highlight> It validates my decision to keep the card every time I open the app.",
+    text: "As someone who analyzes everything, I love the ROI tracker. <highlight>It's one thing to have perks, but another to see a real-time dashboard showing I've already gotten $650 in value back from my $695 annual fee.</highlight> It validates my decision to keep the card every time I open the app.",
     avatar: "https://images.pexels.com/photos/3763188/pexels-photo-3763188.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     rating: 5
   },
@@ -210,7 +210,7 @@ export function Testimonials() {
             Don't Just Take Our Word For It
           </h2>
           <p className="text-lg text-white/60 max-w-2xl mx-auto">
-            Join thousands of users who are maximizing their credit card benefits with Credify
+            Join beta users who are finally maximizing every credit and benefit from their cards
           </p>
         </motion.div>
 
