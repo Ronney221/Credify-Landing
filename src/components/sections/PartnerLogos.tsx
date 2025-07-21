@@ -99,27 +99,19 @@ export function PartnerLogos() {
         <div className="absolute inset-y-0 right-0 w-32 bg-gradient-to-l from-white to-transparent pointer-events-none" />
       </div>
 
-      {/* Mobile: A Single, Correctly Clipped Scrollable Row */}
-      <div className="md:hidden">
-        <div
-          className="relative w-full overflow-x-auto hide-scrollbar"
-          style={{
-            // The mask property is a more direct way to apply gradients as a mask
-            maskImage:
-              "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
-          }}
-        >
-          <div className="flex min-w-max items-center">
-            {[...PARTNER_LOGOS, ...PARTNER_LOGOS, ...PARTNER_LOGOS].map((logo, index) => (
-              <PartnerLogoItem
-                key={`${logo.name}-${index}`}
-                logo={logo}
-                className="mr-6"
-                whileTap={{ scale: 0.95 }}
-              />
-            ))}
-          </div>
+      {/* Mobile: Auto-scrolling Row */}
+      <div className="md:hidden relative w-full overflow-hidden">
+        <div className="flex gap-6 animate-scroll">
+          {[...PARTNER_LOGOS, ...PARTNER_LOGOS, ...PARTNER_LOGOS].map((logo, index) => (
+            <PartnerLogoItem
+              key={`${logo.name}-${index}`}
+              logo={logo}
+              whileTap={{ scale: 0.95 }}
+            />
+          ))}
         </div>
+        <div className="absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-white to-transparent pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-white to-transparent pointer-events-none" />
       </div>
     </section>
   );
