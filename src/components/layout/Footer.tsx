@@ -13,12 +13,12 @@ interface FooterProps {
 const socialLinks = [
   {
     name: "Twitter",
-    href: "https://twitter.com/credifyapp",
+    href: "https://x.com/getCredifyApp",
     icon: Twitter
   },
   {
     name: "GitHub",
-    href: "https://github.com/credifyapp",
+    href: "https://github.com/ronney221",
     icon: Github
   },
   {
