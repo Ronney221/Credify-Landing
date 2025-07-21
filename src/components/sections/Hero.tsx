@@ -50,43 +50,62 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Background Screenshots for Desktop - Subtle preview */}
-      <div className="absolute inset-0 z-0 hidden lg:flex items-center justify-center opacity-30">
-        <div className="flex gap-12 max-w-6xl mx-auto items-center">
+      {/* Enhanced Screenshots for Desktop */}
+      <div className="absolute inset-0 z-0 hidden lg:flex items-center justify-center">
+        <div className="flex gap-8 max-w-5xl mx-auto items-center opacity-80">
           <motion.div
             variants={scaleIn}
             initial="hidden"
             animate="visible"
             transition={{ ...transition, delay: 0.4 }}
-            className="relative flex-1"
-            whileHover={{ scale: 1.01, rotate: "-1deg" }}
+            className="relative"
+            whileHover={{ scale: 1.02, rotate: "-2deg" }}
           >
             <BlurImage
               src="/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 1.png"
               alt="Credify ROI Tracking Interface"
-              width={320}
-              height={570}
-              className="rounded-[28px] shadow-xl"
+              width={280}
+              height={498}
+              className="rounded-[24px] shadow-2xl border border-gray-200"
             />
+            <div className="absolute inset-0 rounded-[24px] bg-gradient-to-t from-black/10 to-transparent" />
           </motion.div>
           <motion.div
             variants={scaleIn}
             initial="hidden"
             animate="visible"
             transition={{ ...transition, delay: 0.5 }}
-            className="relative flex-1"
-            whileHover={{ scale: 1.01, rotate: "1deg" }}
+            className="relative"
+            whileHover={{ scale: 1.02, rotate: "2deg" }}
           >
             <BlurImage
               src="/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 2.png"
               alt="Credify Card Selection Interface"
-              width={320}
-              height={570}
-              className="rounded-[28px] shadow-xl"
+              width={280}
+              height={498}
+              className="rounded-[24px] shadow-2xl border border-gray-200"
             />
+            <div className="absolute inset-0 rounded-[24px] bg-gradient-to-t from-black/10 to-transparent" />
+          </motion.div>
+          <motion.div
+            variants={scaleIn}
+            initial="hidden"
+            animate="visible"
+            transition={{ ...transition, delay: 0.6 }}
+            className="relative hidden xl:block"
+            whileHover={{ scale: 1.02, rotate: "-1deg" }}
+          >
+            <BlurImage
+              src="/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 3.png"
+              alt="Credify AI Assistant Interface"
+              width={280}
+              height={498}
+              className="rounded-[24px] shadow-2xl border border-gray-200"
+            />
+            <div className="absolute inset-0 rounded-[24px] bg-gradient-to-t from-black/10 to-transparent" />
           </motion.div>
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/95 to-white/70" />
+        <div className="absolute inset-0 bg-gradient-to-t from-white via-white/85 to-white/40" />
       </div>
 
       {/* Content */}
@@ -127,37 +146,58 @@ export function Hero() {
             </motion.div>
           </motion.div>
 
-          {/* Mobile Screenshots */}
-          <div className="md:hidden flex flex-row gap-3 mb-8 justify-center items-center max-w-sm mx-auto">
+          {/* Enhanced Mobile Screenshots */}
+          <div className="lg:hidden flex flex-row gap-4 mb-8 justify-center items-center max-w-md mx-auto md:max-w-lg">
             <motion.div
               variants={scaleIn}
               initial="hidden"
               animate="visible"
               transition={{ ...transition, delay: 0.4 }}
-              className="w-1/2"
+              className="relative"
+              whileHover={{ scale: 1.02, rotate: "-1deg" }}
             >
               <BlurImage
                 src="/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 1.png"
                 alt="Credify ROI Tracking Interface"
-                width={240}
-                height={426}
-                className="rounded-[20px] shadow-lg mx-auto w-full h-auto"
+                width={160}
+                height={284}
+                className="rounded-[18px] shadow-xl border border-gray-200 w-full h-auto max-w-[160px] md:max-w-[200px]"
               />
+              <div className="absolute inset-0 rounded-[18px] bg-gradient-to-t from-black/5 to-transparent" />
             </motion.div>
             <motion.div
               variants={scaleIn}
               initial="hidden"
               animate="visible"
               transition={{ ...transition, delay: 0.5 }}
-              className="w-1/2"
+              className="relative"
+              whileHover={{ scale: 1.02, rotate: "1deg" }}
             >
               <BlurImage
                 src="/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 2.png"
                 alt="Credify Card Selection Interface"
-                width={240}
-                height={426}
-                className="rounded-[20px] shadow-lg mx-auto w-full h-auto"
+                width={160}
+                height={284}
+                className="rounded-[18px] shadow-xl border border-gray-200 w-full h-auto max-w-[160px] md:max-w-[200px]"
               />
+              <div className="absolute inset-0 rounded-[18px] bg-gradient-to-t from-black/5 to-transparent" />
+            </motion.div>
+            <motion.div
+              variants={scaleIn}
+              initial="hidden"
+              animate="visible"
+              transition={{ ...transition, delay: 0.6 }}
+              className="relative hidden md:block"
+              whileHover={{ scale: 1.02, rotate: "-0.5deg" }}
+            >
+              <BlurImage
+                src="/assets/screenshots/Apple iPhone 16 Pro Max Screenshot 3.png"
+                alt="Credify AI Assistant Interface"
+                width={160}
+                height={284}
+                className="rounded-[18px] shadow-xl border border-gray-200 w-full h-auto max-w-[200px]"
+              />
+              <div className="absolute inset-0 rounded-[18px] bg-gradient-to-t from-black/5 to-transparent" />
             </motion.div>
           </div>
 
