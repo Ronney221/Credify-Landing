@@ -1,4 +1,4 @@
-import { CardBenefits } from "./components/sections/CardBenefits";
+import { EnhancedCardBenefits } from "./components/sections/EnhancedCardBenefits";
 import { FAQ } from "./components/sections/FAQ";
 import { Footer } from "./components/layout/Footer";
 import { Hero } from "./components/sections/Hero";
@@ -28,7 +28,7 @@ function App() {
       <ValueByPortfolio />
       
       {/* 3. The Concrete Solution - Show the tangible value */}
-      <CardBenefits />
+      <EnhancedCardBenefits />
       
       {/* 4. Build Trust with Social Proof */}
       <Testimonials />

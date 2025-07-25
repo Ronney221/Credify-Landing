@@ -1,5 +1,5 @@
 import { Dialog, DialogContent } from './dialog';
-import { ROICalculator } from '../forms/ROICalculator';
+import { DetailedROICalculator } from '../forms/DetailedROICalculator';
 
 interface ROICalculatorDialogProps {
   isOpen: boolean;
@@ -9,8 +9,8 @@ interface ROICalculatorDialogProps {
 export function ROICalculatorDialog({ isOpen, onClose }: ROICalculatorDialogProps) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
-        <ROICalculator onClose={onClose} />
+      <DialogContent className="sm:max-w-5xl max-h-[90vh] overflow-y-auto">
+        <DetailedROICalculator onClose={onClose} />
       </DialogContent>
     </Dialog>
   );

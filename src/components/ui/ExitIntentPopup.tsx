@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Dialog, DialogContent } from './dialog';
-import { ROICalculator } from '../forms/ROICalculator';
+import { DetailedROICalculator } from '../forms/DetailedROICalculator';
 import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface ExitIntentPopupProps {
@@ -54,7 +54,7 @@ export function ExitIntentPopup({ isEnabled = true }: ExitIntentPopupProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="sm:max-w-lg max-h-[90vh] overflow-y-auto">
+      <DialogContent className="sm:max-w-5xl max-h-[90vh] overflow-y-auto">
         <motion.div
           initial={{ scale: 0.9, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
@@ -71,7 +71,7 @@ export function ExitIntentPopup({ isEnabled = true }: ExitIntentPopupProps) {
             </p>
           </div>
           
-          <ROICalculator onClose={handleClose} />
+          <DetailedROICalculator onClose={handleClose} />
           
           {/* Additional urgency messaging */}
           <div className="mt-4 text-center">
