@@ -4,11 +4,11 @@ import { Footer } from "./components/layout/Footer";
 import { Hero } from "./components/sections/Hero";
 import { HowItWorks } from "./components/sections/HowItWorks";
 import { PartnerLogos } from "./components/sections/PartnerLogos";
+import { RedemptionHacks } from "./components/sections/RedemptionHacks";
 import { Scrollytelling } from "./components/sections/Scrollytelling";
 import { PrivacyFirst } from "./components/sections/PrivacyFirst";
 import { RootLayout } from "./components/layout/RootLayout";
 import { Testimonials } from "./components/sections/Testimonials";
-import { LaunchCountdown } from "./components/ui/LaunchCountdown";
 import { ValueByPortfolio } from "./components/sections/ValueByPortfolio";
 
 function App() {
@@ -17,15 +17,11 @@ function App() {
       {/* 1. Hero - Lead with the core problem */}
       <Hero />
       
-      {/* Launch Countdown */}
-      <section className="py-12 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <LaunchCountdown />
-        </div>
-      </section>
-      
       {/* 5. Partner Logos for Credibility */}
       <PartnerLogos />
+      
+      {/* Redemption Tips & Hacks - New Feature Spotlight */}
+      <RedemptionHacks />
       
       {/* Value by Portfolio Size */}
       <ValueByPortfolio />

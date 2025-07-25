@@ -20,7 +20,7 @@ export function Header() {
   const scrollTo = useScrollTo();
 
   const handleDownload = () => {
-    window.open('https://testflight.apple.com/join/xtFTgddM', '_blank');
+    window.open('https://apps.apple.com/us/app/credify-ai-perk-tracker/id6746953790', '_blank');
   };
 
   return (
@@ -53,7 +53,7 @@ export function Header() {
             className="hidden md:inline-flex whitespace-nowrap ml-8" 
             onClick={handleDownload}
           >
-            Download Beta
+            Download on the App Store
           </Button>
 
           {/* Mobile Menu */}
@@ -86,7 +86,7 @@ export function Header() {
                 ))}
                 {/* Mobile CTA Button */}
                 <Button variant="default" className="w-full" onClick={handleDownload}>
-                  Download Beta
+                  Download on the App Store
                 </Button>
               </div>
             </SheetContent>
