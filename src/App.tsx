@@ -1,7 +1,7 @@
 import { EnhancedCardBenefits } from "./components/sections/EnhancedCardBenefits";
 import { FAQ } from "./components/sections/FAQ";
 import { Footer } from "./components/layout/Footer";
-import { Hero } from "./components/sections/Hero";
+import { Hero2 } from "./components/sections/Hero2";
 import { HowItWorks } from "./components/sections/HowItWorks";
 import { PartnerLogos } from "./components/sections/PartnerLogos";
 import { RedemptionHacks } from "./components/sections/RedemptionHacks";
@@ -18,7 +18,7 @@ function App() {
       <RootLayout>
         {/* 1. Hero - Lead with the core problem */}
         <SectionErrorBoundary sectionName="Hero">
-          <Hero />
+          <Hero2 />
         </SectionErrorBoundary>
         
         {/* 5. Partner Logos for Credibility */}
