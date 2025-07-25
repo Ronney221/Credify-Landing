@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { ExitIntentPopup } from "../ui/ExitIntentPopup";
 
 interface RootLayoutProps {
   children: ReactNode;
@@ -15,6 +16,9 @@ export function RootLayout({ children }: RootLayoutProps) {
         {children}
       </main>
       <Footer />
+      
+      {/* Exit-intent popup for conversion optimization */}
+      <ExitIntentPopup isEnabled={true} />
     </div>
   );
 } 

@@ -8,6 +8,7 @@ import {
   SheetTrigger
 } from "@/components/ui/sheet";
 import { useScrollTo } from "@/hooks/useScrollTo";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const navigation = [
   { name: "Download", id: "hero" },
@@ -19,9 +20,27 @@ const navigation = [
 
 export function Header() {
   const scrollTo = useScrollTo();
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const handleDownload = () => {
     window.open('https://apps.apple.com/us/app/credify-ai-perk-tracker/id6746953790', '_blank');
+  };
+
+  const handleNavClick = (item: typeof navigation[0]) => {
+    if (item.isLink) {
+      navigate(`/${item.id}`);
+    } else if (location.pathname !== '/') {
+      // If not on home page, navigate to home page and then scroll
+      navigate('/');
+      // Use setTimeout to ensure navigation completes before scrolling
+      setTimeout(() => {
+        scrollTo(item.id);
+      }, 100);
+    } else {
+      // If on home page, use smooth scroll
+      scrollTo(item.id);
+    }
   };
 
   return (
@@ -38,23 +57,13 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {navigation.map((item) => (
-              item.isLink ? (
-                <a
-                  key={item.name}
-                  href={`/${item.id}`}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
-                >
-                  {item.name}
-                </a>
-              ) : (
-                <button
-                  key={item.name}
-                  onClick={() => scrollTo(item.id)}
-                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
-                >
-                  {item.name}
-                </button>
-              )
+              <button
+                key={item.name}
+                onClick={() => handleNavClick(item)}
+                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
+              >
+                {item.name}
+              </button>
             ))}
           </nav>
 
@@ -81,29 +90,19 @@ export function Header() {
               </SheetHeader>
               <div className="flex flex-col gap-4 mt-8">
                 {navigation.map((item) => (
-                  item.isLink ? (
-                    <a
-                      key={item.name}
-                      href={`/${item.id}`}
-                      className="text-left py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      {item.name}
-                    </a>
-                  ) : (
-                    <button
-                      key={item.name}
-                      onClick={() => {
-                        scrollTo(item.id);
-                        const closeButton = document.querySelector('[data-radix-collection-item]');
-                        if (closeButton instanceof HTMLElement) {
-                          closeButton.click();
-                        }
-                      }}
-                      className="text-left py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                    >
-                      {item.name}
-                    </button>
-                  )
+                  <button
+                    key={item.name}
+                    onClick={() => {
+                      handleNavClick(item);
+                      const closeButton = document.querySelector('[data-radix-collection-item]');
+                      if (closeButton instanceof HTMLElement) {
+                        closeButton.click();
+                      }
+                    }}
+                    className="text-left py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                  >
+                    {item.name}
+                  </button>
                 ))}
                 {/* Mobile CTA Button */}
                 <Button variant="default" className="w-full" onClick={handleDownload}>

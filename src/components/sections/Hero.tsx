@@ -3,7 +3,8 @@ import { useState } from "react";
 import { BlurImage } from "../ui/BlurImage";
 import { Text } from "../ui/Text";
 import { fadeIn, fadeInUp, scaleIn, transition } from "../../lib/animations";
-import { WaitlistDialog } from "../ui/WaitlistDialog";
+import { SimpleWaitlistDialog } from "../ui/SimpleWaitlistDialog";
+import { ROICalculatorDialog } from "../ui/ROICalculatorDialog";
 import { FeedbackForm } from "../forms/FeedbackForm";
 
 // Partner logos for the animated background with pre-calculated positions
@@ -16,6 +17,7 @@ const partnerLogos = [
 
 export function Hero() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
+  const [isROICalculatorOpen, setIsROICalculatorOpen] = useState(false);
 
   return (
     <section id="hero" className="relative min-h-[100dvh] overflow-hidden">
@@ -236,6 +238,20 @@ export function Hero() {
               <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor"><path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/></svg>
               <Text variant="body" className="font-medium">Join the Beta - Android Coming Soon</Text>
             </motion.button>
+            
+            {/* Lead Magnet CTA - ROI Calculator */}
+            <motion.button
+              onClick={() => setIsROICalculatorOpen(true)}
+              whileHover={{ scale: 1.01, y: -1 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full flex items-center justify-center px-4 py-3 bg-green-50 text-green-700 border border-green-200 rounded-xl hover:bg-green-100 transition-all duration-200 shadow-sm hover:shadow-md"
+            >
+              <svg className="w-5 h-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                <path d="M3 13h2v-2H3v2zm0 4h2v-2H3v2zm0-8h2V7H3v2zm4 4h14v-2H7v2zm0 4h14v-2H7v2zM7 7v2h14V7H7z"/>
+              </svg>
+              <Text variant="body" className="font-medium">🧮 Get My Free ROI Calculator</Text>
+            </motion.button>
+            
             {/* Trust indicators */}
             <motion.div
               variants={fadeInUp}
@@ -261,10 +277,18 @@ export function Hero() {
         </div>
       </div>
 
-      {/* Waitlist Dialog */}
-      <WaitlistDialog
+      {/* Simplified Waitlist Dialog */}
+      <SimpleWaitlistDialog
         isOpen={isWaitlistOpen}
         onClose={() => setIsWaitlistOpen(false)}
+        title="Join the Beta - Android Coming Soon!"
+        description="Be among the first to get Credify on Android and start maximizing your card benefits."
+      />
+      
+      {/* ROI Calculator Dialog */}
+      <ROICalculatorDialog
+        isOpen={isROICalculatorOpen}
+        onClose={() => setIsROICalculatorOpen(false)}
       />
     </section>
   );

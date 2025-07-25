@@ -10,7 +10,7 @@ export default defineConfig({
     },
   },
   optimizeDeps: {
-    include: ['react', 'react-dom', 'framer-motion', '@supabase/supabase-js', 'posthog-js']
+    include: ['react', 'react-dom', 'framer-motion', '@supabase/supabase-js', 'posthog-js', '@hookform/resolvers/zod']
   },
   build: {
     rollupOptions: {
@@ -19,7 +19,7 @@ export default defineConfig({
           'react-vendor': ['react', 'react-dom'],
           'framer-motion': ['framer-motion'],
           'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-accordion', '@radix-ui/react-label', '@radix-ui/react-slot'],
-          'form-vendor': ['react-hook-form', '@hookform/resolvers', 'zod'],
+          'form-vendor': ['react-hook-form', '@hookform/resolvers/zod', 'zod'],
           'supabase': ['@supabase/supabase-js'],
           'analytics': ['@vercel/analytics', 'posthog-js']
         }
