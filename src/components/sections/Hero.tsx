@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useCallback, memo } from "react";
 import { BlurImage } from "../ui/BlurImage";
 import { Text } from "../ui/Text";
 import { fadeIn, fadeInUp, scaleIn, transition } from "../../lib/animations";
@@ -7,7 +7,7 @@ import { SimpleWaitlistDialog } from "../ui/SimpleWaitlistDialog";
 import { ROICalculatorDialog } from "../ui/ROICalculatorDialog";
 import { FeedbackForm } from "../forms/FeedbackForm";
 
-// Partner logos for the animated background with pre-calculated positions
+// Partner logos for the animated background with pre-calculated positions (moved outside component)
 const partnerLogos = [
   { src: "/assets/partner_svg/uber.svg", x: 25, y: 30 },
   { src: "/assets/partner_svg/doordash.svg", x: 70, y: 20 },
@@ -15,9 +15,15 @@ const partnerLogos = [
   { src: "/assets/partner_svg/peloton.svg", x: 15, y: 65 },
 ];
 
-export function Hero() {
+function HeroComponent() {
   const [isWaitlistOpen, setIsWaitlistOpen] = useState(false);
   const [isROICalculatorOpen, setIsROICalculatorOpen] = useState(false);
+
+  // Memoize event handlers to prevent unnecessary re-renders
+  const handleOpenWaitlist = useCallback(() => setIsWaitlistOpen(true), []);
+  const handleCloseWaitlist = useCallback(() => setIsWaitlistOpen(false), []);
+  const handleOpenROICalculator = useCallback(() => setIsROICalculatorOpen(true), []);
+  const handleCloseROICalculator = useCallback(() => setIsROICalculatorOpen(false), []);
 
   return (
     <section id="hero" className="relative min-h-[100dvh] overflow-hidden">
@@ -230,7 +236,7 @@ export function Hero() {
             </motion.a>
             {/* Secondary CTA - Android Waitlist */}
             <motion.button
-              onClick={() => setIsWaitlistOpen(true)}
+              onClick={handleOpenWaitlist}
               whileHover={{ scale: 1.01, y: -1 }}
               whileTap={{ scale: 0.98 }}
               className="w-full flex items-center justify-center px-4 py-3 bg-gray-100 text-gray-700 rounded-xl hover:bg-gray-200 transition-all duration-200 shadow-sm hover:shadow-md"
@@ -241,7 +247,7 @@ export function Hero() {
             
             {/* Lead Magnet CTA - ROI Calculator */}
             <motion.button
-              onClick={() => setIsROICalculatorOpen(true)}
+              onClick={handleOpenROICalculator}
               whileHover={{ scale: 1.01, y: -1 }}
               whileTap={{ scale: 0.98 }}
               className="w-full flex items-center justify-center px-4 py-3 bg-green-50 text-green-700 border border-green-200 rounded-xl hover:bg-green-100 transition-all duration-200 shadow-sm hover:shadow-md"
@@ -280,7 +286,7 @@ export function Hero() {
       {/* Simplified Waitlist Dialog */}
       <SimpleWaitlistDialog
         isOpen={isWaitlistOpen}
-        onClose={() => setIsWaitlistOpen(false)}
+        onClose={handleCloseWaitlist}
         title="Join the Beta - Android Coming Soon!"
         description="Be among the first to get Credify on Android and start maximizing your card benefits."
       />
@@ -288,8 +294,11 @@ export function Hero() {
       {/* ROI Calculator Dialog */}
       <ROICalculatorDialog
         isOpen={isROICalculatorOpen}
-        onClose={() => setIsROICalculatorOpen(false)}
+        onClose={handleCloseROICalculator}
       />
     </section>
   );
-} 
+}
+
+// Export memoized component to prevent unnecessary re-renders
+export const Hero = memo(HeroComponent); 

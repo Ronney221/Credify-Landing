@@ -36,10 +36,32 @@ export function ScreenshotCarousel() {
     }, 3000);
 
     return () => clearInterval(interval);
-  }, [isInView]);
+  }, [isInView, screenshots.length]); // Add screenshots.length dependency
+
+  // Keyboard navigation support
+  const handleKeyDown = (event: React.KeyboardEvent, index: number) => {
+    switch (event.key) {
+      case 'ArrowLeft':
+        event.preventDefault();
+        setCurrentIndex(index > 0 ? index - 1 : screenshots.length - 1);
+        break;
+      case 'ArrowRight':
+        event.preventDefault();
+        setCurrentIndex(index < screenshots.length - 1 ? index + 1 : 0);
+        break;
+      case 'Home':
+        event.preventDefault();
+        setCurrentIndex(0);
+        break;
+      case 'End':
+        event.preventDefault();
+        setCurrentIndex(screenshots.length - 1);
+        break;
+    }
+  };
 
   return (
-    <section className="py-24 bg-gray-50 relative overflow-hidden" ref={containerRef}>
+    <section className="py-24 bg-gray-50 relative overflow-hidden" ref={containerRef} style={{ position: 'relative' }}>
       {/* Background Pattern */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[linear-gradient(30deg,var(--brand)_12%,transparent_12.5%,transparent_87%,var(--brand)_87.5%,var(--brand))] opacity-[0.025]" style={{ backgroundSize: '10px 10px' }} />
@@ -115,12 +137,17 @@ export function ScreenshotCarousel() {
             </div>
 
             {/* Navigation Dots */}
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5">
+            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-1.5" role="tablist" aria-label="Screenshot carousel navigation">
               {screenshots.map((_, index) => (
                 <button
                   key={index}
                   onClick={() => setCurrentIndex(index)}
+                  onKeyDown={(e) => handleKeyDown(e, index)}
                   className="group p-1.5"
+                  role="tab"
+                  aria-selected={currentIndex === index}
+                  aria-label={`View screenshot ${index + 1} of ${screenshots.length}`}
+                  tabIndex={currentIndex === index ? 0 : -1}
                 >
                   <div
                     className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${

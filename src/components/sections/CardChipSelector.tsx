@@ -1,10 +1,10 @@
-import { Card } from "./CardData";
 import { motion } from "framer-motion";
 import { cn } from "../../lib/utils";
 import { useRef } from "react";
+import { CardData } from "@/hooks/useCardData";
 
 interface CardChipSelectorProps {
-  cards: Card[];
+  cards: CardData[];
   selectedCardIndex: number;
   onCardSelect: (index: number) => void;
 }
@@ -12,10 +12,14 @@ interface CardChipSelectorProps {
 export function CardChipSelector({ cards, selectedCardIndex, onCardSelect }: CardChipSelectorProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  // Sort cards by popularity
+  // Return early if no cards
+  if (!cards || cards.length === 0) {
+    return null;
+  }
+
+  // Sort cards (no popularity field in database data)
   const sortedCards = [...cards]
-    .map((card, index) => ({ ...card, originalIndex: index }))
-    .sort((a, b) => (a.popularity || 999) - (b.popularity || 999));
+    .map((card, index) => ({ ...card, originalIndex: index }));
 
   // Helper function to get card issuer logo
   const getCardIssuer = (cardName: string) => {

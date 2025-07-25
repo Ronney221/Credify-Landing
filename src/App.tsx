@@ -10,42 +10,63 @@ import { PrivacyFirst } from "./components/sections/PrivacyFirst";
 import { RootLayout } from "./components/layout/RootLayout";
 import { Testimonials } from "./components/sections/Testimonials";
 import { ValueByPortfolio } from "./components/sections/ValueByPortfolio";
+import { ErrorBoundary, SectionErrorBoundary } from "./components/ui/ErrorBoundary";
 
 function App() {
   return (
-    <RootLayout>
-      {/* 1. Hero - Lead with the core problem */}
-      <Hero />
-      
-      {/* 5. Partner Logos for Credibility */}
-      <PartnerLogos />
-      
-      
-      {/* 2. The Pain & The Numbers - Hit them with powerful statistics */}
-      <PrivacyFirst />
-      
-      {/* Value by Portfolio Size */}
-      <ValueByPortfolio />
-      
-      {/* 3. The Concrete Solution - Show the tangible value */}
-      <EnhancedCardBenefits />
-      
-      {/* 4. Build Trust with Social Proof */}
-      <Testimonials />
-      
-      
-      {/* 6. How It Works - Show the simple process */}
-      <HowItWorks />
-      
-      {/* 7. Interactive Features Demo */}
-      <Scrollytelling />
-      
-      {/* Redemption Tips & Hacks - New Feature Spotlight */}
-      <RedemptionHacks />
+    <ErrorBoundary>
+      <RootLayout>
+        {/* 1. Hero - Lead with the core problem */}
+        <SectionErrorBoundary sectionName="Hero">
+          <Hero />
+        </SectionErrorBoundary>
+        
+        {/* 5. Partner Logos for Credibility */}
+        <SectionErrorBoundary sectionName="Partner Logos">
+          <PartnerLogos />
+        </SectionErrorBoundary>
+        
+        {/* 2. The Pain & The Numbers - Hit them with powerful statistics */}
+        <SectionErrorBoundary sectionName="Privacy First">
+          <PrivacyFirst />
+        </SectionErrorBoundary>
+        
+        {/* Value by Portfolio Size */}
+        <SectionErrorBoundary sectionName="Value by Portfolio">
+          <ValueByPortfolio />
+        </SectionErrorBoundary>
+        
+        {/* 3. The Concrete Solution - Show the tangible value */}
+        <SectionErrorBoundary sectionName="Card Benefits">
+          <EnhancedCardBenefits />
+        </SectionErrorBoundary>
+        
+        {/* 4. Build Trust with Social Proof */}
+        <SectionErrorBoundary sectionName="Testimonials">
+          <Testimonials />
+        </SectionErrorBoundary>
+        
+        {/* 6. How It Works - Show the simple process */}
+        <SectionErrorBoundary sectionName="How It Works">
+          <HowItWorks />
+        </SectionErrorBoundary>
+        
+        {/* 7. Interactive Features Demo */}
+        <SectionErrorBoundary sectionName="Interactive Demo">
+          <Scrollytelling />
+        </SectionErrorBoundary>
+        
+        {/* Redemption Tips & Hacks - New Feature Spotlight */}
+        <SectionErrorBoundary sectionName="Redemption Hacks">
+          <RedemptionHacks />
+        </SectionErrorBoundary>
 
-      {/* 8. FAQ - Address remaining questions */}
-      <FAQ />
-    </RootLayout>
+        {/* 8. FAQ - Address remaining questions */}
+        <SectionErrorBoundary sectionName="FAQ">
+          <FAQ />
+        </SectionErrorBoundary>
+      </RootLayout>
+    </ErrorBoundary>
   );
 }
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 import { Text } from "../ui/Text";
-import { Perk, CategoryIconType, categoryIcons } from "./CardData";
+import { CategoryIconType, categoryIcons } from "./CardData";
 import { cn } from "../../lib/utils";
 
 function PerkIcon({ category }: { category: CategoryIconType }) {
@@ -10,8 +10,18 @@ function PerkIcon({ category }: { category: CategoryIconType }) {
   return <Icon className="w-5 h-5" />;
 }
 
+// Updated interface to match database benefit structure
+interface DatabaseBenefit {
+  name: string;
+  value: number;
+  period: 'monthly' | 'semi_annual' | 'annual' | 'quarterly';
+  description: string;
+  redemption_instructions: string;
+  categories: string[];
+}
+
 interface PerkListProps {
-  perks: Perk[];
+  perks: DatabaseBenefit[];
 }
 
 function formatValue(value: number, period: string) {
@@ -93,7 +103,7 @@ export function PerkList({ perks }: PerkListProps) {
   // Set first perk as expanded only on initial mount
   useEffect(() => {
     if (sortedPerks.length > 0 && expandedPerkId === null) {
-      setExpandedPerkId(sortedPerks[0].id);
+      setExpandedPerkId(sortedPerks[0].name); // Use name as ID since database doesn't have id field
     }
   }, []); // Empty dependency array means this only runs once on mount
 
@@ -104,19 +114,19 @@ export function PerkList({ perks }: PerkListProps) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.2, delay: 0.1 }}
     >
-      {sortedPerks.map((perk) => (
+      {sortedPerks.map((perk, index) => (
         <motion.div
-          key={perk.id}
+          key={`${perk.name}-${index}`} // Use name and index as key since no id field
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}
           className="border rounded-lg overflow-hidden bg-white shadow-sm hover:shadow-md transition-shadow duration-200"
         >
           <button
-            onClick={() => setExpandedPerkId(expandedPerkId === perk.id ? null : perk.id)}
+            onClick={() => setExpandedPerkId(expandedPerkId === perk.name ? null : perk.name)}
             className={cn(
               "w-full p-4 flex items-center justify-between transition-colors duration-200",
-              expandedPerkId === perk.id ? "bg-gray-50" : "hover:bg-gray-50"
+              expandedPerkId === perk.name ? "bg-gray-50" : "hover:bg-gray-50"
             )}
           >
             <div className="flex items-center gap-4">
@@ -146,7 +156,7 @@ export function PerkList({ perks }: PerkListProps) {
                 )}
               </div>
               <motion.div
-                animate={{ rotate: expandedPerkId === perk.id ? 180 : 0 }}
+                animate={{ rotate: expandedPerkId === perk.name ? 180 : 0 }}
                 transition={{ duration: 0.2, ease: "easeInOut" }}
               >
                 <ChevronDown className="w-5 h-5" />
@@ -154,7 +164,7 @@ export function PerkList({ perks }: PerkListProps) {
             </div>
           </button>
           <AnimatePresence>
-            {expandedPerkId === perk.id && (
+            {expandedPerkId === perk.name && (
               <motion.div
                 initial={{ height: 0, opacity: 0 }}
                 animate={{ 
@@ -184,10 +194,12 @@ export function PerkList({ perks }: PerkListProps) {
                   <Text variant="body" className="text-gray-600">
                     {perk.description}
                   </Text>
-                  {perk.redemptionInstructions && (
-                    <Text variant="caption" className="text-gray-500">
-                      <span className="font-semibold">How to redeem:</span> {perk.redemptionInstructions}
-                    </Text>
+                  {perk.redemption_instructions && (
+                    <div className="mt-3 p-3 bg-green-50 border border-green-200 rounded-lg">
+                      <Text variant="caption" className="text-green-800">
+                        <span className="font-semibold">💡 Credify Hack:</span> {perk.redemption_instructions}
+                      </Text>
+                    </div>
                   )}
                 </motion.div>
               </motion.div>

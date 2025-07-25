@@ -146,6 +146,30 @@ export async function fetchCardWithBenefits(cardId: string): Promise<CardWithBen
 }
 
 /**
+ * Map database card names to local image paths
+ */
+function getLocalImagePath(cardName: string): string {
+  const imageMap: Record<string, string> = {
+    'American Express Gold': '/assets/cards/amex_gold.avif',
+    'American Express Green': '/assets/cards/amex_green.avif',
+    'American Express Platinum': '/assets/cards/amex_plat.avif',
+    'Blue Cash Preferred (AmEx)': '/assets/cards/blue_cash_preferred.avif',
+    'Bank of America Premium Rewards': '/assets/cards/boa_premium_rewards.png',
+    'Bank of America Premium Rewards Elite': '/assets/cards/boa_premium_rewards_elite.png',
+    'Chase Sapphire Preferred': '/assets/cards/chase_sapphire_preferred.png',
+    'Chase Sapphire Reserve': '/assets/cards/chase_sapphire_reserve.png',
+    'Citi Prestige Card': '/assets/cards/citi_prestige.jpeg',
+    'Delta SkyMiles Reserve (AmEx)': '/assets/cards/delta_reserve.avif',
+    'Hilton Honors Aspire': '/assets/cards/hilton_aspire.avif',
+    'Marriott Bonvoy Brilliant': '/assets/cards/marriott_bonvoy_brilliant.avif',
+    'U.S. Bank Altitude Reserve Visa Infinite': '/assets/cards/usb_altitude_reserve.png',
+    'Capital One Venture X': '/assets/cards/venture_x.avif'
+  };
+
+  return imageMap[cardName] || '/assets/cards/amex_plat.avif'; // Fallback to a default card
+}
+
+/**
  * Convert database benefit to the format expected by components
  */
 export function transformBenefitToCardData(benefit: BenefitDefinition) {
@@ -165,7 +189,7 @@ export function transformBenefitToCardData(benefit: BenefitDefinition) {
 export function transformCardToCardData(card: CardWithBenefits) {
   return {
     name: card.name,
-    image: card.image_url,
+    image: getLocalImagePath(card.name), // Use local images instead of database URLs
     annualFee: card.annual_fee,
     network: card.network,
     rewards_currency: card.rewards_currency,
