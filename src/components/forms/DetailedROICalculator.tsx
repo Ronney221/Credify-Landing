@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/lib/supabase";
 import { useAnalytics } from "@/hooks/useAnalytics";
-import { cards } from "../sections/CardData";
+import { useCardData } from "@/hooks/useCardData";
 import { PerkList } from "../sections/PerkList";
 
 const portfolioTiers = [
@@ -41,7 +41,7 @@ export function DetailedROICalculator({ onClose }: DetailedROICalculatorProps) {
   const [step, setStep] = useState<'selection' | 'results' | 'email'>('selection');
   const [selectedCardIndex, setSelectedCardIndex] = useState<number>(-1);
   const [calculationResult, setCalculationResult] = useState<{
-    card: typeof cards[0];
+    card: any;
     portfolioTier: typeof portfolioTiers[0];
     totalAnnualValue: number;
     typicalValue: number;
@@ -53,6 +53,7 @@ export function DetailedROICalculator({ onClose }: DetailedROICalculatorProps) {
   const [isSubmittingEmail, setIsSubmittingEmail] = useState(false);
   const [emailSent, setEmailSent] = useState(false);
   const { trackEvent } = useAnalytics();
+  const { cards, loading, error } = useCardData();
 
   const calculateAnnualValue = (value: number, period: string) => {
     switch (period) {
@@ -160,9 +161,25 @@ export function DetailedROICalculator({ onClose }: DetailedROICalculatorProps) {
           </Text>
         </div>
 
-        <div className="grid gap-3 max-h-96 overflow-y-auto">
-          <Label className="text-base font-medium">Select your credit card:</Label>
-          {cards.map((card, index) => (
+        {loading && (
+          <div className="text-center py-8">
+            <Text variant="body" className="text-gray-600">Loading credit cards...</Text>
+          </div>
+        )}
+
+        {error && (
+          <div className="text-center py-8">
+            <Text variant="body" className="text-red-600 mb-4">{error}</Text>
+            <Button onClick={() => window.location.reload()} variant="outline">
+              Retry
+            </Button>
+          </div>
+        )}
+
+        {!loading && !error && (
+          <div className="grid gap-3 max-h-96 overflow-y-auto">
+            <Label className="text-base font-medium">Select your credit card:</Label>
+            {cards.map((card, index) => (
             <button
               key={card.name}
               onClick={() => {
@@ -198,11 +215,14 @@ export function DetailedROICalculator({ onClose }: DetailedROICalculatorProps) {
               </div>
             </button>
           ))}
-        </div>
+          </div>
+        )}
         
-        <Text variant="tiny" className="text-center text-gray-500 mt-4">
-          🔒 Click any card for instant detailed analysis
-        </Text>
+        {!loading && !error && (
+          <Text variant="tiny" className="text-center text-gray-500 mt-4">
+            🔒 Click any card for instant detailed analysis
+          </Text>
+        )}
       </motion.div>
     );
   }

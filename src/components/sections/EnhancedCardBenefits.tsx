@@ -2,7 +2,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { Text } from "../ui/Text";
 import { fadeIn } from "../../lib/animations";
-import { cards } from "./CardData";
+import { useCardData } from "@/hooks/useCardData";
 import { CardGrid } from "./CardGrid";
 import { PerkList } from "./PerkList";
 
@@ -31,6 +31,8 @@ const portfolioInsights = [
 ];
 
 export function EnhancedCardBenefits() {
+  const { cards, loading, error } = useCardData();
+  
   // Find the index of Amex Platinum or default to first card
   const defaultCardIndex = cards.findIndex(card => card.name === "American Express Platinum") || 0;
   const [selectedCardIndex, setSelectedCardIndex] = useState(defaultCardIndex);
@@ -48,9 +50,9 @@ export function EnhancedCardBenefits() {
   };
 
   const currentCard = cards[selectedCardIndex];
-  const totalAnnualValue = currentCard.benefits.reduce((acc, perk) => {
+  const totalAnnualValue = currentCard ? currentCard.benefits.reduce((acc, perk) => {
     return acc + calculateAnnualValue(perk.value, perk.period);
-  }, 0);
+  }, 0) : 0;
 
   // Determine which portfolio tier this card fits into
   const getPortfolioTier = (annualFee: number) => {
@@ -59,7 +61,7 @@ export function EnhancedCardBenefits() {
     return portfolioInsights[2];
   };
 
-  const currentTier = getPortfolioTier(currentCard.annualFee);
+  const currentTier = currentCard ? getPortfolioTier(currentCard.annualFee) : portfolioInsights[0];
   const utilizationRate = 20; // Most people only use 20%
   const credifyRate = 90; // Credify helps achieve 90%
   const typicalValue = Math.round(totalAnnualValue * (utilizationRate / 100));
@@ -85,32 +87,55 @@ export function EnhancedCardBenefits() {
           </Text>
         </motion.div>
 
-        <div className="mb-16">
-          <CardGrid
-            cards={cards}
-            selectedCardIndex={selectedCardIndex}
-            onCardSelect={setSelectedCardIndex}
-          />
-        </div>
+        {loading && (
+          <div className="text-center py-16">
+            <Text variant="body" className="text-gray-600">Loading credit cards...</Text>
+          </div>
+        )}
 
-        <div className="max-w-4xl mx-auto">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={selectedCardIndex}
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
+        {error && (
+          <div className="text-center py-16">
+            <Text variant="body" className="text-red-600 mb-4">{error}</Text>
+            <button 
+              onClick={() => window.location.reload()}
+              className="text-blue-600 hover:text-blue-800 underline"
             >
-              {/* Card Header with Portfolio Context */}
-              <div className="mb-8">
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-6">
-                  <div>
-                    <Text variant="h3" as="h3" className="mb-2">{currentCard.name}</Text>
-                    <Text variant="body" className="text-gray-600">
-                      Annual Fee: ${currentCard.annualFee} | Est. Annual Value: <span className="font-bold text-green-600">${totalAnnualValue}</span>
-                    </Text>
-                  </div>
+              Try again
+            </button>
+          </div>
+        )}
+
+        {!loading && !error && cards.length > 0 && (
+          <>
+            <div className="mb-16">
+              <CardGrid
+                cards={cards}
+                selectedCardIndex={selectedCardIndex}
+                onCardSelect={setSelectedCardIndex}
+              />
+            </div>
+          </>
+        )}
+
+        {!loading && !error && currentCard && (
+          <div className="max-w-4xl mx-auto">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedCardIndex}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.2, ease: "easeInOut" }}
+              >
+                {/* Card Header with Portfolio Context */}
+                <div className="mb-8">
+                  <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6 mb-6">
+                    <div>
+                      <Text variant="h3" as="h3" className="mb-2">{currentCard.name}</Text>
+                      <Text variant="body" className="text-gray-600">
+                        Annual Fee: ${currentCard.annualFee} | Est. Annual Value: <span className="font-bold text-green-600">${totalAnnualValue}</span>
+                      </Text>
+                    </div>
                   
                   {/* Portfolio Tier Badge */}
                   <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 lg:min-w-[280px]">
@@ -155,18 +180,20 @@ export function EnhancedCardBenefits() {
 
               {/* Detailed Perk List */}
               <PerkList perks={currentCard.benefits} />
-            </motion.div>
-          </AnimatePresence>
-        </div>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        )}
 
         {/* Portfolio Strategy Insights */}
-        <motion.div
-          variants={fadeIn}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          className="mt-16 max-w-4xl mx-auto"
-        >
+        {!loading && !error && (
+          <motion.div
+            variants={fadeIn}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="mt-16 max-w-4xl mx-auto"
+          >
           <div className="text-center mb-8">
             <Text variant="h3" className="mb-4">
               Your Savings Potential by Portfolio Size  
@@ -224,7 +251,8 @@ export function EnhancedCardBenefits() {
               </motion.div>
             ))}
           </div>
-        </motion.div>
+          </motion.div>
+        )}
       </div>
     </section>
   );
