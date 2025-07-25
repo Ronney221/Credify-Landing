@@ -12,7 +12,7 @@ const notificationMessages = [
   {
     id: 1,
     message: "Wanderlust loading... ✈️ Your Travel Credit is waiting to be used on flights, hotels, or more. Don't let it fly away!",
-    position: { side: 'left', top: '10%' },
+    position: { side: 'left', top: '20%' },
     screenIndex: 0
   },
   {
@@ -24,14 +24,14 @@ const notificationMessages = [
   {
     id: 3,
     message: "Vacay mode: activated! ☀️ Your Hilton Resort Credit is ready for you. Book that poolside cabana!",
-    position: { side: 'left', top: '70%' },
+    position: { side: 'left', top: '60%' },
     screenIndex: 2
   },
   // Right side notifications
   {
     id: 4,
     message: "Your monthly Dunkin' credit is here to make your day sweeter. You literally can't say no. 🍩",
-    position: { side: 'right', top: '15%' },
+    position: { side: 'right', top: '25%' },
     screenIndex: 0
   },
   {
@@ -43,7 +43,7 @@ const notificationMessages = [
   {
     id: 6,
     message: "Fueling your boba cravings or a late-night snack run. 🚕 Your Uber Cash is about to vanish. Use it before it's gone!",
-    position: { side: 'right', top: '75%' },
+    position: { side: 'right', top: '65%' },
     screenIndex: 2
   }
 ];
@@ -73,12 +73,12 @@ const FloatingNotification = memo(({ notification, isHighlighted, currentScreenI
   const getPositioning = () => {
     if (notification.position.side === 'left') {
       return {
-        right: '180px', // Position to the left of phone (phone width ~320px, so 160px from center + 20px gap)
+        right: '1275px', // Position to the left of phone
         top: notification.position.top
       };
     } else {
       return {
-        left: '180px', // Position to the right of phone
+        left: '1275px', // Position to the right of phone
         top: notification.position.top
       };
     }
@@ -276,7 +276,7 @@ function Hero2Component() {
           {/* Central Phone Mockup */}
           <motion.div
             className="relative z-10"
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 1, scale: 1 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
@@ -311,7 +311,7 @@ function Hero2Component() {
           {/* Central Phone Mockup */}
           <motion.div
             className="relative z-10"
-            initial={{ opacity: 0, scale: 0.9 }}
+            initial={{ opacity: 1, scale: 1 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.3 }}
           >
@@ -331,10 +331,47 @@ function Hero2Component() {
       )}
 
       {/* Spacer to allow scrolling - only when phone is fixed */}
-      {isPhoneFixed && <div className="h-[150vh]"></div>}
+      {isPhoneFixed && <div className="h-[100vh]"></div>}
 
       {/* Bottom Trigger - Phone stops being fixed when this comes into view */}
       <div ref={bottomTriggerRef} className="h-1 w-full"></div>
+
+      {/* Bottom Phone Section - Mirrors Top Section */}
+      <div className={`relative flex items-center justify-center min-h-[80vh] py-10 ${
+        isPhoneFixed ? 'opacity-0 pointer-events-none' : ''
+      }`}>
+        {/* Floating Notifications positioned around phone */}
+        <div className="absolute inset-0 flex items-center justify-center">
+          {notificationMessages.map((notification) => (
+            <FloatingNotification
+              key={`bottom-${notification.id}`}
+              notification={notification}
+              isHighlighted={notification.screenIndex === 2}
+              currentScreenIndex={2}
+            />
+          ))}
+        </div>
+
+        {/* Central Phone Mockup */}
+        <motion.div
+          className="relative z-10"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, delay: 0.3 }}
+        >
+          <div className="relative">
+            <BlurImage
+              src={phoneScreenshots[2].src}
+              alt={phoneScreenshots[2].alt}
+              width={320}
+              height={640}
+              className="rounded-[32px] shadow-2xl border-4 border-gray-800"
+            />
+            {/* Phone overlay for depth */}
+            <div className="absolute inset-0 rounded-[32px] bg-gradient-to-t from-black/10 via-transparent to-transparent" />
+          </div>
+        </motion.div>
+      </div>
 
       {/* Bottom CTA Section - TEMPORARILY COMMENTED OUT */}
       {/* 
