@@ -20,14 +20,12 @@ function App() {
       {/* 5. Partner Logos for Credibility */}
       <PartnerLogos />
       
-      {/* Redemption Tips & Hacks - New Feature Spotlight */}
-      <RedemptionHacks />
-      
-      {/* Value by Portfolio Size */}
-      <ValueByPortfolio />
       
       {/* 2. The Pain & The Numbers - Hit them with powerful statistics */}
       <PrivacyFirst />
+      
+      {/* Value by Portfolio Size */}
+      <ValueByPortfolio />
       
       {/* 3. The Concrete Solution - Show the tangible value */}
       <CardBenefits />
@@ -42,6 +40,9 @@ function App() {
       {/* 7. Interactive Features Demo */}
       <Scrollytelling />
       
+      {/* Redemption Tips & Hacks - New Feature Spotlight */}
+      <RedemptionHacks />
+
       {/* 8. FAQ - Address remaining questions */}
       <FAQ />
     </RootLayout>
