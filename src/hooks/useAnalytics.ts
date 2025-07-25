@@ -1,18 +1,16 @@
-interface PlausibleEvent {
+import { usePostHog } from "posthog-js/react";
+
+interface AnalyticsEvent {
   name: string;
   props?: Record<string, string | number | boolean>;
 }
 
-declare global {
-  interface Window {
-    plausible?: (eventName: string, options?: { props: Record<string, any> }) => void;
-  }
-}
-
 export function useAnalytics() {
-  const trackEvent = (event: PlausibleEvent) => {
-    if (window.plausible) {
-      window.plausible(event.name, event.props ? { props: event.props } : undefined);
+  const posthog = usePostHog();
+
+  const trackEvent = (event: AnalyticsEvent) => {
+    if (posthog) {
+      posthog.capture(event.name, event.props);
     }
   };
 
@@ -25,26 +23,22 @@ export function useAnalytics() {
       name: "waitlist_signup",
       props: {
         email_domain: email.split("@")[1],
-        timestamp: new Date().toISOString()
-      }
+        timestamp: new Date().toISOString(),
+      },
     });
   };
 
   const trackCardClick = (cardName: string) => {
     trackEvent({
       name: "card_click",
-      props: {
-        card_name: cardName
-      }
+      props: { card_name: cardName },
     });
   };
 
   const trackFeatureView = (featureName: string) => {
     trackEvent({
       name: "feature_view",
-      props: {
-        feature_name: featureName
-      }
+      props: { feature_name: featureName },
     });
   };
 
@@ -53,6 +47,6 @@ export function useAnalytics() {
     trackPageView,
     trackWaitlistSignup,
     trackCardClick,
-    trackFeatureView
+    trackFeatureView,
   };
-} 
+}

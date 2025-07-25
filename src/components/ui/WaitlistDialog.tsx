@@ -5,13 +5,7 @@ import { Text } from './Text';
 import { Button } from './button';
 import { Input } from './input';
 import { Label } from './label';
-import { createClient } from '@supabase/supabase-js';
-
-// Initialize Supabase client
-const supabase = createClient(
-  import.meta.env.VITE_SUPABASE_URL,
-  import.meta.env.VITE_SUPABASE_ANON_KEY
-);
+import { supabase } from '../../lib/supabase';
 
 export function WaitlistDialog({ 
   isOpen, 

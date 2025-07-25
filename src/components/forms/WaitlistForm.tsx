@@ -5,6 +5,7 @@ import * as z from "zod";
 import { Button } from "@/components/ui/button";
 import { Form, FormControl, FormField, FormItem, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { supabase } from "@/lib/supabase";
 
 const formSchema = z.object({
   email: z.string().email("Please enter a valid email address"),
@@ -26,8 +27,17 @@ export function WaitlistForm() {
   async function onSubmit(data: FormData) {
     setIsSubmitting(true);
     try {
-      // TODO: Implement actual API call to save email
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      const { error } = await supabase
+        .from('waitlist')
+        .insert([
+          {
+            email: data.email,
+            platform: 'web_form' // Distinguish from dialog signups
+          }
+        ]);
+
+      if (error) throw error;
+      
       setIsSuccess(true);
       form.reset();
     } catch (error) {
