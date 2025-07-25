@@ -13,7 +13,8 @@ const navigation = [
   { name: "Download", id: "hero" },
   { name: "Cards", id: "cards" },
   { name: "How It Works", id: "how-it-works" },
-  { name: "FAQ", id: "faq" }
+  { name: "FAQ", id: "faq" },
+  { name: "Feedback", id: "feedback", isLink: true }
 ];
 
 export function Header() {
@@ -37,13 +38,23 @@ export function Header() {
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center gap-8">
             {navigation.map((item) => (
-              <button
-                key={item.name}
-                onClick={() => scrollTo(item.id)}
-                className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
-              >
-                {item.name}
-              </button>
+              item.isLink ? (
+                <a
+                  key={item.name}
+                  href={`/${item.id}`}
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
+                >
+                  {item.name}
+                </a>
+              ) : (
+                <button
+                  key={item.name}
+                  onClick={() => scrollTo(item.id)}
+                  className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors whitespace-nowrap"
+                >
+                  {item.name}
+                </button>
+              )
             ))}
           </nav>
 
@@ -70,19 +81,29 @@ export function Header() {
               </SheetHeader>
               <div className="flex flex-col gap-4 mt-8">
                 {navigation.map((item) => (
-                  <button
-                    key={item.name}
-                    onClick={() => {
-                      scrollTo(item.id);
-                      const closeButton = document.querySelector('[data-radix-collection-item]');
-                      if (closeButton instanceof HTMLElement) {
-                        closeButton.click();
-                      }
-                    }}
-                    className="text-left py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
-                  >
-                    {item.name}
-                  </button>
+                  item.isLink ? (
+                    <a
+                      key={item.name}
+                      href={`/${item.id}`}
+                      className="text-left py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {item.name}
+                    </a>
+                  ) : (
+                    <button
+                      key={item.name}
+                      onClick={() => {
+                        scrollTo(item.id);
+                        const closeButton = document.querySelector('[data-radix-collection-item]');
+                        if (closeButton instanceof HTMLElement) {
+                          closeButton.click();
+                        }
+                      }}
+                      className="text-left py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {item.name}
+                    </button>
+                  )
                 ))}
                 {/* Mobile CTA Button */}
                 <Button variant="default" className="w-full" onClick={handleDownload}>
